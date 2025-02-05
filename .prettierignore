@@ -1,0 +1,6 @@
+.cache
+.husky
+.next
+.vscode
+package.json
+package-lock.json
