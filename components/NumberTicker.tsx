@@ -32,5 +32,5 @@ export default function NumberTicker({ value, delay = 0 }: NumberTickerProps) {
       }),
     [springValue],
   );
-  return <span className="inline-block tabular-nums text-[#F7CE79] tracking-wider" ref={ref} />;
+  return <span className="inline-block tabular-nums text-[#0514C9] tracking-wider" ref={ref} />;
 }
