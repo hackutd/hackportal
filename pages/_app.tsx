@@ -40,12 +40,12 @@ function PortalApp({ Component, pageProps }: AppProps) {
 
   const duckBackgroundPathnames = new Set(['/profile', '/profile/application/edit']);
   const registerBackgroundPathnames = new Set(['/register', '/auth']);
-  const cloudBackgroundPathnames = new Set([
-    '/admin',
-    '/admin/scan',
-    '/admin/users',
-    '/admin/waitlist',
-  ]);
+  // const cloudBackgroundPathnames = new Set([
+  //   '/admin',
+  //   '/admin/scan',
+  //   '/admin/users',
+  //   '/admin/waitlist',
+  // ]);
   const noTopSpacerPathnames = new Set(['/', '/parking', '/live']);
 
   const faqRef = useRef<HTMLDivElement | null>(null);
@@ -161,7 +161,7 @@ function PortalApp({ Component, pageProps }: AppProps) {
                     </div>
                   )}
 
-                  {cloudBackgroundPathnames.has(router.pathname) && (
+                  {/* {cloudBackgroundPathnames.has(router.pathname) && (
                     <div className="fixed top-0 left-0 w-screen h-screen -z-10">
                       <Image
                         className="w-screen h-screen object-cover"
@@ -171,7 +171,7 @@ function PortalApp({ Component, pageProps }: AppProps) {
                         height={CloudBackgroundImage.height}
                       />
                     </div>
-                  )}
+                  )} */}
 
                   <AppHeader2_Wrapper />
 
