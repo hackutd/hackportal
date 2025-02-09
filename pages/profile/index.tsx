@@ -295,7 +295,7 @@ export default function ProfilePage() {
                     />
                     <label
                       id="resume_label"
-                      className="font-fredoka transition py-3 font-semibold px-6 text-sm text-center whitespace-nowrap text-white w-min bg-[#40B7BA] rounded-full cursor-pointer hover:brightness-110"
+                      className="font-fredoka transition py-3 font-semibold px-6 text-sm text-center whitespace-nowrap text-white w-min bg-[#5D5A88] rounded-full cursor-pointer hover:brightness-110"
                       htmlFor="resume"
                     >
                       {profile.resume ? 'Update' : 'Add'} Resume
@@ -325,7 +325,7 @@ export default function ProfilePage() {
 
           {/* Info */}
           <div className="w-full">
-            <h1 className="text-center font-fredoka font-semibold text-5xl md:mt-0 mt-10 text-[#40B7BA]">{`${profile?.user.firstName} ${profile?.user.lastName}`}</h1>
+            <h1 className="text-center font-fredoka font-semibold text-5xl md:mt-0 mt-10 text-[#5D5A88]">{`${profile?.user.firstName} ${profile?.user.lastName}`}</h1>
 
             <div className="w-full grid gap-8 grid-cols-1 md:grid-cols-2 mt-8">
               <TextField
