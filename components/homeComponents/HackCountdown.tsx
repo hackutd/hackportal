@@ -37,7 +37,10 @@ const HackCountdown: React.FC<CountdownProps> = ({ targetDate }) => {
   });
 
   return (
-    <div className={styles.countdownContainer} style={{ marginTop: '10vh' }}>
+    <div
+      className={styles.countdownContainer}
+      style={{ padding: '10vh', backgroundColor: '#F2F3FF' }}
+    >
       <div className={styles.timeSection}>
         {Object.entries(timeLeft).map(([unit, value]) => {
           const digits = value.toString().padStart(2, '0').split('');

@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const HomeAboutPhotos = () => {
   return (
-    <div className="relative flex flex-col items-center justify-center font-jua">
+    <div className="relative flex flex-col items-center justify-center font-jua bg-[#F2F3FF]">
       {/* About Section */}
       <div
         className="relative flex flex-col-reverse lg:flex-row items-center mb-5 font-fredoka z-10 space-y-8 lg:space-y-0 lg:space-x-15 mt-10"

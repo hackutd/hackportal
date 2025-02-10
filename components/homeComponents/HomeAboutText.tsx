@@ -68,7 +68,7 @@ const HomeAboutText = () => {
       ref={containerRef}
       className="relative py-12 flex flex-col items-center justify-center font-jua"
       style={{
-        background: '#FFFFFF',
+        background: '#F2F3FF',
         backgroundSize: '100% 100%',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

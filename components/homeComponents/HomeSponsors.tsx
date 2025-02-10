@@ -21,7 +21,7 @@ export default function HomeSponsors() {
 
   return (
     SPONSOR_LIST.length != 0 && (
-      <section className="relative pt-[10rem] bg-[#F7F7FB] font-fredoka">
+      <section className="relative pt-[10rem] bg-[#F2F3FF] font-fredoka">
         {/* TODO: will update styling better once get more assets and finalized content */}
         <div>
           <div className="text-center text-5xl text-[#5D5A88]">
