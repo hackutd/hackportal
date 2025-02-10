@@ -21,31 +21,24 @@ export default function HomeSponsors() {
 
   return (
     SPONSOR_LIST.length != 0 && (
-      <section className="relative pt-[10rem] bg-[#DAC397] font-fredoka">
+      <section className="relative pt-[10rem] bg-[#F7F7FB] font-fredoka">
         {/* TODO: will update styling better once get more assets and finalized content */}
         <div>
-          <div className="text-center text-5xl text-white">
+          <div className="text-center text-5xl text-[#5D5A88]">
             <h1 className="uppercase font-bold">see you there!</h1>
-          </div>
-          <div className="flex flex-wrap w-full items-end justify-center mb-8">
-            <div
-              className={styles.placeholder}
-              style={{
-                position: 'relative',
-                maxWidth: '90vw',
-              }}
-            >
-              <Image src={PlaceholderMascot.src} layout="fill" alt="placeholder_5" />
-            </div>
           </div>
         </div>
         <div className="flex flex-col flex-grow">
-          <h4 className="text-white font-bold md:text-5xl text-2xl my-4 text-center uppercase font-fredoka pt-32 pb-12">
+          <h4 className="text-[#5D5A88] font-bold md:text-5xl text-2xl my-4 text-center uppercase font-fredoka pt-32 pb-12">
             Sponsorship
           </h4>
-          <h2 className="uppercase text-center text-white text-3xl">interested in sponsoring?</h2>
-          <h2 className="mt-1 text-center text-white">If you would like to sponsor HackUTD,</h2>
-          <h2 className="text-center text-white">
+          <h2 className="uppercase text-center text-[#5D5A88] text-3xl">
+            interested in sponsoring?
+          </h2>
+          <h2 className="mt-1 text-center text-[#5D5A88]">
+            If you would like to sponsor HackPortal,
+          </h2>
+          <h2 className="text-center text-[#5D5A88]">
             please reach out to us at&nbsp;
             <a
               href="mailto:hello@hackutd.co"
@@ -61,7 +54,7 @@ export default function HomeSponsors() {
               {['title', 'platinum', 'gold', 'silver', 'bronze'].map((tier) => (
                 <div
                   key={tier}
-                  className="flex flex-col gap-8 my-[3rem] text-center text-3xl text-white font-bold"
+                  className="flex flex-col gap-8 my-[3rem] text-center text-3xl text-[#5D5A88] font-bold"
                 >
                   <TierTitle tierName={tier} />
 
@@ -84,7 +77,7 @@ export default function HomeSponsors() {
           </section>
         </div>
         <div className="mt-4">
-          <p className="text-4xl text-center text-white pb-28">and more to come!</p>
+          <p className="text-4xl text-center text-[#5D5A88] pb-28">and more to come!</p>
         </div>
       </section>
     )
