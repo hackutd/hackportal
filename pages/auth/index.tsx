@@ -123,7 +123,7 @@ export default function AuthPage() {
       <section className="min-h-screen mb-16">
         <div className="hidden md:flex p-4">
           <Link href="/" passHref legacyBehavior>
-            <div className="cursor-pointer items-center inline-flex text-white font-bold bg-[#40B7BA] rounded-[30px] pr-5 pl-2 py-3 border-2 border-white">
+            <div className="cursor-pointer items-center inline-flex text-white font-bold bg-[#5D5A88] rounded-[30px] pr-5 pl-2 py-3 border-2 border-white">
               <ChevronLeftIcon />
               Home
             </div>
@@ -137,16 +137,16 @@ export default function AuthPage() {
             >
               {!passwordResetDialog ? (
                 <>
-                  <h1 className="md:text-3xl text-2xl text-center text-[#40B7BA] mt-4 poppins-bold">
+                  <h1 className="md:text-3xl text-2xl text-center text-[#5D5A88] mt-4 poppins-bold">
                     {signInOption ? 'Login' : 'Create an account'}
                   </h1>
                   <div className="text-center text-[#4C495080] mt-4 mb-12 poppins-semibold">
-                    {signInOption ? ' New to HackUTD?' : 'Already have an account?'}{' '}
+                    {signInOption ? ' New to HackPortal?' : 'Already have an account?'}{' '}
                     <span
                       onClick={() =>
                         signInOption ? setSignInOption(false) : setSignInOption(true)
                       }
-                      className="text-[#40B7BA] cursor-pointer underline"
+                      className="text-[#5D5A88] cursor-pointer underline"
                     >
                       {signInOption ? 'Register here!' : 'Sign in'}
                     </span>
@@ -173,17 +173,17 @@ export default function AuthPage() {
                       />
 
                       <div className="inline-flex md:flex justify-between md:flex-row flex-col-reverse poppins-semibold text-sm">
-                        <div className="text-[#40B7BA]">
+                        <div className="text-[#5D5A88]">
                           {/* TODO: should this feature be implemented or does it already exist? */}
                           <input
-                            className="mr-2 r text-[#40B7BA] focus:ring-0 border border-[#40B7BA] text-sm cursor-pointer"
+                            className="mr-2 r text-[#5D5A88] focus:ring-0 border border-[#5D5A88] text-sm cursor-pointer"
                             type="checkbox"
                             onClick={() => setRememberMe(!rememberMe)}
                           />
                           Remember me
                         </div>
                         <div
-                          className="hover:underline cursor-pointer text-left text-[#40B7BA] mb-4 md:mb-0"
+                          className="hover:underline cursor-pointer text-left text-[#5D5A88] mb-4 md:mb-0"
                           onClick={() => {
                             setPasswordResetDialog(true);
                             setErrorMsg('');
@@ -197,7 +197,7 @@ export default function AuthPage() {
                       <div className="flex justify-center mt-6 mb-4">
                         <button
                           type="button"
-                          className="rounded-lg text-base w-full text-white bg-[#40B7BA] hover:brightness-90 px-4 py-2"
+                          className="rounded-lg text-base w-full text-white bg-[#5D5A88] hover:brightness-90 px-4 py-2"
                           onClick={() => {
                             handleSubmit();
                           }}
@@ -233,17 +233,17 @@ export default function AuthPage() {
                 <React.Fragment>
                   <div className="text-left">
                     <ArrowBackIcon
-                      className="cursor-pointer text-[#40B7BA]"
+                      className="cursor-pointer text-[#5D5A88]"
                       onClick={() => {
                         setPasswordResetDialog(false);
                         setErrorMsg('');
                       }}
                     />
                   </div>
-                  <h1 className="md:text-3xl text-2xl font-black text-center text-[#40B7BA] mt-4">
+                  <h1 className="md:text-3xl text-2xl font-black text-center text-[#5D5A88] mt-4">
                     Reset Password
                   </h1>
-                  <div className="text-center text-[#4C495080] mt-4 mb-12">
+                  <div className="text-center text-[#5D5A88] mt-4 mb-12">
                     Enter your email address and we&apos;ll send you a link to reset your password.
                   </div>
 
@@ -259,7 +259,7 @@ export default function AuthPage() {
                   <div className="flex justify-center mt-6 mb-4">
                     <button
                       type="button"
-                      className="rounded-full text-base w-full text-white bg-[#40B7BA] hover:brightness-90 px-4 py-2"
+                      className="rounded-full text-base w-full text-white bg-[#5D5A88] hover:brightness-90 px-4 py-2"
                       onClick={() => {
                         sendResetEmail();
                         setErrorMsg('');

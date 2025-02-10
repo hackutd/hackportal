@@ -380,7 +380,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
     <div className="flex flex-col flex-grow mt-28 md:mt-0 mb-10 ">
       <Head>
         <title>Hacker Application</title>
-        <meta name="description" content="Register for HackUTD 2024" />
+        <meta name="description" content="Register for HackPortal" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Formik
@@ -478,7 +478,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                   await router.push('/');
                 }}
               >
-                <div className="mt-2 cursor-pointer items-center inline-flex text-white font-bold bg-[#40B7BA] rounded-[30px] pr-4 pl-1 py-2 border-2 border-white">
+                <div className="mt-2 cursor-pointer items-center inline-flex text-white font-bold bg-[#5D5A88] rounded-[30px] pr-4 pl-1 py-2 border-2 border-white">
                   <ChevronLeftIcon className="text-white" fontSize={'large'} />
                   Home
                 </div>
@@ -493,9 +493,9 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
               >
                 {/* General Questions */}
                 {registrationSection == 0 && (
-                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-4 py-10 px-8 mb-8 text-[#4C4950]">
+                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-4 py-10 px-8 mb-8 text-[#5D5A88]">
                     <header>
-                      <h1 className="text-[#40B7BA] lg:text-4xl sm:text-3xl text-2xl font-bold text-center mt-2 md:mt-8 mb-4 poppins-bold">
+                      <h1 className="text-[#5D5A88] lg:text-4xl sm:text-3xl text-2xl font-bold text-center mt-2 md:mt-8 mb-4 poppins-bold">
                         Hacker Application
                       </h1>
                       <div
@@ -520,7 +520,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                           e.preventDefault();
                           await handleSaveProfile(values, registrationSection, resetForm);
                         }}
-                        className="bg-[#40B7BA] rounded-lg p-3 text-white font-bold"
+                        className="bg-[#5D5A88] rounded-lg p-3 text-white font-bold"
                       >
                         Save Profile
                       </button>
@@ -530,7 +530,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
 
                 {/* School Questions */}
                 {registrationSection == 1 && (
-                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-10 py-6 px-8 mb-8 text-[#4C4950]">
+                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-10 py-6 px-8 mb-8 text-[#5D5A88]">
                     <h2 className="sm:text-2xl text-xl sm:mb-3 mb-1 poppins-bold mt-2">
                       School Info
                     </h2>
@@ -578,7 +578,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                           e.preventDefault();
                           handleSaveProfile(values, registrationSection, resetForm);
                         }}
-                        className="bg-[#40B7BA] rounded-lg p-3 text-white font-bold"
+                        className="bg-[#5D5A88] rounded-lg p-3 text-white font-bold"
                       >
                         Save Profile
                       </button>
@@ -588,7 +588,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
 
                 {/* Hackathon Questions */}
                 {registrationSection == 2 && (
-                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-10 py-6 px-8 mb-8 text-[#4C4950]">
+                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-10 py-6 px-8 mb-8 text-[#5D5A88]">
                     <h2 className="sm:text-2xl text-xl poppins-bold sm:mb-3 mb-1 mt-2">
                       Hackathon Experience
                     </h2>
@@ -604,7 +604,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                               {
                                 id: 'heardFromManual',
                                 name: 'heardFromManual',
-                                question: 'Where did you hear about HackUTD Ripple Effect?',
+                                question: 'Where did you hear about HackPortal?',
                                 required: values['heardFrom'] === 'Other',
                                 initialValue: '',
                               },
@@ -620,7 +620,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                           e.preventDefault();
                           handleSaveProfile(values, registrationSection, resetForm);
                         }}
-                        className="bg-[#40B7BA] rounded-lg p-3 text-white font-bold"
+                        className="bg-[#5D5A88] rounded-lg p-3 text-white font-bold"
                       >
                         Save Profile
                       </button>
@@ -630,7 +630,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
 
                 {/* Short Answer Questions */}
                 {registrationSection == 3 && (
-                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-10 py-6 px-8 mb-8 text-[#4C4950]">
+                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-10 py-6 px-8 mb-8 text-[#5D5A88]">
                     <h2 className="sm:text-2xl text-xl poppins-bold sm:mb-3 mb-1 mt-2">
                       Short Answer Questions
                     </h2>
@@ -646,7 +646,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                           e.preventDefault();
                           handleSaveProfile(values, registrationSection, resetForm);
                         }}
-                        className="bg-[#40B7BA] rounded-lg p-3 text-white font-bold"
+                        className="bg-[#5D5A88] rounded-lg p-3 text-white font-bold"
                       >
                         Save Profile
                       </button>
@@ -656,7 +656,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
 
                 {/* Event Questions */}
                 {registrationSection == 4 && (
-                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-10 py-6 px-8 mb-8 text-[#4C4950]">
+                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-10 py-6 px-8 mb-8 text-[#5D5A88]">
                     <h2 className="sm:text-2xl text-xl poppins-bold sm:mb-3 mb-1 mt-2">
                       Event Info
                     </h2>
@@ -675,7 +675,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                           e.preventDefault();
                           handleSaveProfile(values, registrationSection, resetForm);
                         }}
-                        className="bg-[#40B7BA] rounded-lg p-3 text-white font-bold"
+                        className="bg-[#5D5A88] rounded-lg p-3 text-white font-bold"
                       >
                         Save Profile
                       </button>
@@ -685,7 +685,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
 
                 {/* Sponsor Questions */}
                 {registrationSection == 5 && (
-                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-10 py-6 px-8 mb-8 text-[#4C4950] relative">
+                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-10 py-6 px-8 mb-8 text-[#5D5A88] relative">
                     <h2 className="sm:text-2xl text-xl poppins-bold sm:mb-3 mb-1 mt-2">
                       Sponsor Info
                     </h2>
@@ -710,9 +710,9 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                         accept=".pdf, .doc, .docx, image/png, image/jpeg, .txt, .tex, .rtf"
                         className="hidden"
                       />
-                      <div className="flex items-center gap-x-3 poppins-regular w-full border border-[#40B7BA] rounded-md">
+                      <div className="flex items-center gap-x-3 poppins-regular w-full border border-[#5D5A88] rounded-md">
                         <button
-                          className="md:p-2 p-1 bg-[#40B7BA] text-white h-full rounded-l-md border-none"
+                          className="md:p-2 p-1 bg-[#5D5A88] text-white h-full rounded-l-md border-none"
                           onClick={(e) => {
                             e.preventDefault();
                             resumeFileRef.current?.click();
@@ -720,17 +720,17 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                         >
                           Upload new resume...
                         </button>
-                        <p className="text-[#4C4950]">
+                        <p className="text-[#5D5A88]">
                           {resumeFile ? resumeFile.name : 'No file selected.'}
                         </p>
                       </div>
-                      <p className="poppins-regular text-xs text-[#40B7BA]">
+                      <p className="poppins-regular text-xs text-[#5D5A88]">
                         Accepted file types: .pdf, .doc, .docx, .png, .jpeg, .txt, .tex, .rtf
                       </p>
                       {partialProfile?.resume && (
                         <div className="my-4 w-fit">
                           <Link href={partialProfile.resume} target="_blank">
-                            <div className="bg-[#40B7BA] md:p-2 p-1 text-white rounded-lg">
+                            <div className="bg-[#5D5A88] md:p-2 p-1 text-white rounded-lg">
                               Click to view your current resume
                             </div>
                           </Link>
@@ -746,7 +746,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                           await handleSaveProfile(values, registrationSection, resetForm);
                           setIsSavingApplication(false);
                         }}
-                        className="bg-[#40B7BA] rounded-lg p-3 text-white font-bold"
+                        className="bg-[#5D5A88] rounded-lg p-3 text-white font-bold"
                       >
                         Save Profile
                       </button>
@@ -755,7 +755,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                 )}
                 {/* Teammate Questions */}
                 {registrationSection == 6 && (
-                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-10 py-6 px-8 mb-8 text-[#4C4950]">
+                  <section className="bg-white lg:w-3/5 md:w-3/4 w-full min-h-[35rem] mx-auto rounded-2xl md:py-10 py-6 px-8 mb-8 text-[#5D5A88]">
                     <h2 className="sm:text-2xl text-xl font-semibold sm:mb-3 mb-1">
                       Teammate Questions
                     </h2>
@@ -773,7 +773,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                       <button
                         disabled={isSubmitting}
                         type="submit"
-                        className="mr-auto cursor-pointer px-4 py-2 rounded-lg bg-[#40B7BA] hover:brightness-90"
+                        className="mr-auto cursor-pointer px-4 py-2 rounded-lg bg-[#5D5A88] hover:brightness-90"
                       >
                         Submit
                       </button>
@@ -791,7 +791,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                           e.preventDefault();
                           handleSaveProfile(values, registrationSection, resetForm);
                         }}
-                        className="bg-[#40B7BA] rounded-lg p-3 text-white font-bold"
+                        className="bg-[#5D5A88] rounded-lg p-3 text-white font-bold"
                       >
                         Save Profile
                       </button>
@@ -824,16 +824,16 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                   >
                     <div
                       style={{ width: 'fit-content' }}
-                      className="hidden md:inline-flex cursor-pointer select-none bg-white text-[#40B7BA] rounded-[30px] py-3 pl-2 pr-4 text-xs md:text-lg border-2 border-[#40B7BA]"
+                      className="hidden md:inline-flex cursor-pointer select-none bg-white text-[#5D5A88] rounded-[30px] py-3 pl-2 pr-4 text-xs md:text-lg border-2 border-[#5D5A88]"
                     >
-                      <ChevronLeftIcon className="text-[#40B7BA]" />
+                      <ChevronLeftIcon className="text-[#5D5A88]" />
                       prev page
                     </div>
                     <div
                       style={{ width: 'fit-content' }}
-                      className="md:hidden cursor-pointer select-none bg-white text-[#40B7BA] rounded-[30px] py-3 pl-2 pr-4 text-xs md:text-lg border-2 border-[#40B7BA]"
+                      className="md:hidden cursor-pointer select-none bg-white text-[#5D5A88] rounded-[30px] py-3 pl-2 pr-4 text-xs md:text-lg border-2 border-[#5D5A88]"
                     >
-                      <ChevronLeftIcon className="text-[#40B7BA]" />
+                      <ChevronLeftIcon className="text-[#5D5A88]" />
                       prev
                     </div>
                   </div>
@@ -881,14 +881,14 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                   >
                     <div
                       style={{ width: 'fit-content' }}
-                      className="hidden md:inline-flex cursor-pointer select-none bg-white text-[#40B7BA] text-xs md:text-lg rounded-[30px] py-3 pr-2 pl-4 border-2 border-[#40B7BA]"
+                      className="hidden md:inline-flex cursor-pointer select-none bg-white text-[#5D5A88] text-xs md:text-lg rounded-[30px] py-3 pr-2 pl-4 border-2 border-[#5D5A88]"
                     >
                       next page
                       <ChevronRightIcon />
                     </div>
                     <div
                       style={{ width: 'fit-content' }}
-                      className="md:hidden cursor-pointer select-none bg-white text-[#40B7BA] text-xs md:text-lg rounded-[30px] py-3 pr-2 pl-4 border-2 border-[#40B7BA]"
+                      className="md:hidden cursor-pointer select-none bg-white text-[#5D5A88] text-xs md:text-lg rounded-[30px] py-3 pr-2 pl-4 border-2 border-[#5D5A88]"
                     >
                       next
                       <ChevronRightIcon />

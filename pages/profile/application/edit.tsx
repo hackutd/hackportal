@@ -255,7 +255,7 @@ export default function EditApplication({ allowedRegistrations }: EditApplicatio
     <div className="flex flex-col flex-grow mb-10">
       <Head>
         <title>Hacker Application</title>
-        <meta name="description" content="Register for HackUTD 2024" />
+        <meta name="description" content="Register for HackPortal" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Formik
@@ -546,7 +546,7 @@ export default function EditApplication({ allowedRegistrations }: EditApplicatio
                               {
                                 id: 'heardFromManual',
                                 name: 'heardFromManual',
-                                question: 'Where did you hear about HackUTD Ripple Effect?',
+                                question: 'Where did you hear about HackPortal?',
                                 required: values['heardFrom'] === 'Other',
                                 initialValue: '',
                               },
