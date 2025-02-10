@@ -302,7 +302,7 @@ export default function ProfilePage() {
                     </label>
                     {profile.resume && (
                       <Link
-                        className="font-fredoka transition py-3 font-semibold px-6 text-sm text-center whitespace-nowrap text-white w-min bg-[#40B7BA] rounded-full cursor-pointer hover:brightness-110"
+                        className="font-fredoka transition py-3 font-semibold px-6 text-sm text-center whitespace-nowrap text-white w-min bg-[#5D5A88] rounded-full cursor-pointer hover:brightness-110"
                         href={profile.resume}
                         target="__blank__"
                       >
