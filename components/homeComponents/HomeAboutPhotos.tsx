@@ -15,7 +15,7 @@ const HomeAboutPhotos = () => {
         }}
       >
         <div className="order-2 lg:order-1 flex justify-center items-center z-20 lg:justify-end"></div>
-        <div className="w-[600px] order-1 lg:order-2 text-center text-[#0514C9] lg:ml-8">
+        <div className="w-[600px] order-1 lg:order-2 text-center text-[#05149C] lg:ml-8">
           <p className="text-5xl font-bold stroke-rose-700">
             <NumberTicker value={1000} />+ Hackers
           </p>

@@ -42,13 +42,13 @@ export default function HomeChallengesComponent(props: { challenges: Challenge[]
         <div className={styles.content}>
           <div
             style={{ textShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}
-            className="font-fredoka font-bold md:text-4xl text-2xl text-center text-[#0514C9]"
+            className="font-fredoka font-bold md:text-4xl text-2xl text-center text-[#05149C]"
           >
             Challenge Tracks
           </div>
           <div
             style={{ textShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}
-            className="text-center text-5xl font-bold text-[#0514C9] p-4 font-fredoka uppercase"
+            className="text-center text-5xl font-bold text-[#05149C] p-4 font-fredoka uppercase"
           >
             Choose your track to get started
           </div>
