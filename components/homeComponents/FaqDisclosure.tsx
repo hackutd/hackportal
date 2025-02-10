@@ -63,13 +63,13 @@ export default function FaqDisclosure({
 
             {/* Plus/Minus icon with background transition */}
             <div
-              style={{ backgroundColor: !isOpen ? '#F7F7FB' : '#54DDE8' }}
+              style={{ backgroundColor: !isOpen ? '#F7F7FB' : '#F2F3FF' }}
               className="p-3 rounded-md transition duration-500 ease-in-out"
             >
               {!isOpen ? (
                 <PlusIcon className="transition transform duration-300 ease-in-out w-5 h-5" />
               ) : (
-                <MinusIcon className="transition transform duration-300 ease-in-out w-5 h-5 text-white" />
+                <MinusIcon className="transition transform duration-300 ease-in-out w-5 h-5 text-[#5D5A88]" />
               )}
             </div>
           </button>
