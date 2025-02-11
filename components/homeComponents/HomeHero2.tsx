@@ -18,7 +18,7 @@ export default function HomeHero() {
 
         <div className="relative z-10 shrink-0 w-full flex">
           {/* MLH sticker */}
-          <div className="absolute top-0 right-4 z-20">
+          {/* <div className="absolute top-0 right-4 z-20">
             <Image
               src={MLH_Sticker.src}
               height={MLH_Sticker.height}
@@ -26,7 +26,7 @@ export default function HomeHero() {
               alt="MLH sticker"
               className="w-full h-full object-cover"
             />
-          </div>
+          </div> */}
 
           {/* Big welcome */}
           <div className="w-full flex flex-col gap-2 justify-center items-center bg-[rgba(255,255,255,0.75)] backdrop-blur-[60px]">
