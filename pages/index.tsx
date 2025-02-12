@@ -18,6 +18,7 @@ import countdownClouds from '../public/assets/countdown_clouds.png';
 import hackutdBg from '../public/assets/hackutd-bg.png';
 import topBg from '../public/assets/topBg.png';
 import HomeChallengesComponent from '@/components/homeComponents/HomeChallenges';
+import HomeSpeakers from '@/components/homeComponents/HomeSpeakers';
 export default function Home(props: {
   answeredQuestion: AnsweredQuestion[];
   sponsorCard: Sponsor[];
@@ -41,98 +42,24 @@ export default function Home(props: {
   return (
     <>
       <Head>
-        <title>HackUTD 2024</title>
+        <title>HackPortal</title>
         <meta name="description" content="A default HackPortal instance" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      {/* <HomeNotif /> */}
-      <HomeHero2 />
-      <HomeAboutText />
-
-      <div style={{ position: 'relative', zIndex: 0 }}>
-        {/* TODO: enable this when UI is finalized */}
-        {/* <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundImage: `url(${hackutdBg.src})`,
-            backgroundSize: '100% 100%',
-            backgroundPosition: 'center top',
-            backgroundRepeat: 'no-repeat',
-          }}
-        /> */}
-
-        {/* Themed ocean background of HackUTD */}
-        <Image
-          src={hackutdBg.src}
-          width={hackutdBg.width}
-          height={hackutdBg.height}
-          alt="hackutd-bg.png"
-          className="absolute top-0 left-0 w-full h-full object-cover"
-        />
-
-        <div style={{ position: 'relative', zIndex: 1, overflowX: 'hidden' }}>
-          <div
-            style={{
-              position: 'relative',
-              zIndex: 1,
-              // backgroundImage: `url(${countdownClouds.src}), url(${topBg.src})`,
-              // backgroundSize: 'cover',
-              // backgroundPosition: 'center 50px',
-              // backgroundRepeat: 'no-repeat',
-            }}
-          >
-            {/* Bottom layer background */}
-            <Image
-              src={topBg.src}
-              width={topBg.width}
-              height={topBg.height}
-              alt="topBg.png"
-              className="absolute z-0 top-0 left-0 w-full h-full object-cover"
-            />
-
-            {/* Top layer background */}
-            <Image
-              src={countdownClouds.src}
-              width={countdownClouds.width}
-              height={countdownClouds.height}
-              alt="countdown_clouds.png"
-              className="absolute z-[1] top-0 left-0 w-full h-full object-cover"
-            />
-
-            <div className="relative z-[2]">
-              <Wave />
-              <HomeAboutPhotos />
-              <HomeVideoStats />
-              <HackCountdown />
-            </div>
-          </div>
-
-          <Image
-            style={{
-              position: 'absolute',
-              top: '1100px',
-              right: '-100px',
-              filter: 'blur(8px)',
-            }}
-            src={cloud.src}
-            width={300}
-            height={300}
-            alt="cloud.png"
-          />
-
-          <HomeSchedule scheduleCard={props.scheduleCard} dateCard={props.dateCard} />
-          <HomeChallengesComponent challenges={props.challenges} />
-          {/* include HomePrizes in HomeChallenges */}
-          {/* <HomePrizes prizes={props.prizeData} /> */}
-          <HomeFaq answeredQuestion={props.answeredQuestion} />
-          <HomeSponsors />
-          <HomeFooter />
-        </div>
+      <div className="overflow-x-hidden w-full">
+        {/* <HomeNotif /> */}
+        <HomeHero2 />
+        <HackCountdown />
+        <HomeAboutText />
+        <HomeAboutPhotos />
+        <HomeSchedule scheduleCard={props.scheduleCard} dateCard={props.dateCard} />
+        <HomeChallengesComponent challenges={props.challenges} />
+        {/* include HomePrizes in HomeChallenges */}
+        {/* <HomePrizes prizes={props.prizeData} /> */}
+        {/* <HomeVideoStats /> */}
+        <HomeFaq answeredQuestion={props.answeredQuestion} />
+        <HomeSponsors />
+        <HomeFooter />
       </div>
     </>
   );
@@ -140,10 +67,10 @@ export default function Home(props: {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const protocol = context.req.headers.referer?.split('://')[0] || 'http';
-  // const { data: keynoteData } = await RequestHelper.get<KeynoteSpeaker[]>(
-  //   `${protocol}://${context.req.headers.host}/api/keynotespeakers`,
-  //   {},
-  // );
+  const { data: keynoteData } = await RequestHelper.get<KeynoteSpeaker[]>(
+    `${protocol}://${context.req.headers.host}/api/keynotespeakers`,
+    {},
+  );
   const { data: challengeData } = await RequestHelper.get<Challenge[]>(
     `${protocol}://${context.req.headers.host}/api/challenges/`,
     {},
@@ -162,7 +89,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
   return {
     props: {
-      // keynoteSpeakers: keynoteData,
+      keynoteSpeakers: keynoteData,
       challenges: challengeData,
       answeredQuestion: answeredQuestion,
       scheduleCard: scheduleData,

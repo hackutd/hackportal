@@ -189,14 +189,14 @@ function Question(props: QuestionProps) {
                 components={{
                   a(props) {
                     const { node, ...rest } = props;
-                    return <a className="text-[#40B7BA] hover:underline" {...rest} />;
+                    return <a className="text-[#5D5A88] hover:underline" {...rest} />;
                   },
                 }}
               >
                 {option.title}
               </Markdown>
               {option.link && option.linkText && (
-                <a href={option.link} target="_blank" className="text-[#40B7BA] hover:underline">
+                <a href={option.link} target="_blank" className="text-[#5D5A88] hover:underline">
                   {option.linkText}
                 </a>
               )}

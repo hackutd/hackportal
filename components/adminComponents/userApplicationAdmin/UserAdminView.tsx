@@ -173,14 +173,14 @@ export default function UserAdminView({
 
         <div className="text-sm flex-wrap gap-y-2 flex flex-row justify-between items-start gap-x-3">
           <button
-            className="rounded-full bg-transparent text-[rgba(66,184,187,1)] border-2 border-solid border-[rgba(66,184,187,1)] font-bold py-2 px-8 hover:border-red-500 hover:text-white hover:bg-red-500 transition"
+            className="rounded-full bg-transparent text-[#5D5A88] border-2 border-solid border-[#5D5A88] font-bold py-2 px-8 hover:border-red-500 hover:text-white hover:bg-red-500 transition"
             // Score of 1 means strong NO
             onClick={() => onScoreSubmit(1)}
           >
             REJECT
           </button>
           <button
-            className="rounded-full bg-transparent text-[rgba(66,184,187,1)] border-2 border-solid border-[rgba(66,184,187,1)] font-bold py-2 px-8 hover:border-yellow-500 hover:text-white hover:bg-yellow-500 transition"
+            className="rounded-full bg-transparent text-[#5D5A88] border-2 border-solid border-[#5D5A88] font-bold py-2 px-8 hover:border-yellow-500 hover:text-white hover:bg-yellow-500 transition"
             onClick={() => {
               setShowMaybeDialog(true);
             }}
@@ -188,7 +188,7 @@ export default function UserAdminView({
             MAYBE
           </button>
           <button
-            className="rounded-full bg-[rgba(66,184,187,1)] text-white border-2 border-solid border-[rgba(66,184,187,1)] font-bold py-2 px-8 hover:border-green-500 hover:bg-green-500 transition"
+            className="rounded-full bg-[#5D5A88] text-white border-2 border-solid border-[#5D5A88] font-bold py-2 px-8 hover:border-green-500 hover:bg-green-500 transition"
             // Score of 4 means strong YES
             onClick={() => onScoreSubmit(4)}
           >

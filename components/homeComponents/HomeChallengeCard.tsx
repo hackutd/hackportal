@@ -31,7 +31,7 @@ export default function HomeChallengesCard(props: { challenge: Challenge; blockT
           : 'translate3d(0px, 0px, 0) scale3d(1, 1, 1)',
         transition: 'transform 0.1s ease-out',
       }}
-      className="h-full w-full mx-auto bg-white rounded-lg mb-8 mt-8 relative"
+      className="h-full w-full mx-auto bg-[#C1C8FF] rounded-lg mb-8 mt-8 relative"
     >
       <div className="w-4/5 md:w-full mx-auto">
         <div className="w-5/6 mx-auto">
@@ -42,7 +42,7 @@ export default function HomeChallengesCard(props: { challenge: Challenge; blockT
             </h1>
           </div>
           {/* Company Name */}
-          <h1 className="font-atlasi font-normal text-2xl text-[#40B7BA] my-4 uppercase text-center">
+          <h1 className="font-dmSans text-2xl text-[#0514C9] my-4 uppercase text-center">
             {props.challenge.title}
           </h1>
           {/* Description */}

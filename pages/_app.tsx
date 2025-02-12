@@ -40,12 +40,12 @@ function PortalApp({ Component, pageProps }: AppProps) {
 
   const duckBackgroundPathnames = new Set(['/profile', '/profile/application/edit']);
   const registerBackgroundPathnames = new Set(['/register', '/auth']);
-  const cloudBackgroundPathnames = new Set([
-    '/admin',
-    '/admin/scan',
-    '/admin/users',
-    '/admin/waitlist',
-  ]);
+  // const cloudBackgroundPathnames = new Set([
+  //   '/admin',
+  //   '/admin/scan',
+  //   '/admin/users',
+  //   '/admin/waitlist',
+  // ]);
   const noTopSpacerPathnames = new Set(['/', '/parking', '/live']);
 
   const faqRef = useRef<HTMLDivElement | null>(null);
@@ -124,7 +124,7 @@ function PortalApp({ Component, pageProps }: AppProps) {
                     name="viewport"
                     content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
                   />
-                  <title>HackUTD 2024</title> {/* !change */}
+                  <title>HackPortal</title> {/* !change */}
                   <meta name="description" content="Your all-in-one guide to this hackathon." />
                   {process.env.ENABLE_PWA ||
                     (process.env.NODE_ENV !== 'development' && (
@@ -137,7 +137,8 @@ function PortalApp({ Component, pageProps }: AppProps) {
                 </Head>
 
                 <div className="min-h-screen flex flex-col">
-                  {duckBackgroundPathnames.has(router.pathname) && (
+                  {/* Profile Page BG */}
+                  {/* {duckBackgroundPathnames.has(router.pathname) && (
                     <div className="fixed top-0 left-0 w-screen h-screen -z-10">
                       <Image
                         className="w-screen h-screen object-cover"
@@ -147,9 +148,9 @@ function PortalApp({ Component, pageProps }: AppProps) {
                         height={PondBackgroundImage.height}
                       />
                     </div>
-                  )}
+                  )} */}
 
-                  {registerBackgroundPathnames.has(router.pathname) && (
+                  {/* {registerBackgroundPathnames.has(router.pathname) && (
                     <div className="fixed top-0 left-0 w-screen h-screen -z-10">
                       <Image
                         className="w-screen h-screen object-cover"
@@ -159,9 +160,9 @@ function PortalApp({ Component, pageProps }: AppProps) {
                         height={RegisterBackgroundImage.height}
                       />
                     </div>
-                  )}
+                  )} */}
 
-                  {cloudBackgroundPathnames.has(router.pathname) && (
+                  {/* {cloudBackgroundPathnames.has(router.pathname) && (
                     <div className="fixed top-0 left-0 w-screen h-screen -z-10">
                       <Image
                         className="w-screen h-screen object-cover"
@@ -171,7 +172,7 @@ function PortalApp({ Component, pageProps }: AppProps) {
                         height={CloudBackgroundImage.height}
                       />
                     </div>
-                  )}
+                  )} */}
 
                   <AppHeader2_Wrapper />
 
