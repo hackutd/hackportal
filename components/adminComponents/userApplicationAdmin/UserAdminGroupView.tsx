@@ -176,7 +176,7 @@ export default function UserAdminGroupView({
         <div className="sticky top-0 bg-[rgba(255,255,255,0.8)] flex flex-row justify-between items-center text-secondary">
           <div className="flex items-center p-0">
             <ChevronLeftIcon
-              className="h-12 w-12 text-sm font-extralight cursor-pointer"
+              className="h-12 w-12 text-sm font-extralight cursor-pointer text-[#5D5A88]"
               onClick={() =>
                 onUserGroupClick(
                   userGroups[currentUserGroupIndex - 1]
@@ -186,7 +186,7 @@ export default function UserAdminGroupView({
               }
             />
             <ChevronRightIcon
-              className="h-12 w-12 text-sm font-extralight cursor-pointer"
+              className="h-12 w-12 text-sm font-extralight cursor-pointer text-[#5D5A88]"
               onClick={() =>
                 onUserGroupClick(
                   userGroups[currentUserGroupIndex + 1]
@@ -197,7 +197,7 @@ export default function UserAdminGroupView({
             />
           </div>
           <div onClick={goBack} className="p-3">
-            <XIcon className="h-12 w-12 cursor-pointer" />
+            <XIcon className="h-12 w-12 cursor-pointer text-[#5D5A88]" />
           </div>
         </div>
 

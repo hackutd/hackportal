@@ -278,7 +278,7 @@ export const hackPortalConfig: HackPortalConfig = {
           },
           {
             //Heard from question
-            question: 'Where did you hear about HackUTD Ripple Effect?',
+            question: 'Where did you hear about HackPortal?',
             required: true,
             id: 'heardFrom',
             name: 'heardFrom',
@@ -319,7 +319,7 @@ export const hackPortalConfig: HackPortalConfig = {
         textAreaQuestions: [
           {
             //Why do you want to attend question
-            question: 'Why do you want to attend HackUTD Ripple Effect?',
+            question: 'Why do you want to attend HackPortal?',
             id: 'whyAttend',
             name: 'whyAttend',
             required: true,
@@ -336,9 +336,9 @@ export const hackPortalConfig: HackPortalConfig = {
             placeholder: '',
           },
           {
-            //What do you hope to learn from HackUTD as a first timer question
+            //What do you hope to learn from HackPortal as a first timer question
             question:
-              'If you haven’t been to a hackathon, what do you hope to learn from HackUTD Ripple Effect?',
+              'If you haven’t been to a hackathon, what do you hope to learn from HackPortal?',
             id: 'hackathonFirstTimer',
             name: 'hackathonFirstTimer',
             required: true,
@@ -347,7 +347,7 @@ export const hackPortalConfig: HackPortalConfig = {
           },
           {
             //What are you looking forward to question
-            question: 'What are you looking forward to at HackUTD Ripple Effect?',
+            question: 'What are you looking forward to do at HackPortal?',
             id: 'lookingForward',
             name: 'lookingForward',
             required: true,

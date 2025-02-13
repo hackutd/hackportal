@@ -4,8 +4,6 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import FaqDisclosure from './FaqDisclosure';
 import { RequestHelper } from '../../lib/request-helper';
 
-import Fish from '../../public/assets/koi.gif';
-
 import Image from 'next/image';
 import { SectionReferenceContext } from '@/lib/context/section';
 import Link from 'next/link';
@@ -83,45 +81,20 @@ export default function FaqPage({ fetchedFaqs }: { fetchedFaqs: AnsweredQuestion
         `}
       </style>
       <Head>
-        <title>HackUTD 2024</title>
+        <title>HackPortal</title>
         <meta name="description" content="HackPortal's Frequently Asked Questions" />
       </Head>
       <div className="top-6">
-        {/* <div className="flex flex-row justify-between items-center py-1"> */}
-        {/*   <div> */}
-        {/*     <Image */}
-        {/*       src={Fish2.src} */}
-        {/*       alt="fish_2.png" */}
-        {/*       width={200} */}
-        {/*       height={200} */}
-        {/*       style={fish1HoverStyle} */}
-        {/*     /> */}
-        {/*     <Image */}
-        {/*       src={Fish1.src} */}
-        {/*       alt="fish_1.png" */}
-        {/*       width={200} */}
-        {/*       height={200} */}
-        {/*       style={fish2HoverStyle} */}
-        {/*     /> */}
-        {/*   </div> */}
-        {/*   <Image */}
-        {/*     src={Fish2.src} */}
-        {/*     alt="fish_2.png" */}
-        {/*     width={200} */}
-        {/*     height={200} */}
-        {/*     style={fish3HoverStyle} */}
-        {/*   /> */}
-        {/* </div> */}
         <div className="pt-[8rem]">
           <div className="bg-white mx-[8vw] p-10 rounded-lg flex justify-between font-fredoka">
             <div className="pt-3">
-              <h1 className="text-3xl mb-4 font-bold text-[#54DDE8]">FAQ</h1>
+              <h1 className="text-3xl mb-4 font-bold text-[#5D5A88]">FAQ</h1>
               <p>Can’t find what you’re looking for? Connect with our team at hello@hackutd.co</p>
             </div>
             <div className="flex items-center">
               <Link
                 href="mailto:hello@hackutd.co"
-                className="bg-[#DFFEFF] text-[#40B7BA] p-3 rounded-2xl"
+                className="bg-[#EAE6F2] text-[#5D5A88] p-3 rounded-2xl"
               >
                 Ask A Question!
               </Link>

@@ -1,3 +1,4 @@
+//ADD SPONSORS HERE
 export const SPONSOR_LIST = [
   {
     link: 'https://www.goldmansachs.com/',

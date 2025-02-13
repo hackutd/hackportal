@@ -98,7 +98,7 @@ export default function AllUsersAdminView({
               type="text"
               className={`
                 rounded-lg
-                bg-[rgb(213,244,255)] text-[rgb(9,45,122)] placeholder:text-[rgba(9,45,122,0.7)]
+                bg-[#F2F3FF] text-[#5D5A88] placeholder:text-[#5D5A88]
                 w-full border-none
               `}
               placeholder="Search Users"
@@ -134,8 +134,8 @@ export default function AllUsersAdminView({
                     <Tab
                       className={`rounded-full font-bold ${
                         registrationState === RegistrationState.CLOSED
-                          ? 'bg-[#163950] text-[#F1F8FC]'
-                          : 'bg-[#F1F8FC] text-[#163950]'
+                          ? 'bg-[#5D5A88] text-[#F1F8FC]'
+                          : 'bg-[#F2F3FF] text-[#5D5A88]'
                       } py-2 px-4`}
                     >
                       Close Registration
@@ -143,8 +143,8 @@ export default function AllUsersAdminView({
                     <Tab
                       className={`rounded-full font-bold ${
                         registrationState === RegistrationState.OPEN
-                          ? 'bg-[#163950] text-[#F1F8FC]'
-                          : 'bg-[#F1F8FC] text-[#163950]'
+                          ? 'bg-[#5D5A88] text-[#F1F8FC]'
+                          : 'bg-[#F2F3FF] text-[#5D5A88]'
                       } py-2 px-4`}
                     >
                       Live Registration
@@ -258,8 +258,8 @@ export default function AllUsersAdminView({
           {/* Header */}
           <div
             className={clsx(
-              `flex flex-row border-b-2 border-gray px-6 py-3 justify-between sticky z-10 top-0`,
-              `text-[#40B7BA] bg-[rgba(255,255,255,0.8)]`,
+              `flex flex-row border-b-2 px-6 py-3 justify-between sticky z-10 top-0`,
+              `text-[#F2F3FF] bg-[#5D5A88]`,
             )}
           >
             {/* <div className="w-1/2 md:w-2/12 flex items-center justify-center">Name</div> */}
