@@ -67,10 +67,10 @@ export default function Home(props: {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const protocol = context.req.headers.referer?.split('://')[0] || 'http';
-  const { data: keynoteData } = await RequestHelper.get<KeynoteSpeaker[]>(
-    `${protocol}://${context.req.headers.host}/api/keynotespeakers`,
-    {},
-  );
+  // const { data: keynoteData } = await RequestHelper.get<KeynoteSpeaker[]>(
+  //   `${protocol}://${context.req.headers.host}/api/keynotespeakers`,
+  //   {},
+  // );
   const { data: challengeData } = await RequestHelper.get<Challenge[]>(
     `${protocol}://${context.req.headers.host}/api/challenges/`,
     {},
@@ -89,7 +89,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
   return {
     props: {
-      keynoteSpeakers: keynoteData,
+      // keynoteSpeakers: keynoteData,
       challenges: challengeData,
       answeredQuestion: answeredQuestion,
       scheduleCard: scheduleData,
