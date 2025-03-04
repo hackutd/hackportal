@@ -282,9 +282,9 @@ export default function Admin() {
         <AppHeader2_Core_AdminMobile />
       </div>
 
-      <section className="p-4">
+      {/* <section className="p-4">
         <AdminHeader />
-      </section>
+      </section> */}
       {currentScan && (
         <Dialog
           open={showDeleteScanDialog}
