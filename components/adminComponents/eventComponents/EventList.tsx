@@ -106,9 +106,6 @@ export default function EventList({
               <div className="flex gap-4 items-center">
                 <p>
                   {new Date(event.startDate).toLocaleString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
                     hour: 'numeric',
                     minute: 'numeric',
                     hour12: false,
@@ -149,9 +146,6 @@ export default function EventList({
               <div className="flex gap-4 items-center">
                 <p>
                   {new Date(event.startDate).toLocaleString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
                     hour: 'numeric',
                     minute: 'numeric',
                     hour12: false,
@@ -175,45 +169,47 @@ export default function EventList({
         </div>
       </div>
 
-      <div>
-        <h1 className="text-red-400 text-center text-4xl border-b-[1px] border-black p-2">
-          Events that cant be seen
-        </h1>
-        <div className="flex flex-wrap gap-2 justify-center">
-          {NotSeen.map((event, idx) => (
-            <div
-              key={idx}
-              className="flex items-center justify-between p-3 border-2 my-4 rounded-xl w-[49%]"
-            >
-              <h1 className="md:text-lg text-base">{event.title}</h1>
-              <div className="flex gap-4 items-center">
-                <p>
-                  {new Date(event.startDate).toLocaleString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: false,
-                  })}
-                </p>
-                <button
-                  onClick={() => onEventEditClick(event.originalIndex)}
-                  className="font-bold bg-green-200 hover:bg-green-300 border border-green-800 text-green-900 rounded-lg md:p-3 p-1 px-2 md:text-base text-sm"
-                >
-                  Edit Event
-                </button>
-                <button
-                  onClick={() => onEventDeleteClick(event.originalIndex)}
-                  className="font-bold text-red-800 bg-red-100 hover:bg-red-200 border border-red-400 rounded-lg md:p-3 p-1 px-2 md:text-base text-sm"
-                >
-                  Delete Event
-                </button>
+      {NotSeen?.length > 0 && (
+        <div>
+          <h1 className="text-red-400 text-center text-4xl border-b-[1px] border-black p-2">
+            Events that cant be seen
+          </h1>
+          <div className="flex flex-wrap gap-2 justify-center">
+            {NotSeen.map((event, idx) => (
+              <div
+                key={idx}
+                className="flex items-center justify-between p-3 border-2 my-4 rounded-xl w-[49%]"
+              >
+                <h1 className="md:text-lg text-base">{event.title}</h1>
+                <div className="flex gap-4 items-center">
+                  <p>
+                    {new Date(event.startDate).toLocaleString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: false,
+                    })}
+                  </p>
+                  <button
+                    onClick={() => onEventEditClick(event.originalIndex)}
+                    className="font-bold bg-green-200 hover:bg-green-300 border border-green-800 text-green-900 rounded-lg md:p-3 p-1 px-2 md:text-base text-sm"
+                  >
+                    Edit Event
+                  </button>
+                  <button
+                    onClick={() => onEventDeleteClick(event.originalIndex)}
+                    className="font-bold text-red-800 bg-red-100 hover:bg-red-200 border border-red-400 rounded-lg md:p-3 p-1 px-2 md:text-base text-sm"
+                  >
+                    Delete Event
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
