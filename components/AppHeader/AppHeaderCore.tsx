@@ -199,7 +199,7 @@ export default function AppHeaderCore(props: Props) {
                           },
                         ]
                       : []),
-                    ...(isSuperAdmin
+                    ...(isAdmin
                       ? [
                           {
                             optionName: 'Scanner',
