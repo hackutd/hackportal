@@ -30,6 +30,20 @@ function ChallengeCard({ title, description = '', prizes }: Props) {
           </ul>
         </div>
       )}
+      <div className="mt-2">
+        <button
+          className="font-bold bg-green-200 hover:bg-green-300 border border-green-800 text-green-900 rounded-lg md:p-3 p-1 px-2 md:text-base text-sm mr-2"
+          onClick={props.onEditClick}
+        >
+          Edit Challenge
+        </button>
+        <button
+          className="font-bold text-red-800 bg-red-100 hover:bg-red-200 border border-red-400 rounded-lg md:p-3 p-1 px-2 md:text-base text-sm"
+          onClick={props.onDeleteClick}
+        >
+          Delete Challenge
+        </button>
+      </div>
     </div>
   );
 }
