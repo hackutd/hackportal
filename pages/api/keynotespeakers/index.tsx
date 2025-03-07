@@ -17,6 +17,8 @@ const KEYNOTE_SPEAKERS = '/keynotespeakers';
  *
  */
 async function getKeynoteSpeakers(req: NextApiRequest, res: NextApiResponse) {
+  console.log(db);
+
   const snapshot = await db.collection(KEYNOTE_SPEAKERS).get();
   let data = [];
   snapshot.forEach((doc) => {
