@@ -79,7 +79,7 @@ const HomeAboutText = () => {
         ref={titleRef}
         className="text-5xl font-bold mb-3 text-center relative font-jua z-10 text-[#05149C] opacity-0"
       >
-        What is HackPortal?
+        About  HackPortal?
       </h1>
 
       <div className="relative w-full flex justify-center items-center z-10">
@@ -87,8 +87,8 @@ const HomeAboutText = () => {
           ref={explanationRef}
           className="text-xl text-center text-[#616161] max-w-2xl mb-16 font-fredoka relative z-10 px-6 md:px-0 opacity-0"
         >
-          Hackathons are 24-hour gatherings where students collaborate to create innovative
-          projects, forge new connections, and compete for prizes.
+          Hackathons are 24-hour gatherings where students collaborate  
+          to create innovative projects, forge new connections, and compete for prizes.
         </p>
       </div>
     </div>
