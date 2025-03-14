@@ -169,10 +169,19 @@ export default function AppHeader2_Core(props: Props) {
             leaveTo="transform opacity-0 scale-95"
           >
             <Menu.Items className="absolute right-0 mt-2 w-full origin-top-right divide-x divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none flex">
-              <div className="px-1 py-1 w-1/4">
-                <AdminNavbarColumn
+              <div className="w-1/2 px-1 py-1">
+                <AdminNavbarGrid
+                  numCols={2}
                   sectionTitle="Admin"
                   options={[
+                    {
+                      optionName: 'Event Dashboard',
+                      onClick: () => router.push('/admin'),
+                    },
+                    {
+                      optionName: 'Scanner',
+                      onClick: () => router.push('/admin/scan'),
+                    },
                     {
                       optionName: 'User Dashboard',
                       onClick: () => router.push('/admin/users'),
@@ -192,10 +201,8 @@ export default function AppHeader2_Core(props: Props) {
                   ]}
                 />
               </div>
-
-              <div className="w-1/2 px-1 py-1">
-                <AdminNavbarGrid
-                  numCols={2}
+              <div className="px-1 py-1 w-1/4">
+                <AdminNavbarColumn
                   sectionTitle="Temporary Scans"
                   options={scanList
                     .filter((scan) => !scan.isPermanentScan)
