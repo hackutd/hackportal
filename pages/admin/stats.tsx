@@ -51,7 +51,7 @@ export default function AdminStatsPage() {
         <title>HackUTD 2024 - Admin</title>
         <meta name="description" content="HackPortal's Admin Page" />
       </Head>
-      <AdminHeader />
+      {/* <AdminHeader /> */}
       <div className="w-full xl:w-3/5 mx-auto p-6 flex flex-col gap-y-6">
         <div className="flex-col gap-y-3 w-full md:flex-row flex justify-around gap-x-2">
           <AdminStatsCard icon={<CheckIcon />} title="Check-Ins" value={statsData.checkedInCount} />
