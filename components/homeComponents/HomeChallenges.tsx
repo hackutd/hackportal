@@ -40,17 +40,25 @@ export default function HomeChallengesComponent(props: { challenges: Challenge[]
     props.challenges.length !== 0 && (
       <section className={`${styles.container} m-auto pb-[20rem] relative`}>
         <div className={styles.content}>
-          <div
-            style={{ textShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}
-            className="font-fredoka font-bold md:text-4xl text-2xl text-center text-[#05149C]"
-          >
-            Challenge Tracks
+          <div className="flex  flex-row items-center w-full ">
+            <div className="h-0.5 w-full bg-black ml-28"></div>
+
+            <div
+              style={{ textShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}
+              className="font-fredoka whitespace-nowrap font-bold text-5xl md:text-6xl text-center text-[#05149C] m-6 "
+            >
+              Challenge Tracks
+            </div>
+
+            <div className="h-0.5 w-full  bg-black mr-28"></div>
           </div>
+
           <div
             style={{ textShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}
-            className="text-center text-5xl font-bold text-[#05149C] p-4 font-fredoka uppercase"
+            className="text-center text-xl  text-[#000000] p-4 font-dmSans"
           >
-            Choose your track to get started
+            Hackathons are 24-hour gatherings where students collaborate to create innovative
+            projects, forge new connections, and compete for prizes
           </div>
 
           {/* Challenge Tracks */}
