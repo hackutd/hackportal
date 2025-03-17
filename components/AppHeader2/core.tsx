@@ -198,14 +198,6 @@ export default function AppHeader2_Core(props: Props) {
                           },
                         ]
                       : []),
-                    ...(isAdmin
-                      ? [
-                          {
-                            optionName: 'Scanner',
-                            onClick: () => router.push('/admin/scan'),
-                          },
-                        ]
-                      : []),
                   ]}
                 />
               </div>
