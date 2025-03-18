@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import EventForm from '../../../components/adminComponents/eventComponents/EventForm';
+import EventForm from '../../../components/admin/event/EventForm';
 import { RequestHelper } from '../../../lib/request-helper';
 import { useAuthContext } from '../../../lib/user/AuthContext';
 import Link from 'next/link';

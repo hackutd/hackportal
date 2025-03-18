@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
-import ChallengeForm from '../../../components/adminComponents/challengeComponents/ChallengeForm';
-import { RequestHelper } from '../../../lib/request-helper';
-import { useAuthContext } from '../../../lib/user/AuthContext';
 import Link from 'next/link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { RequestHelper } from '@/lib/request-helper';
+import ChallengeForm from '@/components/admin/challenge/ChallengeForm';
 
 function isAuthorized(user): boolean {
   if (!user || !user.permissions) return false;

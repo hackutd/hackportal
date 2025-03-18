@@ -8,8 +8,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import GoogleIcon from '../../public/icons/googleicon.png';
 import Image from 'next/image';
-import EmailInput from '../../components/authComponents/EmailInput';
-import PasswordInput from '../../components/authComponents/PasswordInput';
+import EmailInput from '../../components/auth/EmailInput';
+import PasswordInput from '../../components/auth/PasswordInput';
 /**
  * A page that allows the user to sign in.
  *

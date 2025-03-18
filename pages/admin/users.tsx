@@ -1,21 +1,17 @@
-// import { GetServerSideProps } from 'next';
-// import AdminHeader from '../../components/adminComponents/AdminHeader';
-// import FilterComponent from '../../components/adminComponents/FilterComponent';
-// import UserList from '../../components/adminComponents/userApplicationAdmin/UserList';
-// import { UserData } from '../api/users';
 import { Dialog, Transition } from '@headlessui/react';
 import Head from 'next/head';
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { isAuthorized } from '.';
-import AllUsersAdminView from '../../components/adminComponents/userApplicationAdmin/AllUsersAdminView';
-import UserAdminGroupView from '../../components/adminComponents/userApplicationAdmin/UserAdminGroupView';
+import UserAdminGroupView from '../../components/admin/hacker-application/HackerApplicationGroupView';
 import { RequestHelper } from '../../lib/request-helper';
 import { useAuthContext } from '../../lib/user/AuthContext';
 import { ApplicationViewState, RegistrationState } from '../../lib/util';
 import { ApplicationEntry, useUserGroup } from '@/lib/admin/group';
-import AdminStatsCard from '@/components/adminComponents/AdminStatsCard';
+import AdminStatsCard from '@/components/admin/AdminStatsCard';
 import { CheckIcon, XCircleIcon } from '@heroicons/react/solid';
 import { SelectChangeEvent } from '@mui/material';
+import HackerApplicationGroupView from '../../components/admin/hacker-application/HackerApplicationGroupView';
+import HackerApplications from '@/components/admin/hacker-application';
 
 /**
  *
@@ -32,17 +28,8 @@ export default function UserPage() {
   const setUserGroups = useUserGroup((state) => state.setUserGroup);
   const currentUserGroup = useUserGroup((state) => state.currentUserGroup);
   const setCurrentUserGroup = useUserGroup((state) => state.setCurrentUsergroup);
-
-  // const [filter, setFilter] = useState({
-  //   hacker: true,
-  //   sponsor: true,
-  //   organizer: true,
-  //   admin: true,
-  //   super_admin: true,
-  // });
   const [filteredGroups, setFilteredGroups] = useState<ApplicationEntry[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  // const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
   const filterParams = [
     'hacker',
@@ -156,87 +143,6 @@ export default function UserPage() {
     };
   }, [searchQuery, loading, userGroups, filterParamsList]);
 
-  // const updateFilter = (name: string) => {
-  //   const filterCriteria = {
-  //     ...filter,
-  //     [name]: !filter[name],
-  //   };
-  //   const newFilteredUser = users.filter(({ user }) => {
-  //     for (let category of Object.keys(filterCriteria) as UserPermission[]) {
-  //       if (filterCriteria[category] && user.permissions.includes(category)) {
-  //         return true;
-  //       }
-  //     }
-  //     return false;
-  //   });
-  //   setFilteredUsers(newFilteredUser);
-  //   setFilter(filterCriteria);
-  // };
-
-  // const sortByName = () => {
-  //   setFilteredUsers((prev) =>
-  //     [...prev].sort((a, b) => {
-  //       const nameA = a.user.firstName + ' ' + a.user.lastName;
-  //       const nameB = b.user.firstName + ' ' + b.user.lastName;
-  //       return nameA.localeCompare(nameB);
-  //     }),
-  //   );
-  // };
-
-  // const handleUserSelect = (id: string) => {
-  //   setUsers((prev) =>
-  //     prev.map((user) => (user.id === id ? { ...user, selected: !user.selected } : user)),
-  //   );
-  //   setFilteredUsers((prev) =>
-  //     prev.map((user) => (user.id === id ? { ...user, selected: !user.selected } : user)),
-  //   );
-  //   if (selectedUsers.includes(id)) {
-  //     setSelectedUsers([...selectedUsers.filter((v) => v != id)]);
-  //     return;
-  //   }
-  //   setSelectedUsers([...selectedUsers, id]);
-  // };
-
-  // const postHackersStatus = (status: string, notes: string) => {
-  //   if (selectedUsers.length === 0) return;
-  //   fetch('/api/acceptreject', {
-  //     method: 'post',
-  //     body: JSON.stringify({
-  //       adminId: user.id,
-  //       selectedUsers,
-  //       status,
-  //       notes,
-  //     }),
-  //     headers: {
-  //       Authorization: user.token,
-  //     },
-  //   })
-  //     .then((res) => {
-  //       if (res.status !== 200) {
-  //         alert('Hackers update failed...');
-  //       } else {
-  //         setUsers((prev) =>
-  //           prev.map((user) => ({
-  //             ...user,
-  //             status: selectedUsers.includes(user.id) ? status : user.status,
-  //             selected: false,
-  //           })),
-  //         );
-  //         setFilteredUsers((prev) =>
-  //           prev.map((user) => ({
-  //             ...user,
-  //             selected: false,
-  //             status: selectedUsers.includes(user.id) ? status : user.status,
-  //           })),
-  //         );
-  //         alert('Hackers update success');
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       alert(err);
-  //     });
-  // };
-  //
   const numAppsReviewed = useMemo(() => {
     return userGroups
       .map((obj) => obj.application)
@@ -402,7 +308,7 @@ export default function UserPage() {
       </div>
       <div className="w-full max-w-screen-2xl mb-10" style={{ height: 'calc(100vh - 180px)' }}>
         {currentUserGroup === '' ? (
-          <AllUsersAdminView
+          <HackerApplications
             userGroups={filteredGroups}
             // selectedUsers={selectedUsers}
             onUserGroupClick={(id) => {
@@ -427,32 +333,14 @@ export default function UserPage() {
             registrationState={registrationStatus}
           />
         ) : (
-          <UserAdminGroupView
+          <HackerApplicationGroupView
             appViewState={appViewState}
             userGroups={filteredGroups}
             currentUserGroupId={currentUserGroup}
             goBack={() => setCurrentUserGroup('')}
             onUserGroupClick={(id) => {
-              // setSelectedUsers([id]);
               setCurrentUserGroup(id);
             }}
-            // onAcceptReject={(status, notes) => postHackersStatus(status, notes)}
-            // onUpdateRole={(newRole) => {
-            //   setUsers((users) =>
-            //     users.map((user) =>
-            //       user.id !== currentUser
-            //         ? { ...user }
-            //         : { ...user, user: { ...user.user, permissions: [newRole] } },
-            //     ),
-            //   );
-            //   setFilteredUsers((users) =>
-            //     users.map((user) =>
-            //       user.id !== currentUser
-            //         ? { ...user }
-            //         : { ...user, user: { ...user.user, permissions: [newRole] } },
-            //     ),
-            //   );
-            // }}
           />
         )}
       </div>

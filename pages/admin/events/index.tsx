@@ -1,8 +1,8 @@
 import { Transition, Dialog } from '@headlessui/react';
 import { GetServerSideProps } from 'next';
 import React, { Fragment } from 'react';
-import EventForm from '../../../components/adminComponents/eventComponents/EventForm';
-import EventList from '../../../components/adminComponents/eventComponents/EventList';
+import EventForm from '../../../components/admin/event/EventForm';
+import EventList from '../../../components/admin/event/EventList';
 import { RequestHelper } from '../../../lib/request-helper';
 import { useAuthContext } from '../../../lib/user/AuthContext';
 import Link from 'next/link';

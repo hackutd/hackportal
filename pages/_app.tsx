@@ -3,8 +3,7 @@ import '../styles/tailwind.css';
 
 import 'firebase/compat/auth';
 
-import AppHeader2_Wrapper from '@/components/AppHeader2/wrapper';
-import AppNavbarBottom from '@/components/AppNavbarBottom/AppNavbarBottom';
+import AppNavbarBottom from '@/components/AppNavbarBottom';
 import { NavbarCallbackRegistryContext } from '@/lib/context/navbar';
 import { SectionReferenceContext } from '@/lib/context/section';
 import { useUrlHash } from '@/lib/hooks';
@@ -24,6 +23,7 @@ import { ParticlesContext } from '../components/Particles/ParticlesProvider';
 import { initFirebase } from '../lib/firebase-client';
 import { FCMProvider } from '../lib/service-worker/FCMContext';
 import { AuthProvider } from '../lib/user/AuthContext';
+import AppHeader from '@/components/AppHeader';
 
 initFirebase();
 
@@ -174,7 +174,7 @@ function PortalApp({ Component, pageProps }: AppProps) {
                     </div>
                   )} */}
 
-                  <AppHeader2_Wrapper />
+                  <AppHeader />
 
                   {/* Spacer at the top of the page so that content won't be covered by the navbar */}
                   {!noTopSpacerPathnames.has(router.pathname) && (

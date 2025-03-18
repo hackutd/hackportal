@@ -3,16 +3,16 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { useAuthContext } from '../../lib/user/AuthContext';
-import LoadIcon from '../../components/LoadIcon';
+import LoadIcon from '../../components/icon/Loading';
 import { getFileExtension } from '../../lib/util';
-import QRCode from '../../components/dashboardComponents/QRCode';
+import QRCode from '../../components/dashboard/QRCode';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInImage from '@/public/icons/linkedin.png';
 import ChickenImage from '@/public/assets/profile-chicken-egg.png';
 import { TextField, TextFieldProps } from '@mui/material';
 import Link from 'next/link';
 import { RequestHelper } from '@/lib/request-helper';
-import DeleteProfileDialog from '@/components/profileComponents/DeleteProfileDialog';
+import DeleteProfileDialog from '@/components/profile/DeleteProfileDialog';
 import QRCodeStyling from 'qr-code-styling';
 
 /**

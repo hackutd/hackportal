@@ -1,11 +1,11 @@
 import Head from 'next/head';
-import AdminHeader from '../../../components/adminComponents/AdminHeader';
+import AdminHeader from '../../../components/admin/AdminHeader';
 import { useState } from 'react';
-import QRCodeReader from '../../../components/dashboardComponents/QRCodeReader';
+import QRCodeReader from '../../../components/dashboard/QRCodeReader';
 import { RequestHelper } from '../../../lib/request-helper';
 import { useAuthContext } from '../../../lib/user/AuthContext';
 import { isAuthorized } from '..';
-import WaitlistCheckInNotificationDialog from '@/components/adminComponents/WaitlistCheckInNotificationDialog';
+import WaitlistCheckInNotificationDialog from '@/components/admin/WaitlistCheckInNotificationDialog';
 
 const SCAN_STATUS = {
   successful: 'Check-in successful...',

@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import LoadIcon from '../components/LoadIcon';
+import LoadIcon from '../components/icon/Loading';
 import { RequestHelper } from '../lib/request-helper';
 import { useAuthContext } from '../lib/user/AuthContext';
 import { Formik, Form, useFormikContext } from 'formik';
 import { hackPortalConfig, generateInitialValues } from '../hackportal.config';
-import DisplayQuestion from '../components/registerComponents/DisplayQuestion';
+import DisplayQuestion from '../components/register/DisplayRegistrationQuestion';
 import { getFileExtension } from '../lib/util';
 import Link from 'next/link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';

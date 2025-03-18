@@ -1,9 +1,17 @@
-import { FC, useEffect } from 'react';
-import type { IParticlesProps } from './IParticlesProps';
-import { tsParticles, type Container } from '@tsparticles/engine';
+import { CSSProperties, FC, useEffect } from 'react';
+import { ISourceOptions, tsParticles, type Container } from '@tsparticles/engine';
 import { loadRotateUpdater } from '@tsparticles/updater-rotate';
 
-const Particles: FC<IParticlesProps> = (props) => {
+interface Props {
+  id?: string;
+  options?: ISourceOptions;
+  url?: string;
+  style?: CSSProperties;
+  className?: string;
+  particlesLoaded?: (container?: Container) => Promise<void>;
+}
+
+const Particles: FC<Props> = (props) => {
   const id = props.id ?? 'tsparticles';
 
   useEffect(() => {

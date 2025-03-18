@@ -1,9 +1,8 @@
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import AdminHeader from '../../../components/adminComponents/AdminHeader';
 import ScanType from '../../../components/ScanType';
-import QRCodeReader from '../../../components/dashboardComponents/QRCodeReader';
-import LoadIcon from '../../../components/LoadIcon';
+import QRCodeReader from '../../../components/dashboard/QRCodeReader';
+import LoadIcon from '../../../components/icon/Loading';
 import { useAuthContext } from '../../../lib/user/AuthContext';
 import { isAuthorized } from '..';
 import { RequestHelper } from '../../../lib/request-helper';
@@ -11,7 +10,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Dialog } from '@headlessui/react';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { TextField } from '@mui/material';
-import AppHeader2_Core_AdminMobile from '@/components/AppHeader2/core-mobile';
+
+import AppHeaderCoreMobile from '@/components/AppHeader/AppHeaderCoreMobile';
 
 const successStrings = {
   claimed: 'Scan claimed...',
@@ -279,7 +279,7 @@ export default function Admin() {
         <meta name="description" content="HackPortal's Admin Page" />
       </Head>
       <div className="z-10 md:hidden md:mt-10 mt-10">
-        <AppHeader2_Core_AdminMobile />
+        <AppHeaderCoreMobile />
       </div>
 
       {/* <section className="p-4">
