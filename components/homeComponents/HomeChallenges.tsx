@@ -38,40 +38,41 @@ const CHALLENGE_TRACKS = [
 export default function HomeChallengesComponent(props: { challenges: Challenge[] }) {
   return (
     props.challenges.length !== 0 && (
-      <section className={`${styles.container} m-auto pb-[20rem] relative`}>
+      <section className={`${styles.container} m-auto pb-[20rem] relative bg-white`}>
         <div className={styles.content}>
-          <div className="flex  flex-row items-center w-full ">
-            <div className="h-0.5 w-full bg-black ml-28"></div>
-
+          <div className="flex flex-row items-center w-full ">
+            <div className="h-0.5 w-full bg-black ml-28 hidden sm:block"></div>
             <div
               style={{ textShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}
-              className="font-fredoka whitespace-nowrap font-bold text-5xl md:text-6xl text-center text-[#05149C] m-6 "
+              className="font-fredoka whitespace-nowrap font-bold text-4xl sm:text-5xl md:text-6xl text-center text-[#05149C] m-4 sm:m-6 mx-auto sm:mx-4"
             >
               Challenge Tracks
             </div>
-
-            <div className="h-0.5 w-full  bg-black mr-28"></div>
+            <div className="h-0.5 w-full bg-black mr-28 hidden sm:block"></div>
           </div>
 
           <div
             style={{ textShadow: '0 4px 4px rgba(0, 0, 0, 0.25)' }}
-            className="text-center text-xl  text-[#000000] p-4 font-dmSans"
+            className="text-center text-lg sm:text-xl text-[#000000] px-4 py-2 sm:p-4 font-dmSans max-w-4xl mx-auto"
           >
             Hackathons are 24-hour gatherings where students collaborate to create innovative
             projects, forge new connections, and compete for prizes
           </div>
 
-          {/* Challenge Tracks */}
-          <div className="flex pt-14 px-16 flex-wrap lg:flex-nowrap gap-4">
-            {CHALLENGE_TRACKS.map((track, idx) => (
-              <HomeChallengeTrackCard key={idx} challengeTrack={track} blockType={idx % 3} />
+          <div className="flex flex-wrap w-full pt-14 px-4 justify-center lg:justify-start lg:px-16 lg:pl-32">
+            {props.challenges.map((challenge, idx) => (
+              <div
+                key={idx}
+                className="w-full xs:w-4/5 sm:w-2/3 md:w-4/5 lg:w-1/3 mb-10 px-4 flex justify-center lg:justify-start lg:p-6"
+              >
+                <HomeChallengesCard challenge={challenge} blockType={idx % 3} />
+              </div>
             ))}
           </div>
 
-          {/* TODO: enable this after get challenge data */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:p-10 items-center gap-x-6 gap-y-6 mt-6 mx-auto">
-            {props.challenges.map((challenge, idx) => (
-              <HomeChallengesCard key={idx} challenge={challenge} blockType={idx % 2} />
+          <div className="flex pt-14 px-16 flex-wrap lg:flex-nowrap gap-4">
+            {CHALLENGE_TRACKS.map((track, idx) => (
+              <HomeChallengeTrackCard key={idx} challengeTrack={track} blockType={idx % 3} />
             ))}
           </div>
         </div>

@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import HomeChallengeDescription from './HomeChallengeDescription';
+import styles from './HomeChallenges.module.css';
 
 const PRIZE_INDEX = ['1st', '2nd', '3rd'];
 
@@ -9,6 +10,7 @@ export default function HomeChallengesCard(props: { challenge: Challenge; blockT
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
+  const { blockType } = props;
   const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
     const { clientX, clientY } = event;
     const rect = event.currentTarget.getBoundingClientRect();
@@ -17,45 +19,57 @@ export default function HomeChallengesCard(props: { challenge: Challenge; blockT
     setMousePosition({ x, y });
   };
 
+  const getShape = (type) => {
+    switch (type) {
+      case 0:
+        return <div className={styles['challenge-block']}></div>;
+      case 1:
+        return (
+          <div className={`${styles['challenge-block']} ${styles['challenge-block-1']}`}></div>
+        );
+      case 2:
+        return (
+          <div className={`${styles['challenge-block']} ${styles['challenge-block-2']}`}></div>
+        );
+      default:
+        return null;
+    }
+  };
+  {
+    /*This displays all the content as a laptop/desktop version*/
+  }
   return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => {
-        setIsHovering(false);
-        setMousePosition({ x: 0, y: 0 });
-      }}
-      style={{
-        transform: isHovering
-          ? `translate3d(${mousePosition.x}px, ${mousePosition.y}px, 0) scale3d(1, 1, 1)`
-          : 'translate3d(0px, 0px, 0) scale3d(1, 1, 1)',
-        transition: 'transform 0.1s ease-out',
-      }}
-      className="h-full w-full mx-auto bg-[#C1C8FF] rounded-lg mb-8 mt-8 relative"
-    >
-      <div className="w-4/5 md:w-full mx-auto">
-        <div className="w-5/6 mx-auto">
-          {/* Challenge Name */}
-          <div className="flex justify-center">
-            <h1 className="font-montserrat font-semibold text-xl mt-4 text-center border-b-2 border-[rgb(0,0,0,0.4)] w-fit">
-              <span className="uppercase">presented by {props.challenge.organization}</span>
-            </h1>
-          </div>
-          {/* Company Name */}
-          <h1 className="font-dmSans text-2xl text-[#0514C9] my-4 uppercase text-center">
-            {props.challenge.title}
+    <div className="w-full px-4 mb-12 justify-center">
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => {
+          setIsHovering(false);
+          setMousePosition({ x: 0, y: 0 });
+        }}
+        style={{
+          transform: isHovering
+            ? `translate3d(${mousePosition.x}px, ${mousePosition.y}px, 0) scale3d(1, 1, 1)`
+            : 'translate3d(0px, 0px, 0) scale3d(1, 1, 1)',
+          transition: 'transform 0.1s ease-out',
+        }}
+        className="flex flex-col w-full"
+      >
+        <div className="w-full">{getShape(blockType)}</div>
+
+        <div className="w-full pt-6 px-2">
+          <h1 className="font-dmSans font-bold text-2xl text-black uppercase">
+            {props.challenge.title || 'CHALLENGE'}
           </h1>
-          {/* Description */}
-          <div className="mb-8 max-w-fit">
-            {props.challenge.prizes.map((prize, idx) => (
-              <p key={idx} className="text-md text-balance">
-                {PRIZE_INDEX[idx]}: {props.challenge.prizes[idx]}
-              </p>
-            ))}
+          <h2 className="font-bold text-2xl text-blue-700 uppercase mb-4">
+            {props.challenge.organization || 'INSERT COMPANY'}
+          </h2>
+          <div className="text-base">
+            {props.challenge.description ||
+              'Hackathons are 24-hour gatherings where students collaborate to create innovative projects, forge new connections, and compete for prizes.'}
           </div>
-          <div>{props.challenge.description}</div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }

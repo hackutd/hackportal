@@ -12,10 +12,27 @@
   z-index: 0;
 
   background-position: 0 0, 0 0;
-  /* animation: animatedBackground 30s linear infinite; */
+   animation: animatedBackground 30s linear infinite; 
 }
 
 .content {
   position: relative;
   z-index: 3;
+}
+
+.challenge-block {
+  width: 306px;
+  height: 175px;
+  right: 595px;
+  top: 10px;
+  background: #C1C8FF;
+  border-radius: 0 100px 0 0;
+}
+
+.challenge-block-1 {
+  transform: matrix(1, 0, 0, -1, 0, 0);
+}
+
+.challenge-block-2 {
+  transform: matrix(-1, 0, 0, 1, 0, 0);
 }
