@@ -1,10 +1,14 @@
-import React, { useRef, useState } from 'react';
+import { RequestHelper } from '@/lib/request-helper';
+import { useAuthContext } from '@/lib/user/AuthContext';
+import React, { useEffect, useRef, useState } from 'react';
 
 const Page = () => {
+  const { user, isSignedIn } = useAuthContext();
+
   const [values, setValues] = React.useState({
-    name: 'Name',
-    title: 'Title',
-    description: 'Desription',
+    name: '',
+    title: '',
+    description: '',
     img: '',
   });
   const [form, setForm] = React.useState({
@@ -35,9 +39,31 @@ const Page = () => {
   };
 
   const onSubmit = async () => {
-    setValues(form);
-    setIsEditing(false);
+    const { data }: any = await RequestHelper.post(
+      '/api/keynotespeakers',
+      {
+        headers: {
+          authorization: user.token,
+        },
+      },
+      form,
+    );
+    if (data.msg == 'ok') {
+      setValues(form);
+      setIsEditing(false);
+      alert('updated');
+    } else {
+      alert('there was an error: ' + data.msg);
+    }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data: keynote }: any = await RequestHelper.get('/api/keynotespeakers', {});
+      setValues(keynote);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center p-12 gap-4 ">

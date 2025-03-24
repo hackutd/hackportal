@@ -18,7 +18,7 @@ import countdownClouds from '../public/assets/countdown_clouds.png';
 import hackutdBg from '../public/assets/hackutd-bg.png';
 import topBg from '../public/assets/topBg.png';
 import HomeChallengesComponent from '@/components/homeComponents/HomeChallenges';
-import HomeSpeakers from '@/components/homeComponents/HomeSpeakers';
+import HomeSpeakers2 from '@/components/homeComponents/HomeSpeakers2';
 export default function Home(props: {
   answeredQuestion: AnsweredQuestion[];
   sponsorCard: Sponsor[];
@@ -57,7 +57,10 @@ export default function Home(props: {
         {/* include HomePrizes in HomeChallenges */}
         {/* <HomePrizes prizes={props.prizeData} /> */}
         {/*<HomeVideoStats />*/}
+
         <HomeFaq answeredQuestion={props.answeredQuestion} />
+
+        <HomeSpeakers2 />
         <HomeSponsors />
         <HomeFooter />
       </div>
