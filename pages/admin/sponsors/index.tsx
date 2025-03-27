@@ -1,6 +1,7 @@
 import AdminSponsorList from '@/components/adminComponents/sponsorComponents/AdminSponsorList';
 import { RequestHelper } from '@/lib/request-helper';
 import { useAuthContext } from '@/lib/user/AuthContext';
+import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 
 const Page = () => {
@@ -50,6 +51,13 @@ const Page = () => {
   return (
     <div className="w-full h-full flex flex-col justify-center items-center p-12 gap-4 ">
       <AdminSponsorList />
+      <div className="p-3">
+        <Link href={`/admin/sponsors/add`} legacyBehavior>
+          <button className="font-bold bg-green-200 hover:bg-green-300 border border-green-800 text-green-900 rounded-lg md:p-3 p-1 px-2">
+            Add New Sponsor
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
