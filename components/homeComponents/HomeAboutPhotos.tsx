@@ -15,22 +15,31 @@ const HomeAboutPhotos = () => {
         }}
       >
         <div className="order-2 lg:order-1 flex justify-center items-center z-20 lg:justify-end"></div>
-        <div className="w-[600px] order-1 lg:order-2 text-center text-[#05149C] lg:ml-8">
-          <p className="text-5xl font-bold stroke-rose-700">
-            <NumberTicker value={1000} />+ Hackers
-          </p>
-
-          <p className="text-5xl font-bold">
-            <NumberTicker value={24} /> hours
-          </p>
-
-          <p className="text-5xl font-bold">
-            $<NumberTicker value={120000} /> in prizes
-          </p>
-
-          <p className="text-5xl font-bold">
-            <NumberTicker value={200} />+ projects
-          </p>
+        <div className="w-full h-[320px] flex flex-row gap-4 order-1 lg:order-2 text-center text-[#05149C] lg:ml-8">
+          <div className="flex flex-col w-3/5 gap-4">
+            <div className="flex flex-row h-2/5 gap-4">
+              <div className="bg-primary w-2/5 rounded-tr-[158px] p-8 pr-12">
+                <p className="text-5xl font-bold">
+                  <NumberTicker value={24} /> hours
+                </p>
+              </div>
+              <div className="bg-primary w-3/5 rounded-bl-[158px] p-8">
+                <p className="text-5xl font-bold stroke-rose-700">
+                  <NumberTicker value={1000} />+ Hackers
+                </p>
+              </div>
+            </div>
+            <div className="bg-primary h-3/5 rounded-tr-[158px] rounded-bl-[158px] p-8">
+              <p className="text-5xl font-bold">
+                <NumberTicker value={200} />+ projects
+              </p>
+            </div>
+          </div>
+          <div className="bg-primary w-2/5 rounded-tr-[158px] p-8">
+            <p className="text-5xl font-bold">
+              $<NumberTicker value={120000} /> in prizes
+            </p>
+          </div>
         </div>
       </div>
     </div>
