@@ -18,27 +18,28 @@ const HomeAboutPhotos = () => {
         <div className="w-full h-[320px] flex flex-row gap-4 order-1 lg:order-2 text-center text-[#05149C] lg:ml-8">
           <div className="flex flex-col w-3/5 gap-4">
             <div className="flex flex-row h-2/5 gap-4">
-              <div className="bg-primary w-2/5 rounded-tr-[158px] p-8 pr-12">
-                <p className="text-5xl font-bold">
+              <div className="bg-primary w-2/5 rounded-tr-[158px] flex items-center justify-center pr-3 pt-1">
+                <p className="text-4xl font-bold">
                   <NumberTicker value={24} /> hours
                 </p>
               </div>
-              <div className="bg-primary w-3/5 rounded-bl-[158px] p-8">
+              <div className="bg-primary w-3/5 rounded-bl-[158px] flex items-center justify-center pl-9 pb-2">
                 <p className="text-5xl font-bold stroke-rose-700">
                   <NumberTicker value={1000} />+ Hackers
                 </p>
               </div>
             </div>
-            <div className="bg-primary h-3/5 rounded-tr-[158px] rounded-bl-[158px] p-8">
-              <p className="text-5xl font-bold">
+            <div className="bg-primary h-3/5 rounded-tr-[158px] rounded-bl-[158px] flex items-center justify-center">
+              <p className="text-6xl font-bold">
                 <NumberTicker value={200} />+ projects
               </p>
             </div>
           </div>
-          <div className="bg-primary w-2/5 rounded-tr-[158px] p-8">
-            <p className="text-5xl font-bold">
-              $<NumberTicker value={120000} /> in prizes
+          <div className="bg-primary w-2/5 rounded-tr-[158px] flex flex-col items-center justify-center">
+            <p className="text-7xl font-bold">
+              $<NumberTicker value={120000} />
             </p>
+            <p className="text-5xl font-bold">in prizes</p>
           </div>
         </div>
       </div>
