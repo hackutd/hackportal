@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import LoadIcon from '../../components/LoadIcon';
 
 import CheckIcon from '@mui/icons-material/Check';
+import LocalDiningIcon from '@mui/icons-material/LocalDining';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import EngineeringIcon from '@mui/icons-material/Engineering';
@@ -23,6 +24,7 @@ export default function AdminStatsPage() {
   const [loading, setLoading] = useState(true);
   const { user, isSignedIn } = useAuthContext();
   const [statsData, setStatsData] = useState<GeneralStats>();
+  const [countData, setCountData] = useState<any>();
 
   useEffect(() => {
     async function getData() {
@@ -32,6 +34,12 @@ export default function AdminStatsPage() {
         },
       });
       setStatsData(data);
+      const counts = await RequestHelper.get<{ scans: any }>('/api/count', {
+        headers: {
+          Authorization: user.token,
+        },
+      });
+      setCountData(counts);
       setLoading(false);
     }
     getData();
@@ -69,6 +77,11 @@ export default function AdminStatsPage() {
             icon={<EngineeringIcon />}
             title="Super Admin"
             value={statsData.superAdminCount}
+          />
+          <AdminStatsCard
+            icon={<LocalDiningIcon />}
+            title="Meals"
+            value={countData.data.scans['Meals test']}
           />
         </div>
         {Object.entries(statsData)

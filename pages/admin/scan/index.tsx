@@ -460,7 +460,7 @@ export default function Admin() {
                           style={{ color: getSuccessColor(success) }}
                         >
                           <p>{success ?? 'Unexpected error!'}</p>
-                          {scannedUserInfo && (
+                          {scannedUserInfo && scannedUserInfo.user && (
                             <>
                               <p>
                                 Name: {scannedUserInfo.user.firstName}{' '}
