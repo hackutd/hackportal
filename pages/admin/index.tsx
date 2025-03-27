@@ -132,6 +132,7 @@ export default function Admin({ questions }: { questions: QADocument[] }) {
           <div className="py-2">
             <EventDetailLink title="View Events" href="/admin/events" />
             <EventDetailLink title="View Challenges" href="/admin/challenges" />
+            <EventDetailLink title="View Sponsors" href="/admin/sponsors" />
           </div>
         </div>
       )}
