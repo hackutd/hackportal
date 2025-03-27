@@ -26,7 +26,9 @@ const AdminSponsorCard: React.FC<AdminSponsorCardProps> = ({
             height={tier === 'title' ? 600 : 200}
             className="rounded-md"
           />
-          <div className="mt-2 text-sm text-blue-500 break-all">{link}</div>
+          <a href={link} className="mt-2 text-sm text-blue-500 break-all">
+            {link}
+          </a>
         </div>
         <div className="mt-auto flex gap-2">
           <button
