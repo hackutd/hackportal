@@ -1,97 +1,89 @@
 import React, { useState } from 'react';
 
-interface SponsorFormProps {
-  sponsor?: Sponsor;
-  onSubmitClick: (newSponsor: Sponsor) => Promise<void>;
-  formAction: 'Add' | 'Edit';
-}
-
+// Adjust this interface so it matches your actual Sponsor fields
 interface Sponsor {
+  name: string;
   link: string;
   reference: string;
-  alternativeReference?: string;
   tier: string;
 }
 
-export default function SponsorForm({ sponsor, onSubmitClick, formAction }: SponsorFormProps) {
-  // fill form if sponsor is passed otherwise default to empty sponsor
-  const [link, setLink] = useState(sponsor?.link || '');
-  const [reference, setReference] = useState(sponsor?.reference || '');
-  const [alternativeReference, setAlternativeReference] = useState(
-    sponsor?.alternativeReference || '',
-  );
-  const [tier, setTier] = useState(sponsor?.tier || '');
+interface SponsorFormProps {
+  sponsor?: Sponsor;
+  onSubmitClick: (sponsorData: Sponsor) => Promise<void>;
+  formAction: 'Add' | 'Edit';
+}
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const newSponsor: Sponsor = {
-      link,
-      reference,
-      alternativeReference,
-      tier,
-    };
-    await onSubmitClick(newSponsor);
-  };
+export default function SponsorForm({ sponsor, onSubmitClick, formAction }: SponsorFormProps) {
+  const [disableSubmit, setDisableSubmit] = useState(false);
+
+  const [sponsorForm, setSponsorForm] = useState<Sponsor>(
+    formAction === 'Edit' && sponsor
+      ? sponsor
+      : {
+          name: '',
+          link: '',
+          reference: '',
+          tier: '',
+        },
+  );
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-md p-4 border rounded-lg space-y-4">
-      <h1 className="text-xl font-bold">{formAction} Sponsor</h1>
+    <div className="my-3 flex flex-col gap-y-4">
+      <input
+        type="text"
+        placeholder="Sponsor name"
+        className="border-2 p-3 rounded-lg"
+        value={sponsorForm.name}
+        onChange={(e) => setSponsorForm((prev) => ({ ...prev, name: e.target.value }))}
+      />
 
-      <div>
-        <label className="block mb-1 font-medium">Sponsor Link (Website)</label>
-        <input
-          type="text"
-          value={link}
-          onChange={(e) => setLink(e.target.value)}
-          className="w-full border p-2 rounded"
-          required
-        />
-      </div>
+      <input
+        type="text"
+        placeholder="Sponsor link (website)"
+        className="border-2 p-3 rounded-lg"
+        value={sponsorForm.link}
+        onChange={(e) => setSponsorForm((prev) => ({ ...prev, link: e.target.value }))}
+      />
 
-      <div>
-        <label className="block mb-1 font-medium">Sponsor Image - CHANGE THIS TO TAKE IMGs</label>
-        <input
-          type="text"
-          value={reference}
-          onChange={(e) => setReference(e.target.value)}
-          className="w-full border p-2 rounded"
-          required
-        />
-      </div>
+      <input
+        type="text"
+        placeholder="Sponsor image reference"
+        className="border-2 p-3 rounded-lg"
+        value={sponsorForm.reference}
+        onChange={(e) => setSponsorForm((prev) => ({ ...prev, reference: e.target.value }))}
+      />
 
-      <div>
-        <label className="block mb-1 font-medium">Alternative Image (optional)</label>
-        <input
-          type="text"
-          value={alternativeReference}
-          onChange={(e) => setAlternativeReference(e.target.value)}
-          className="w-full border p-2 rounded"
-        />
-      </div>
-
-      <div>
-        <label className="block mb-1 font-medium">Sponsor Tier</label>
-        <select
-          value={tier}
-          onChange={(e) => setTier(e.target.value)}
-          className="w-full border p-2 rounded"
-          required
-        >
-          <option value="">-- Select Tier --</option>
-          <option value="title">Title</option>
-          <option value="platinum">Platinum</option>
-          <option value="gold">Gold</option>
-          <option value="silver">Silver</option>
-          <option value="bronze">Bronze</option>
-        </select>
-      </div>
+      <select
+        className="border-2 p-3 rounded-lg"
+        value={sponsorForm.tier}
+        onChange={(e) => setSponsorForm((prev) => ({ ...prev, tier: e.target.value }))}
+      >
+        <option value="">-- Select Sponsor Tier --</option>
+        <option value="title">Title</option>
+        <option value="platinum">Platinum</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="bronze">Bronze</option>
+      </select>
 
       <button
-        type="submit"
-        className="font-bold bg-green-200 hover:bg-green-300 border border-green-800 text-green-900 rounded-lg py-2 px-4"
+        disabled={disableSubmit}
+        onClick={async () => {
+          setDisableSubmit(true);
+          try {
+            // Pass the Sponsor object back to the parent via the callback
+            await onSubmitClick(sponsorForm);
+          } catch (error) {
+            console.error('Error submitting sponsor data:', error);
+          } finally {
+            setDisableSubmit(false);
+          }
+        }}
+        className="font-bold bg-green-200 hover:bg-green-300 border border-green-800 text-green-900 rounded-lg p-3"
       >
         {formAction} Sponsor
       </button>
-    </form>
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-// pages/admin/sponsors/add.tsx
 import React from 'react';
 import { useAuthContext } from '@/lib/user/AuthContext';
 import { RequestHelper } from '@/lib/request-helper';
@@ -37,7 +36,7 @@ export default function AddSponsorPage() {
         return;
       }
 
-      if (data?.msg === 'ok' || status === 200) {
+      if (status >= 200 && status < 300) {
         alert('Sponsor created successfully!');
         router.push('/admin/sponsors');
       } else {
@@ -64,7 +63,12 @@ export default function AddSponsorPage() {
         </Link>
       </div>
       <div className="mt-4">
-        <SponsorForm formAction="Add" onSubmitClick={submitAddSponsorRequest} />
+        <SponsorForm
+          formAction="Add"
+          onSubmitClick={async (event) => {
+            await submitAddSponsorRequest(event);
+          }}
+        />
       </div>
     </div>
   );
