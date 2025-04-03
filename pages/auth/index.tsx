@@ -1,15 +1,18 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { useAuthContext } from '../../lib/user/AuthContext';
 import { useState } from 'react';
 import firebase from 'firebase/compat/app';
 import Link from 'next/link';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import GoogleIcon from '../../public/icons/googleicon.png';
 import Image from 'next/image';
-import EmailInput from '../../components/auth/EmailInput';
-import PasswordInput from '../../components/auth/PasswordInput';
+
+import GoogleIcon from '@/public/icons/googleicon.png';
+
+import { useAuthContext } from '@/lib/user/AuthContext';
+
+import EmailInput from '@/components/auth/EmailInput';
+import PasswordInput from '@/components/auth/PasswordInput';
 /**
  * A page that allows the user to sign in.
  *

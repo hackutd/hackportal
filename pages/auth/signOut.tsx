@@ -1,6 +1,6 @@
+import { useAuthContext } from '@/lib/user/AuthContext';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useAuthContext } from '../../lib/user/AuthContext';
 
 /**
  * A page that signs the user out and redirects to the index (/) page.
@@ -18,7 +18,7 @@ export default function SignOutPage() {
       .catch((error) => {
         console.error('Could not sign out', error);
       });
-  }, [router]);
+  }, [router, signOut]);
 
   return (
     <div className="p-4 text-center flex flex-col justify-center">

@@ -1,12 +1,15 @@
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import AnsweredQuestion from '../../components/dashboard/AnsweredQuestion';
-import ErrorList from '../../components/ErrorList';
-import PendingQuestion from '../../components/dashboard/PendingQuestion';
-import { RequestHelper } from '../../lib/request-helper';
-import { useAuthContext } from '../../lib/user/AuthContext';
+
 import { QAReqBody } from '../api/questions';
-import DashboardHeader from '../../components/dashboard/DashboardHeader';
+
+import { RequestHelper } from '@/lib/request-helper';
+import { useAuthContext } from '@/lib/user/AuthContext';
+
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import ErrorList from '@/components/error/ErrorList';
+import AnsweredQuestion from '@/components/dashboard/AnsweredQuestion';
+import PendingQuestion from '@/components/dashboard/PendingQuestion';
 /**
  * The Question and Answers page.
  *

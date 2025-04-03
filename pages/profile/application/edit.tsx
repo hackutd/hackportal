@@ -4,22 +4,27 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Formik, Form, useFormikContext } from 'formik';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Snackbar } from '@mui/material';
 import { GetServerSideProps } from 'next';
+
 import { generateInitialValues, hackPortalConfig } from '@/hackportal.config';
+import majorsList from '@/public/majors.json';
+import schoolsList from '@/public/schools.json';
+
 import { useAuthContext } from '@/lib/user/AuthContext';
 import { RequestHelper } from '@/lib/request-helper';
-import LoadIcon from '@/components/icon/Loading';
-import DisplayQuestion from '@/components/register/DisplayRegistrationQuestion';
-import schoolsList from 'public/schools.json';
-import majorsList from 'public/majors.json';
-import { Snackbar } from '@mui/material';
 import { NavbarCallbackRegistryContext } from '@/lib/context/navbar';
+
+import Loading from '@/components/icon/Loading';
+import DisplayRegistrationQuestion from '@/components/register/DisplayRegistrationQuestion';
+
+// TODO: refactor this page
+
 /**
  * The edit application page.
- *
  */
 
-interface EditApplicationPageProps {
+interface Props {
   allowedRegistrations: boolean;
 }
 
@@ -64,7 +69,7 @@ function ApplicationAutosaveHandler({
   return null;
 }
 
-export default function EditApplication({ allowedRegistrations }: EditApplicationPageProps) {
+export default function EditApplication({ allowedRegistrations }: Props) {
   const router = useRouter();
 
   const {
@@ -196,7 +201,7 @@ export default function EditApplication({ allowedRegistrations }: EditApplicatio
   }
 
   if (loading) {
-    return <LoadIcon width={200} height={200} />;
+    return <Loading width={200} height={200} />;
   }
 
   //disables submitting form on enter key press
@@ -435,7 +440,7 @@ export default function EditApplication({ allowedRegistrations }: EditApplicatio
                     <div className="md:px-10">
                       <div className="flex flex-col">
                         {generalQuestions.map((obj, idx) => (
-                          <DisplayQuestion key={idx} obj={obj} />
+                          <DisplayRegistrationQuestion key={idx} obj={obj} />
                         ))}
                       </div>
                     </div>
@@ -470,10 +475,10 @@ export default function EditApplication({ allowedRegistrations }: EditApplicatio
                     </h2>
                     <div className="flex flex-col md:px-4 poppins-regular ">
                       {schoolQuestions.map((obj, idx) => (
-                        <DisplayQuestion key={idx} obj={obj} />
+                        <DisplayRegistrationQuestion key={idx} obj={obj} />
                       ))}
                       {values['major'] === 'Other' && (
-                        <DisplayQuestion
+                        <DisplayRegistrationQuestion
                           key={1000}
                           obj={{
                             textInputQuestions: [
@@ -489,7 +494,7 @@ export default function EditApplication({ allowedRegistrations }: EditApplicatio
                         />
                       )}
                       {values['university'] === 'Other' && (
-                        <DisplayQuestion
+                        <DisplayRegistrationQuestion
                           key={1000}
                           obj={{
                             textInputQuestions: [
@@ -536,10 +541,10 @@ export default function EditApplication({ allowedRegistrations }: EditApplicatio
                     </h2>
                     <div className="flex flex-col poppins-regular md:px-4">
                       {hackathonExperienceQuestions.map((obj, idx) => (
-                        <DisplayQuestion key={idx} obj={obj} />
+                        <DisplayRegistrationQuestion key={idx} obj={obj} />
                       ))}
                       {values['heardFrom'] === 'Other' && (
-                        <DisplayQuestion
+                        <DisplayRegistrationQuestion
                           key={1000}
                           obj={{
                             textInputQuestions: [
@@ -586,7 +591,7 @@ export default function EditApplication({ allowedRegistrations }: EditApplicatio
                     </h2>
                     <div className="flex flex-col poppins-regular md:px-4">
                       {shortAnswerQuestions.map((obj, idx) => (
-                        <DisplayQuestion key={idx} obj={obj} />
+                        <DisplayRegistrationQuestion key={idx} obj={obj} />
                       ))}
                     </div>
                     <div className="flex justify-end mt-4">
@@ -623,7 +628,7 @@ export default function EditApplication({ allowedRegistrations }: EditApplicatio
                       {eventInfoQuestions.map((obj, idx) => {
                         // if (idx !== 0) return <DisplayQuestion key={idx} obj={obj} />;
 
-                        return <DisplayQuestion key={idx} obj={obj} />;
+                        return <DisplayRegistrationQuestion key={idx} obj={obj} />;
                       })}
                     </div>
                     <div className="flex justify-end mt-4">
@@ -657,7 +662,7 @@ export default function EditApplication({ allowedRegistrations }: EditApplicatio
                     </h2>
                     <div className="flex flex-col poppins-regular md:px-4">
                       {sponsorInfoQuestions.map((obj, idx) => (
-                        <DisplayQuestion key={idx} obj={obj} />
+                        <DisplayRegistrationQuestion key={idx} obj={obj} />
                       ))}
                     </div>
                     <div className="flex justify-end mt-4">
@@ -693,7 +698,7 @@ export default function EditApplication({ allowedRegistrations }: EditApplicatio
                     </p>
                     <div className="flex flex-col">
                       {teammateQuestions.map((obj, idx) => (
-                        <DisplayQuestion key={idx} obj={obj} />
+                        <DisplayRegistrationQuestion key={idx} obj={obj} />
                       ))}
                     </div>
 
