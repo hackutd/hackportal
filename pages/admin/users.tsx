@@ -1,11 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Head from 'next/head';
 import { Fragment, useEffect, useMemo, useState } from 'react';
-import { isAuthorized } from '.';
 import UserAdminGroupView from '../../components/admin/hacker-application/HackerApplicationGroupView';
 import { RequestHelper } from '../../lib/request-helper';
 import { useAuthContext } from '../../lib/user/AuthContext';
-import { ApplicationViewState, RegistrationState } from '../../lib/util';
+import { ApplicationViewState, checkUserPermission, RegistrationState } from '../../lib/util';
 import { ApplicationEntry, useUserGroup } from '@/lib/admin/group';
 import AdminStatsCard from '@/components/admin/AdminStatsCard';
 import { CheckIcon, XCircleIcon } from '@heroicons/react/solid';
@@ -20,6 +19,8 @@ import HackerApplications from '@/components/admin/hacker-application';
  * Route: /admin/users
  *
  */
+const allowedRoles = ['admin', 'super_admin', 'organizer'];
+
 export default function UserPage() {
   const { user } = useAuthContext();
 
@@ -230,7 +231,7 @@ export default function UserPage() {
     [numAppsReviewed, numAppsAccepted],
   );
 
-  if (!user || !isAuthorized(user))
+  if (!user || !checkUserPermission(user, allowedRoles))
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
 
   if (loading) {

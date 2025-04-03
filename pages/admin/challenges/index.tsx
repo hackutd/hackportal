@@ -10,15 +10,13 @@ import { RequestHelper } from '@/lib/request-helper';
 
 import ChallengeForm from '@/components/admin/challenge/ChallengeForm';
 import ChallengeList from '@/components/admin/challenge/ChallengeList';
+import { checkUserPermission } from '@/lib/util';
 
 interface Props {
   challenges: Challenge[];
 }
 
-function isAuthorized(user): boolean {
-  if (!user || !user.permissions) return false;
-  return (user.permissions as string[]).includes('super_admin');
-}
+const allowedRoles = ['super_admin'];
 
 export default function ChallengePage(props: Props) {
   const { user, isSignedIn } = useAuthContext();
@@ -102,7 +100,7 @@ export default function ChallengePage(props: Props) {
       console.error(error);
     }
   };
-  if (!isSignedIn || !isAuthorized(user))
+  if (!isSignedIn || !checkUserPermission(user, allowedRoles))
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
 
   const orderChanged = challenges.filter((obj, idx) => obj.rank !== idx).length !== 0;

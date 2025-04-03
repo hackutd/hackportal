@@ -4,7 +4,6 @@ import ScanType from '../../../components/ScanType';
 import QRCodeReader from '../../../components/dashboard/QRCodeReader';
 import LoadIcon from '../../../components/icon/Loading';
 import { useAuthContext } from '../../../lib/user/AuthContext';
-import { isAuthorized } from '..';
 import { RequestHelper } from '../../../lib/request-helper';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Dialog } from '@headlessui/react';
@@ -12,6 +11,9 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { TextField } from '@mui/material';
 
 import AppHeaderCoreMobile from '@/components/AppHeader/AppHeaderCoreMobile';
+import { checkUserPermission } from '@/lib/util';
+
+const allowedRoles = ['super_admin', 'admin', 'organizer'];
 
 const successStrings = {
   claimed: 'Scan claimed...',
@@ -269,7 +271,7 @@ export default function Admin() {
     fetchScanTypes();
   });
 
-  if (!isSignedIn || !isAuthorized(user))
+  if (!isSignedIn || !checkUserPermission(user, allowedRoles))
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
 
   return (

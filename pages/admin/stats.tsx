@@ -13,11 +13,9 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 import { fieldToName } from '../../lib/stats/field';
 import NivoBarChart from '../../components/admin/NivoBarChart';
 import NivoPieChart from '../../components/admin/NivoPieChart';
+import { checkUserPermission } from '@/lib/util';
 
-function isAuthorized(user): boolean {
-  if (!user || !user.permissions) return false;
-  return (user.permissions as string[]).includes('super_admin');
-}
+const allowedRoles = ['super_admin'];
 
 export default function AdminStatsPage() {
   const [loading, setLoading] = useState(true);
@@ -37,7 +35,7 @@ export default function AdminStatsPage() {
     getData();
   }, []);
 
-  if (!isSignedIn || !isAuthorized(user)) {
+  if (!isSignedIn || !checkUserPermission(user, allowedRoles)) {
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
   }
 

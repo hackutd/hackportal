@@ -7,15 +7,13 @@ import { RequestHelper } from '../../../lib/request-helper';
 import { useAuthContext } from '../../../lib/user/AuthContext';
 import Link from 'next/link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import { checkUserPermission } from '@/lib/util';
 
 interface EventPageProps {
   events_: ScheduleEvent[];
 }
 
-function isAuthorized(user): boolean {
-  if (!user || !user.permissions) return false;
-  return (user.permissions as string[]).includes('super_admin');
-}
+const allowedRoles = ['super_admin'];
 
 export default function EventPage({ events_ }: EventPageProps) {
   const { user, isSignedIn } = useAuthContext();
@@ -85,7 +83,7 @@ export default function EventPage({ events_ }: EventPageProps) {
       console.error(error);
     }
   };
-  if (!isSignedIn || !isAuthorized(user))
+  if (!isSignedIn || !checkUserPermission(user, allowedRoles))
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
 
   return (

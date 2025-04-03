@@ -9,15 +9,9 @@ import ErrorList from '@/components/error/ErrorList';
 import SuccessCard from '@/components/admin/SuccessCard';
 import PendingQuestion from '@/components/dashboard/PendingQuestion';
 import EventLink from '@/components/admin/event/EventLink';
+import { checkUserPermission } from '@/lib/util';
 
-export function isAuthorized(user): boolean {
-  if (!user || !user.permissions) return false;
-  return (
-    (user.permissions as string[]).includes('admin') ||
-    (user.permissions as string[]).includes('organizer') ||
-    (user.permissions as string[]).includes('super_admin')
-  );
-}
+const allowedRoles = ['admin', 'organizer', 'super_admin'];
 
 /**
  * The main page of Admin Console.
@@ -64,7 +58,7 @@ export default function Admin({ questions }: { questions: QADocument[] }) {
     }
   };
 
-  if (!isSignedIn || !isAuthorized(user))
+  if (!isSignedIn || !checkUserPermission(user, allowedRoles))
     return <div className="text-2xl font-black text-center bg-blue-200">Unauthorized</div>;
 
   return (

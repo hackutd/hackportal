@@ -13,14 +13,9 @@ import { useAuthContext } from '@/lib/user/AuthContext';
 import { SectionReferenceContext } from '@/lib/context/section';
 import { NavbarCallbackRegistryContext } from '@/lib/context/navbar';
 import FloatingDock from './FloatingDock';
+import { checkUserPermission } from '@/lib/util';
 
-function isAuthorized(user): boolean {
-  if (!user || !user.permissions) return false;
-  return (
-    (user.permissions as string[]).includes('admin') ||
-    (user.permissions as string[]).includes('super_admin')
-  );
-}
+const allowedRoles = ['admin', 'super_admin'];
 
 type Props = {
   dockItemIdRoot?: string;
@@ -171,7 +166,7 @@ export default function AppNavbarBottom(props: Props) {
 
     // Scanner Icon
     {
-      isAuthorized(user) &&
+      checkUserPermission(user, allowedRoles) &&
         items.push(
           <button
             id={itemIdRoot + itemIdx}
@@ -180,7 +175,7 @@ export default function AppNavbarBottom(props: Props) {
               if (Object.hasOwn(callbackRegistry, router.pathname)) {
                 await callbackRegistry[router.pathname]();
               }
-              await router.push(isAuthorized(user) ? '/admin/scan' : '/auth');
+              await router.push(checkUserPermission(user, allowedRoles) ? '/admin/scan' : '/auth');
             }}
           >
             <ScannerIcon />

@@ -5,12 +5,9 @@ import Link from 'next/link';
 import { useAuthContext } from '@/lib/user/AuthContext';
 
 import NavLink from '../NavLink';
+import { checkUserPermission } from '@/lib/util';
 
-function isAuthorized(user): boolean {
-  if (!user || !user.permissions) return false;
-  return (user.permissions as string[]).includes('super_admin');
-}
-
+const allowedRoles = ['super_admin'];
 /**
  * A dashboard header.
  */
@@ -59,7 +56,7 @@ export default function AdminHeader() {
           >
             User Dashboard
           </NavLink>
-          {isAuthorized(user) && (
+          {checkUserPermission(user, allowedRoles) && (
             <NavLink
               href="/admin/stats"
               exact={true}
@@ -105,7 +102,7 @@ export default function AdminHeader() {
                 <div>User Dashboard</div>
               </Link>
             </li>
-            {isAuthorized(user) && (
+            {checkUserPermission(user, allowedRoles) && (
               <li className="p-2 hover:bg-secondary cursor-pointer">
                 <Link href="/admin/stats" passHref legacyBehavior>
                   <div>Stats at a Glance</div>
