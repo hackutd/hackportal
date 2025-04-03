@@ -34,6 +34,7 @@ const AdminSponsorCard: React.FC<AdminSponsorCardProps> = ({
           <button
             // onClick={() => onSponsorEditClick(sponsor.originalIndex)}
             className="font-bold bg-green-200 hover:bg-green-300 border border-green-800 text-green-900 rounded-lg md:p-3 p-1 px-2 md:text-base text-sm"
+            // formAction="Edit"
           >
             Edit Sponsor
           </button>
