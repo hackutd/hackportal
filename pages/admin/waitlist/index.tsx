@@ -1,11 +1,12 @@
 import Head from 'next/head';
-import AdminHeader from '../../../components/admin/AdminHeader';
 import { useState } from 'react';
-import QRCodeReader from '../../../components/dashboard/QRCodeReader';
-import { RequestHelper } from '../../../lib/request-helper';
-import { useAuthContext } from '../../../lib/user/AuthContext';
-import WaitlistCheckInNotificationDialog from '@/components/admin/WaitlistCheckInNotificationDialog';
+
 import { checkUserPermission } from '@/lib/util';
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { RequestHelper } from '@/lib/request-helper';
+
+import WaitlistCheckInNotificationDialog from '@/components/admin/WaitlistCheckInNotificationDialog';
+import QRCodeReader from '@/components/dashboard/QRCodeReader';
 
 const allowedRoles = ['admin', 'organizer', 'super_admin'];
 

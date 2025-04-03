@@ -1,10 +1,5 @@
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import ScanType from '../../../components/ScanType';
-import QRCodeReader from '../../../components/dashboard/QRCodeReader';
-import LoadIcon from '../../../components/icon/Loading';
-import { useAuthContext } from '../../../lib/user/AuthContext';
-import { RequestHelper } from '../../../lib/request-helper';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Dialog } from '@headlessui/react';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -12,9 +7,15 @@ import { TextField } from '@mui/material';
 
 import AppHeaderCoreMobile from '@/components/AppHeader/AppHeaderCoreMobile';
 import { checkUserPermission } from '@/lib/util';
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { RequestHelper } from '@/lib/request-helper';
+import ScanType from '@/components/ScanType';
+import QRCodeReader from '@/components/dashboard/QRCodeReader';
+import Loading from '@/components/icon/Loading';
 
 const allowedRoles = ['super_admin', 'admin', 'organizer'];
 
+// TODO: refactor this page
 const successStrings = {
   claimed: 'Scan claimed...',
   invalidUser: 'Invalid user...',
@@ -283,10 +284,6 @@ export default function Admin() {
       <div className="z-10 md:hidden md:mt-10 mt-10">
         <AppHeaderCoreMobile />
       </div>
-
-      {/* <section className="p-4">
-        <AdminHeader />
-      </section> */}
       {currentScan && (
         <Dialog
           open={showDeleteScanDialog}
@@ -437,7 +434,7 @@ export default function Admin() {
                 ))
               ) : (
                 <div className="w-full flex justify-center">
-                  <LoadIcon width={150} height={150} />
+                  <Loading width={150} height={150} />
                 </div>
               )}
             </div>

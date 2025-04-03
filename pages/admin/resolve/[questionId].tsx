@@ -19,13 +19,12 @@ import { checkUserPermission } from '@/lib/util';
  */
 const allowedRoles = ['admin', 'organizer', 'super_admin'];
 
-export default function ResolveQuestionPage({
-  question,
-  questionId,
-}: {
+interface Props {
   question: QADocument;
   questionId: string;
-}) {
+}
+
+export default function ResolveQuestionPage({ question, questionId }: Props) {
   const router = useRouter();
   const [answer, setAnswer] = useState('');
   const [errors, setErrors] = useState<string[]>([]);

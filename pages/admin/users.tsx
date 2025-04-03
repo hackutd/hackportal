@@ -1,16 +1,17 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Head from 'next/head';
 import { Fragment, useEffect, useMemo, useState } from 'react';
-import UserAdminGroupView from '../../components/admin/hacker-application/HackerApplicationGroupView';
-import { RequestHelper } from '../../lib/request-helper';
-import { useAuthContext } from '../../lib/user/AuthContext';
-import { ApplicationViewState, checkUserPermission, RegistrationState } from '../../lib/util';
-import { ApplicationEntry, useUserGroup } from '@/lib/admin/group';
-import AdminStatsCard from '@/components/admin/AdminStatsCard';
 import { CheckIcon, XCircleIcon } from '@heroicons/react/solid';
 import { SelectChangeEvent } from '@mui/material';
-import HackerApplicationGroupView from '../../components/admin/hacker-application/HackerApplicationGroupView';
+
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { ApplicationViewState, checkUserPermission, RegistrationState } from '@/lib/util';
+import { RequestHelper } from '@/lib/request-helper';
+import { ApplicationEntry, useUserGroup } from '@/lib/admin/group';
+
+import AdminStatsCard from '@/components/admin/AdminStatsCard';
 import HackerApplications from '@/components/admin/hacker-application';
+import HackerApplicationGroupView from '@/components/admin/hacker-application/HackerApplicationGroupView';
 
 /**
  *
@@ -122,6 +123,7 @@ export default function UserPage() {
         filterParamsList.includes(app.user.permissions[0]),
       );
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     timer = setTimeout(() => {
       if (searchQuery !== '') {
         const newFiltered = filteredUserGroups.filter(

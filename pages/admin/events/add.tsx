@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router';
-import EventForm from '../../../components/admin/event/EventForm';
-import { RequestHelper } from '../../../lib/request-helper';
-import { useAuthContext } from '../../../lib/user/AuthContext';
 import Link from 'next/link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+
 import { checkUserPermission } from '@/lib/util';
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { RequestHelper } from '@/lib/request-helper';
+
+import EventForm from '@/components/admin/event/EventForm';
 
 const allowedRoles = ['super_admin'];
 
