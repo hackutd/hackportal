@@ -1,19 +1,21 @@
+import React, { useEffect, useRef, useState } from 'react';
 import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
-import { useAuthContext } from '../../lib/user/AuthContext';
-import LoadIcon from '../../components/icon/Loading';
-import { getFileExtension } from '../../lib/util';
-import QRCode from '../../components/dashboard/QRCode';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInImage from '@/public/icons/linkedin.png';
-import ChickenImage from '@/public/assets/profile-chicken-egg.png';
-import { TextField, TextFieldProps } from '@mui/material';
 import Link from 'next/link';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import { TextField, TextFieldProps } from '@mui/material';
+
+import LinkedInImage from '@/public/icons/linkedin.png';
+
 import { RequestHelper } from '@/lib/request-helper';
+
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { getFileExtension } from '@/lib/util';
+
 import DeleteProfileDialog from '@/components/profile/DeleteProfileDialog';
-import QRCodeStyling from 'qr-code-styling';
+import QRCode from '@/components/dashboard/QRCode';
+import Loading from '@/components/icon/Loading';
 
 /**
  * A page that allows a user to modify app or profile settings and see their data.
@@ -317,7 +319,7 @@ export default function ProfilePage() {
                     </button>
                   </>
                 ) : (
-                  <LoadIcon width={16} height={16} />
+                  <Loading width={16} height={16} />
                 )}
               </div>
             </div>
