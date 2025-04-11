@@ -13,3 +13,12 @@ export enum ApplicationViewState {
   REVIEWABLE = 0,
   ALL = 1,
 }
+
+export function checkUserPermission(user, allowedRoles): boolean {
+  if (!user || !user.permissions) return false;
+
+  // check if all user.permissions has one of the allowedRoles
+  const hasAnyRole = user.permissions.some((role) => allowedRoles.includes(role));
+
+  return hasAnyRole;
+}
