@@ -3,27 +3,26 @@ import '../styles/tailwind.css';
 
 import 'firebase/compat/auth';
 
-import AppHeader2_Wrapper from '@/components/AppHeader2/wrapper';
-import AppNavbarBottom from '@/components/AppNavbarBottom/AppNavbarBottom';
-import { NavbarCallbackRegistryContext } from '@/lib/context/navbar';
-import { SectionReferenceContext } from '@/lib/context/section';
-import { useUrlHash } from '@/lib/hooks';
-import CloudBackgroundImage from '@/public/assets/cloud-bg.png';
-import PondBackgroundImage from '@/public/assets/pond-background.png';
-import RegisterBackgroundImage from '@/public/assets/registration-background.png';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { loadSlim } from '@tsparticles/slim';
 import { AppProps } from 'next/dist/shared/lib/router/router';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
-import { initParticlesEngine } from '../components/Particles';
-import { ParticlesContext } from '../components/Particles/ParticlesProvider';
-import { initFirebase } from '../lib/firebase-client';
-import { FCMProvider } from '../lib/service-worker/FCMContext';
-import { AuthProvider } from '../lib/user/AuthContext';
+
+import { initFirebase } from '@/lib/firebase-client';
+import { AuthProvider } from '@/lib/user/AuthContext';
+import { FCMProvider } from '@/lib/service-worker/FCMContext';
+
+import AppHeader from '@/components/AppHeader';
+import { initParticlesEngine } from '@/components/Particles';
+import AppNavbarBottom from '@/components/AppNavbarBottom';
+import { ParticlesContext } from '@/components/Particles/ParticlesProvider';
+
+import { NavbarCallbackRegistryContext } from '@/lib/context/navbar';
+import { SectionReferenceContext } from '@/lib/context/section';
+import { useUrlHash } from '@/lib/hooks';
 
 initFirebase();
 
@@ -38,14 +37,6 @@ function PortalApp({ Component, pageProps }: AppProps) {
   const [particlesInit, setParticlesInit] = useState(false);
   const hash = useUrlHash('');
 
-  const duckBackgroundPathnames = new Set(['/profile', '/profile/application/edit']);
-  const registerBackgroundPathnames = new Set(['/register', '/auth']);
-  // const cloudBackgroundPathnames = new Set([
-  //   '/admin',
-  //   '/admin/scan',
-  //   '/admin/users',
-  //   '/admin/waitlist',
-  // ]);
   const noTopSpacerPathnames = new Set(['/', '/parking', '/live']);
 
   const faqRef = useRef<HTMLDivElement | null>(null);
@@ -66,14 +57,6 @@ function PortalApp({ Component, pageProps }: AppProps) {
   // this should be run only once per application lifetime
   useEffect(() => {
     initParticlesEngine(async (engine) => {
-      // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
-      // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-      // starting from v2 you can add only the features you need reducing the bundle size
-
-      //await loadAll(engine);
-      //await loadFull(engine);
-      //await loadBasic(engine);
-
       await loadSlim(engine);
     })
       .then(() => {
@@ -85,7 +68,6 @@ function PortalApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    // <DndProvider backend={HTML5Backend}>
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <AuthProvider>
         <FCMProvider>
@@ -137,55 +119,14 @@ function PortalApp({ Component, pageProps }: AppProps) {
                 </Head>
 
                 <div className="min-h-screen flex flex-col">
-                  {/* Profile Page BG */}
-                  {/* {duckBackgroundPathnames.has(router.pathname) && (
-                    <div className="fixed top-0 left-0 w-screen h-screen -z-10">
-                      <Image
-                        className="w-screen h-screen object-cover"
-                        alt="Pond Background"
-                        src={PondBackgroundImage.src}
-                        width={PondBackgroundImage.width}
-                        height={PondBackgroundImage.height}
-                      />
-                    </div>
-                  )} */}
-
-                  {/* {registerBackgroundPathnames.has(router.pathname) && (
-                    <div className="fixed top-0 left-0 w-screen h-screen -z-10">
-                      <Image
-                        className="w-screen h-screen object-cover"
-                        alt="Register background"
-                        src={RegisterBackgroundImage.src}
-                        width={RegisterBackgroundImage.width}
-                        height={RegisterBackgroundImage.height}
-                      />
-                    </div>
-                  )} */}
-
-                  {/* {cloudBackgroundPathnames.has(router.pathname) && (
-                    <div className="fixed top-0 left-0 w-screen h-screen -z-10">
-                      <Image
-                        className="w-screen h-screen object-cover"
-                        alt="Cloud background"
-                        src={CloudBackgroundImage.src}
-                        width={CloudBackgroundImage.width}
-                        height={CloudBackgroundImage.height}
-                      />
-                    </div>
-                  )} */}
-
-                  <AppHeader2_Wrapper />
-
+                  <AppHeader />
                   {/* Spacer at the top of the page so that content won't be covered by the navbar */}
                   {!noTopSpacerPathnames.has(router.pathname) && (
                     <div className="h-[86px] shrink-0" />
                   )}
-
                   <Component {...pageProps} />
-
                   {/* Spacer at the bottom of the page for navbar bottom on mobile, so that content won't be covered by the navbar */}
                   <div className="md:hidden h-[80px] shrink-0" />
-
                   <AppNavbarBottom />
                 </div>
               </NavbarCallbackRegistryContext.Provider>

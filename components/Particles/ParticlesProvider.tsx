@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
+import { Dispatch, SetStateAction, createContext, useContext } from 'react';
 
 export const ParticlesContext = createContext<{
   state: { init: boolean };

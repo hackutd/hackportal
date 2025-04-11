@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
-import EventForm from '../../../components/adminComponents/eventComponents/EventForm';
-import { RequestHelper } from '../../../lib/request-helper';
-import { useAuthContext } from '../../../lib/user/AuthContext';
 import Link from 'next/link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-function isAuthorized(user): boolean {
-  if (!user || !user.permissions) return false;
-  return (user.permissions as string[]).includes('super_admin');
-}
+import { checkUserPermission } from '@/lib/util';
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { RequestHelper } from '@/lib/request-helper';
+
+import EventForm from '@/components/admin/event/EventForm';
+
+const allowedRoles = ['super_admin'];
 
 export default function AddEventPage() {
   const { user, isSignedIn } = useAuthContext();
@@ -36,7 +36,7 @@ export default function AddEventPage() {
     }
   };
 
-  if (!isSignedIn || !isAuthorized(user))
+  if (!isSignedIn || !checkUserPermission(user, allowedRoles))
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
 
   return (

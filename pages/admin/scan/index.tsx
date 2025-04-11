@@ -1,18 +1,21 @@
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import AdminHeader from '../../../components/adminComponents/AdminHeader';
-import ScanType from '../../../components/ScanType';
-import QRCodeReader from '../../../components/dashboardComponents/QRCodeReader';
-import LoadIcon from '../../../components/LoadIcon';
-import { useAuthContext } from '../../../lib/user/AuthContext';
-import { isAuthorized } from '..';
-import { RequestHelper } from '../../../lib/request-helper';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Dialog } from '@headlessui/react';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { TextField } from '@mui/material';
-import AppHeader2_Core_AdminMobile from '@/components/AppHeader2/core-mobile';
 
+import AppHeaderCoreMobile from '@/components/AppHeader/AppHeaderCoreMobile';
+import { checkUserPermission } from '@/lib/util';
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { RequestHelper } from '@/lib/request-helper';
+import ScanType from '@/components/ScanType';
+import QRCodeReader from '@/components/dashboard/QRCodeReader';
+import Loading from '@/components/icon/Loading';
+
+const allowedRoles = ['super_admin', 'admin', 'organizer'];
+
+// TODO: refactor this page
 const successStrings = {
   claimed: 'Scan claimed...',
   invalidUser: 'Invalid user...',
@@ -269,7 +272,7 @@ export default function Admin() {
     fetchScanTypes();
   });
 
-  if (!isSignedIn || !isAuthorized(user))
+  if (!isSignedIn || !checkUserPermission(user, allowedRoles))
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
 
   return (
@@ -279,12 +282,8 @@ export default function Admin() {
         <meta name="description" content="HackPortal's Admin Page" />
       </Head>
       <div className="z-10 md:hidden md:mt-10 mt-10">
-        <AppHeader2_Core_AdminMobile />
+        <AppHeaderCoreMobile />
       </div>
-
-      {/* <section className="p-4">
-        <AdminHeader />
-      </section> */}
       {currentScan && (
         <Dialog
           open={showDeleteScanDialog}
@@ -435,7 +434,7 @@ export default function Admin() {
                 ))
               ) : (
                 <div className="w-full flex justify-center">
-                  <LoadIcon width={150} height={150} />
+                  <Loading width={150} height={150} />
                 </div>
               )}
             </div>
