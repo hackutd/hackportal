@@ -110,7 +110,7 @@ export default function HackerpackDisplay(props: {
       }
       actualSidebarContent.push(currH1);
     }
-  } else if (hackerpackSettings.sidebar && hackerpackSettings.mainContent === 'notion') {
+  } else if (hackerpackSettings.sidebar && hackerpackSettings.mainContent === 'markdown') {
     // Get the ordered list of blocks
     const rootObj = props.content.block[props.notionRootId];
     const blockList = rootObj.value.content;
@@ -164,7 +164,7 @@ export default function HackerpackDisplay(props: {
 
       {/* Generate main content based on mainContent setting [notion, markdown, html] */}
       <section id="mainContent" className={`px-6 py-3 relative w-full ${adjustedWidth}`}>
-        {hackerpackSettings.mainContent === 'notion' && (
+        {hackerpackSettings.mainContent === 'markdown' && (
           <NotionRenderer
             recordMap={props.content}
             darkMode={hackerpackSettings.darkMode}
@@ -182,7 +182,7 @@ export default function HackerpackDisplay(props: {
           </ReactMarkdown>
         )}
 
-        {hackerpackSettings.mainContent === 'html' && (
+        {hackerpackSettings.mainContent === 'markdown' && (
           <>
             {/* Main content goes in this section if using plain HTML/tailwind */}
             <div
