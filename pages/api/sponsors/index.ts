@@ -19,10 +19,6 @@ const SPONSORS = '/sponsors';
  */
 async function getSponsors(req: NextApiRequest, res: NextApiResponse) {
   const snapshot = await db.collection(SPONSORS).get();
-  if (snapshot.empty) {
-    // Define default data
-    const defaultData = {};
-  }
   let data = [];
   snapshot.forEach((doc) => {
     data.push(doc.data());

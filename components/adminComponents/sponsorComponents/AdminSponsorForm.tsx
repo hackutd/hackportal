@@ -16,7 +16,6 @@ interface SponsorFormProps {
 
 export default function SponsorForm({ sponsor, onSubmitClick, formAction }: SponsorFormProps) {
   const [disableSubmit, setDisableSubmit] = useState(false);
-
   const [sponsorForm, setSponsorForm] = useState<Sponsor>(
     formAction === 'Edit' && sponsor
       ? sponsor
@@ -82,7 +81,7 @@ export default function SponsorForm({ sponsor, onSubmitClick, formAction }: Spon
         }}
         className="font-bold bg-green-200 hover:bg-green-300 border border-green-800 text-green-900 rounded-lg p-3"
       >
-        {formAction} Sponsor
+        {formAction === 'Edit' ? 'Save Changes' : 'Add Sponsor'}
       </button>
     </div>
   );
