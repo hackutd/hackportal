@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import jsQR from 'jsqr';
 import { Point } from 'jsqr/dist/locator';
 import LoadIcon from '../LoadIcon';
@@ -27,48 +27,100 @@ export const drawLine = (begin: Point, end: Point, context: CanvasRenderingConte
 };
 
 export default function QRCodeReader({ callback, width, height }: QRCodeReaderProps) {
-  const canvas = useRef(null);
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const animationRef = useRef<number | null>(null);
   const [videoReady, setVideoReady] = useState(false);
   const [paused, setPaused] = useState(false);
-  const video = document.createElement('video');
-  video.playsInline = true;
 
   const tick = () => {
-    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+    if (!videoRef.current) return;
+
+    if (videoRef.current.readyState === videoRef.current.HAVE_ENOUGH_DATA) {
       setVideoReady(true);
-      const canvasElement: HTMLCanvasElement = canvas.current;
-      if (!canvasElement) return requestAnimationFrame(tick);
-      canvasElement.width = video.videoWidth;
-      canvasElement.height = video.videoHeight;
+      const canvasElement = canvas.current;
+      if (!canvasElement) {
+        animationRef.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      canvasElement.width = videoRef.current.videoWidth;
+      canvasElement.height = videoRef.current.videoHeight;
       const context = canvasElement.getContext('2d');
-      context.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+      if (!context) return;
+
+      context.drawImage(videoRef.current, 0, 0, canvasElement.width, canvasElement.height);
       const imageData = context.getImageData(0, 0, canvasElement.width, canvasElement.height);
-      var qrCode = jsQR(imageData.data, imageData.width, imageData.height, {
+      const qrCode = jsQR(imageData.data, imageData.width, imageData.height, {
         inversionAttempts: 'dontInvert',
       });
+
       if (qrCode) {
         drawLine(qrCode.location.topLeftCorner, qrCode.location.topRightCorner, context);
         drawLine(qrCode.location.topRightCorner, qrCode.location.bottomRightCorner, context);
         drawLine(qrCode.location.bottomRightCorner, qrCode.location.bottomLeftCorner, context);
         drawLine(qrCode.location.bottomLeftCorner, qrCode.location.topLeftCorner, context);
-        video.pause();
+        if (videoRef.current) videoRef.current.pause();
         setPaused(true);
         setVideoReady(false);
-        callback(qrCode.data, video, setVideoReady, setPaused, tick);
+        if (callback && videoRef.current) {
+          callback(qrCode.data, videoRef.current, setVideoReady, setPaused, tick);
+        }
         return;
       }
     }
-    requestAnimationFrame(tick);
+
+    animationRef.current = requestAnimationFrame(tick);
   };
 
-  !paused &&
-    navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: 'environment', frameRate: 30, width, height } })
-      .then((stream) => {
-        video.srcObject = stream;
-        video.play();
-        requestAnimationFrame(tick);
-      });
+  useEffect(() => {
+    // Initialize video element only once
+    if (!videoRef.current) {
+      videoRef.current = document.createElement('video');
+      videoRef.current.playsInline = true;
+    }
+
+    // Start/stop video based on paused state
+    const startVideo = async () => {
+      if (paused || streamRef.current) return;
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment', width, height },
+        });
+
+        streamRef.current = stream;
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          await videoRef.current.play();
+          animationRef.current = requestAnimationFrame(tick);
+        }
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+      }
+    };
+
+    startVideo();
+
+    // Cleanup function
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
+
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
+      }
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = null;
+      }
+    };
+  }, [paused, width, height]);
+
   return (
     <div className="flex items-center justify-center">
       {videoReady && !paused ? <canvas ref={canvas} /> : <LoadIcon width={width} height={height} />}
