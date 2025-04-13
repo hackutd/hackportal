@@ -28,7 +28,41 @@ async function getSponsors(req: NextApiRequest, res: NextApiResponse) {
 
 async function updateSponsor(req: NextApiRequest, res: NextApiResponse) {
   const sponsorData = JSON.parse(req.body);
+  const { originalName, ...updatedSponsorData } = sponsorData;
 
+  const userToken = req.headers['authorization'] as string;
+  const isAuthorized = await userIsAuthorized(userToken, ['super_admin']);
+  if (!isAuthorized) {
+    return res.status(403).json({
+      statusCode: 403,
+      msg: 'Request is not authorized to perform admin functionality',
+    });
+  }
+
+  // if originalName is provided use it to find the sponsor
+  // handles the case when a sponsor's name is being changed
+  const searchName = originalName || updatedSponsorData.name;
+
+  const sponsorSnapshot = await db.collection(SPONSORS).where('name', '==', searchName).get();
+  if (sponsorSnapshot.empty) {
+    await db.collection(SPONSORS).add(updatedSponsorData);
+    return res.status(201).json({
+      msg: 'Sponsor created',
+    });
+  }
+
+  const updatePromises = sponsorSnapshot.docs.map((doc) =>
+    db.collection(SPONSORS).doc(doc.id).update(updatedSponsorData),
+  );
+  await Promise.all(updatePromises);
+
+  return res.status(200).json({
+    msg: 'Sponsor updated',
+  });
+}
+
+async function deleteSponsor(req: NextApiRequest, res: NextApiResponse) {
+  const sponsorData = JSON.parse(req.body);
   const userToken = req.headers['authorization'] as string;
   const isAuthorized = await userIsAuthorized(userToken, ['super_admin']);
   if (!isAuthorized) {
@@ -40,26 +74,18 @@ async function updateSponsor(req: NextApiRequest, res: NextApiResponse) {
 
   const sponsorSnapshot = await db.collection(SPONSORS).where('name', '==', sponsorData.name).get();
   if (sponsorSnapshot.empty) {
-    await db.collection(SPONSORS).add({
-      ...sponsorData,
-    });
-    return res.status(201).json({
-      msg: 'Sponsor created',
+    return res.status(404).json({
+      msg: 'Sponsor not found',
     });
   }
 
-  const updatePromises = sponsorSnapshot.docs.map((doc) =>
-    db
-      .collection(SPONSORS)
-      .doc(doc.id)
-      .update({
-        ...sponsorData,
-      }),
+  const deletePromises = sponsorSnapshot.docs.map((doc) =>
+    db.collection(SPONSORS).doc(doc.id).delete(),
   );
-  await Promise.all(updatePromises);
+  await Promise.all(deletePromises);
 
   return res.status(200).json({
-    msg: 'Sponsor updated',
+    msg: 'Sponsor deleted',
   });
 }
 
@@ -71,6 +97,10 @@ function handlePostRequest(req: NextApiRequest, res: NextApiResponse) {
   return updateSponsor(req, res);
 }
 
+function handleDeleteRequest(req: NextApiRequest, res: NextApiResponse) {
+  return deleteSponsor(req, res);
+}
+
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
   switch (method) {
@@ -79,6 +109,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
     case 'POST': {
       return handlePostRequest(req, res);
+    }
+    case 'DELETE': {
+      return handleDeleteRequest(req, res);
     }
     default: {
       return res.status(404).json({
