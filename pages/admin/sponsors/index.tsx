@@ -10,10 +10,16 @@ export interface Sponsor {
   img: string;
   tier: 'title' | 'platinum' | 'gold' | 'silver' | 'bronze';
   reference?: string;
+  name: string;
 }
 
 interface AdminSponsorPageProps {
   sponsors_: Sponsor[];
+}
+
+function isAuthorized(user): boolean {
+  if (!user || !user.permissions) return false;
+  return (user.permissions as string[]).includes('super_admin');
 }
 
 const Page = ({ sponsors_ }: AdminSponsorPageProps) => {
@@ -21,7 +27,8 @@ const Page = ({ sponsors_ }: AdminSponsorPageProps) => {
 
   const [sponsors, setSponsors] = useState<Sponsor[]>(sponsors_);
 
-  if (!isSignedIn) return <div className="text-2xl font-bold text-center">Unauthorized</div>;
+  if (!isSignedIn || !isAuthorized(user))
+    return <div className="text-2xl font-bold text-center">Unauthorized</div>;
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center p-12 gap-4 ">
