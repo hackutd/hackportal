@@ -26,42 +26,12 @@ export default function SponsorForm({ sponsor, onSubmitClick, formAction }: Spon
     fileInputRef.current.click();
   };
 
-  // compress image to 70% quality
-  const compressImage = (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        const img = new Image();
-        img.onload = () => {
-          // create canvas for compression
-          const canvas = document.createElement('canvas');
-
-          // max 800px width or height
-          const maxSize = 800;
-          let width = img.width;
-          let height = img.height;
-
-          if (width > height && width > maxSize) {
-            height = Math.round((height * maxSize) / width);
-            width = maxSize;
-          } else if (height > maxSize) {
-            width = Math.round((width * maxSize) / height);
-            height = maxSize;
-          }
-
-          // resize image
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-
-          // 70% quality
-          const compressedImage = canvas.toDataURL('image/jpeg', 0.7);
-
-          setSponsorForm({ ...sponsorForm, reference: compressedImage });
-        };
-        img.src = event.target.result as string;
+        setSponsorForm({ ...sponsorForm, reference: event.target.result as string });
       };
       reader.readAsDataURL(file);
     }
@@ -86,7 +56,7 @@ export default function SponsorForm({ sponsor, onSubmitClick, formAction }: Spon
       />
 
       <div className="flex flex-col gap-2">
-        <label className="font-medium">Sponsor Image</label>
+        <label className="font-medium">Sponsor Logo</label>
         <div
           onClick={handleImageClick}
           className="border-2 p-3 rounded-lg cursor-pointer flex flex-col items-center justify-center h-48 bg-gray-50 hover:bg-gray-100"
@@ -94,7 +64,7 @@ export default function SponsorForm({ sponsor, onSubmitClick, formAction }: Spon
           <input
             type="file"
             ref={fileInputRef}
-            onChange={compressImage}
+            onChange={handleImageChange}
             accept="image/*"
             className="hidden"
           />
