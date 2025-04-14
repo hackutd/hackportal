@@ -65,8 +65,8 @@ export default function AddSponsorPage() {
       <div className="mt-4">
         <SponsorForm
           formAction="Add"
-          onSubmitClick={async (event) => {
-            await submitAddSponsorRequest(event);
+          onSubmitClick={async (sponsorData) => {
+            await submitAddSponsorRequest(sponsorData);
           }}
         />
       </div>

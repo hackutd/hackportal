@@ -5,13 +5,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import SponsorForm from '@/components/adminComponents/sponsorComponents/AdminSponsorForm';
 import { RequestHelper } from '@/lib/request-helper';
 import { useAuthContext } from '@/lib/user/AuthContext';
-
-interface Sponsor {
-  name: string;
-  link: string;
-  reference: string;
-  tier: string;
-}
+import { Sponsor } from '../index';
 
 interface EditSponsorPageProps {
   sponsor: Sponsor;
@@ -76,8 +70,8 @@ export default function EditSponsorPage({ sponsor }: EditSponsorPageProps) {
         <SponsorForm
           sponsor={sponsor}
           formAction="Edit"
-          onSubmitClick={async (event) => {
-            await submitEditSponsorRequest(event);
+          onSubmitClick={async (sponsorData) => {
+            await submitEditSponsorRequest(sponsorData);
           }}
         />
       </div>

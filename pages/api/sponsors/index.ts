@@ -39,8 +39,7 @@ async function updateSponsor(req: NextApiRequest, res: NextApiResponse) {
     });
   }
 
-  // if originalName is provided use it to find the sponsor
-  // handles the case when a sponsor's name is being changed
+  // handles case when a sponsor's name is being changed
   const searchName = originalName || updatedSponsorData.name;
 
   const sponsorSnapshot = await db.collection(SPONSORS).where('name', '==', searchName).get();
