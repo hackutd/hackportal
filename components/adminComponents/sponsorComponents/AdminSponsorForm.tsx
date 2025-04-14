@@ -19,19 +19,28 @@ export default function SponsorForm({ sponsor, onSubmitClick, formAction }: Spon
           tier: 'bronze',
         },
   );
+  const [imageError, setImageError] = useState<string | null>(null);
 
   const fileInputRef = useRef(null);
 
   const handleImageClick = () => {
+    setImageError(null);
     fileInputRef.current.click();
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Check file size (1MB = 1024 * 1024 bytes)
+      if (file.size > 1024 * 1024) {
+        setImageError('Logo file cannot be larger than 1MB');
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (event) => {
         setSponsorForm({ ...sponsorForm, reference: event.target.result as string });
+        setImageError(null);
       };
       reader.readAsDataURL(file);
     }
@@ -94,9 +103,11 @@ export default function SponsorForm({ sponsor, onSubmitClick, formAction }: Spon
                 />
               </svg>
               <p className="mt-2 text-sm text-gray-500">Click to upload an image</p>
+              <p className="mt-1 text-xs text-gray-400">Maximum file size: 1MB</p>
             </div>
           )}
         </div>
+        {imageError && <div className="text-red-500 text-sm mt-1">{imageError}</div>}
       </div>
 
       <select
@@ -115,13 +126,16 @@ export default function SponsorForm({ sponsor, onSubmitClick, formAction }: Spon
       </select>
 
       <button
-        disabled={disableSubmit}
+        disabled={disableSubmit || !!imageError}
         onClick={async () => {
           setDisableSubmit(true);
           try {
             await onSubmitClick(sponsorForm);
           } catch (error) {
             console.error('Error submitting sponsor data:', error);
+            if (error.message && error.message.includes('Body exceeded')) {
+              setImageError('Logo file is too large. Please use a file smaller than 1MB.');
+            }
           } finally {
             setDisableSubmit(false);
           }
