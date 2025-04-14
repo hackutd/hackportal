@@ -1,16 +1,42 @@
 import LogoContext from '@/lib/context/logo';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PlaceholderMascot from '../../public/assets/Reveal.gif';
 import styles from './HomeSponsors.module.css';
 import SponsorCard from './SponsorCard';
 import TierTitle from './TierTitle';
-import { SPONSOR_LIST } from '@/lib/sponsors';
+import { Sponsor } from '@/pages/admin/sponsors';
+import { RequestHelper } from '@/lib/request-helper';
 
 export default function HomeSponsors() {
   const [currentHoveredLogo, setCurrentHoveredLogo] = useState<string>('');
+  const [sponsors, setSponsors] = useState<Sponsor[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const sponsorTiers: { [key: string]: Sponsor[] } = SPONSOR_LIST.reduce((acc, curr) => {
+  useEffect(() => {
+    const fetchSponsors = async () => {
+      try {
+        setLoading(true);
+        const { data, status } = await RequestHelper.get<Sponsor[]>('/api/sponsors', {});
+
+        if (status >= 200 && status < 300) {
+          setSponsors(data);
+        } else {
+          setError(`Failed to fetch sponsors: ${status}`);
+        }
+      } catch (err) {
+        setError('An error occurred while fetching sponsors');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSponsors();
+  }, []);
+
+  const sponsorTiers: { [key: string]: Sponsor[] } = sponsors.reduce((acc, curr) => {
     const tier = curr.tier;
     if (!acc[tier]) {
       acc[tier] = [];
@@ -19,8 +45,29 @@ export default function HomeSponsors() {
     return acc;
   }, {} as { [key: string]: Sponsor[] });
 
+  if (loading) {
+    return (
+      <section className="relative pt-[10rem] bg-[#F2F3FF] font-fredoka">
+        <div className="text-center text-5xl text-[#5D5A88]">
+          <h1 className="uppercase font-bold">Loading sponsors...</h1>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="relative pt-[10rem] bg-[#F2F3FF] font-fredoka">
+        <div className="text-center text-5xl text-[#5D5A88]">
+          <h1 className="uppercase font-bold">Error loading sponsors</h1>
+          <p className="text-2xl mt-4">{error}</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    SPONSOR_LIST.length != 0 && (
+    sponsors.length !== 0 && (
       <section className="relative pt-[10rem] bg-[#F2F3FF] font-fredoka">
         {/* TODO: will update styling better once get more assets and finalized content */}
         <div>
@@ -60,14 +107,8 @@ export default function HomeSponsors() {
 
                   <div className="flex flex-wrap gap-16 justify-center items-center">
                     <LogoContext.Provider value={{ currentHoveredLogo, setCurrentHoveredLogo }}>
-                      {sponsorTiers[tier]?.map(({ link, reference, alternativeReference }, idx) => (
-                        <SponsorCard
-                          tier={tier}
-                          alternativeReference={alternativeReference}
-                          reference={reference}
-                          key={idx}
-                          link={link}
-                        />
+                      {sponsorTiers[tier]?.map((sponsor, idx) => (
+                        <SponsorCard key={idx} {...sponsor} />
                       ))}
                     </LogoContext.Provider>
                   </div>

@@ -76,7 +76,7 @@ const AdminSponsorCard: React.FC<AdminSponsorCardProps> = ({
               )}
             </div>
             <a
-              href={link}
+              href={link.startsWith('http') ? link : `https://${link}`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 text-sm text-blue-500 break-all"

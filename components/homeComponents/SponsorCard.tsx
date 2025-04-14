@@ -5,13 +5,7 @@ import 'firebase/compat/storage';
 import Image from 'next/image';
 import { useContext, useState } from 'react';
 import LoadIcon from '../LoadIcon';
-
-interface SponsorCardProps {
-  tier: string;
-  link: string;
-  reference: string;
-  alternativeReference?: string;
-}
+import { Sponsor } from '@/pages/admin/sponsors';
 
 const mountedStyle = { animation: 'inAnimation 250ms ease-in' };
 const unmountedStyle = {
@@ -22,15 +16,10 @@ const unmountedStyle = {
 /**
  * Keynote Speaker card for landing page.
  */
-export default function SponsorCard(props: SponsorCardProps) {
+export default function SponsorCard(props: Sponsor) {
   const [hovering, setHovering] = useState(false);
 
   const { setCurrentHoveredLogo, currentHoveredLogo } = useContext(LogoContext);
-
-  const shouldRenderAlternativeImg = useDelayUnmount(
-    hovering && Boolean(props.alternativeReference),
-    100,
-  );
 
   return (
     <div
@@ -58,37 +47,24 @@ export default function SponsorCard(props: SponsorCardProps) {
         setHovering(false);
       }}
     >
-      <a href={props.link} target="_blank" rel="noreferrer">
-        {shouldRenderAlternativeImg ? (
-          <Image
-            alt={`Sponsor Image ${props.alternativeReference}`}
-            src={props.alternativeReference}
-            width={props.tier === 'title' ? 600 : 200}
-            height={props.tier === 'title' ? 600 : 200}
-            layout="fixed"
-            objectFit="contain"
-            style={hovering ? mountedStyle : unmountedStyle}
-            className={clsx('object-contain', {
-              ['w-[250px] h-[150px]']: props.tier !== 'title',
-              ['w-[600] h-[150px]']: props.tier === 'title',
-            })}
-          />
-        ) : (
-          <Image
-            alt={`Sponsor Image ${props.reference}`}
-            src={props.reference}
-            width={props.tier === 'title' ? 600 : 200}
-            height={props.tier === 'title' ? 600 : 200}
-            layout="fixed"
-            objectFit="contain"
-            className={clsx('object-contain', {
-              ['w-[250px] h-[150px]']: props.tier !== 'title',
-              ['w-[600px] h-[150px]']: props.tier === 'title',
-            })}
-          />
-        )}
+      <a
+        href={props.link.startsWith('http') ? props.link : `https://${props.link}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Image
+          alt={`Sponsor Image ${props.reference}`}
+          src={props.reference}
+          width={props.tier === 'title' ? 600 : 200}
+          height={props.tier === 'title' ? 600 : 200}
+          layout="fixed"
+          objectFit="contain"
+          className={clsx('object-contain', {
+            ['w-[250px] h-[150px]']: props.tier !== 'title',
+            ['w-[600px] h-[150px]']: props.tier === 'title',
+          })}
+        />
       </a>
-      <br></br>
     </div>
   );
 }
