@@ -66,7 +66,15 @@ const AdminSponsorCard: React.FC<AdminSponsorCardProps> = ({
               {tier} Sponsor
             </div>
             <div className="text-gray-800 font-medium">{name}</div>
-            <div className="text-center text-gray-600 break-all">{reference}</div>
+            <div className="w-full h-32 flex justify-center items-center mb-2">
+              {reference && (
+                <img
+                  src={reference}
+                  alt={`${name} logo`}
+                  className="max-h-full max-w-full object-contain"
+                />
+              )}
+            </div>
             <a
               href={link}
               target="_blank"

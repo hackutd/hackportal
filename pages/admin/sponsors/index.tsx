@@ -6,11 +6,11 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 
 export interface Sponsor {
-  link: string;
-  img: string;
-  tier: 'title' | 'platinum' | 'gold' | 'silver' | 'bronze';
-  reference?: string;
   name: string;
+  link: string;
+  tier: 'title' | 'platinum' | 'gold' | 'silver' | 'bronze';
+  // base64 encoded image data instead of a path
+  reference: string;
 }
 
 interface AdminSponsorPageProps {
