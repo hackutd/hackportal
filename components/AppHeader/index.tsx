@@ -96,9 +96,9 @@ export default function AppHeader() {
       <header
         className={clsx(
           'hidden md:flex flex-col w-full',
-          // 'fixed top-0 z-[1000]', // NOTE: Comment line below for special hiding effect
+          'fixed top-0 z-[1000]', // NOTE: Comment line below for special hiding effect
           // NOTE: Uncomment line below for special hiding effect
-          'relative z-[1000]',
+          //'relative z-[1000]',
         )}
         // NOTE: Uncomment line below for special hiding effect
         style={{
