@@ -120,24 +120,6 @@ export default function AppHeader() {
           <AppHeaderCore />
         </div>
       </header>
-
-      {/* Sign out button for mobile */}
-      <button
-        className={clsx(
-          'w-[112px]',
-          `md:hidden fixed z-[1000] ${location.pathname === '/' ? 'left-[1rem]' : 'right-[1rem]'}`,
-          'mt-10 py-3 px-5 rounded-[30px] bg-[#40B7BA] font-bold text-white ml-3 border-2 border-white',
-        )}
-        onClick={async () => {
-          if (user) {
-            await signOut();
-          } else {
-            await router.push('/auth');
-          }
-        }}
-      >
-        {user ? 'Sign Out' : 'Sign In'}
-      </button>
     </React.Fragment>
   );
 }
