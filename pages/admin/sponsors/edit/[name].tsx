@@ -6,6 +6,7 @@ import SponsorForm from '@/components/adminComponents/sponsorComponents/AdminSpo
 import { RequestHelper } from '@/lib/request-helper';
 import { useAuthContext } from '@/lib/user/AuthContext';
 import { Sponsor } from '../index';
+import { useState, useEffect } from 'react';
 
 interface EditSponsorPageProps {
   sponsor: Sponsor;
@@ -15,9 +16,43 @@ export default function EditSponsorPage({ sponsor }: EditSponsorPageProps) {
   const { user, isSignedIn } = useAuthContext();
   const router = useRouter();
   const { name: originalName } = router.query;
+  const [error, setError] = useState<string | null>(null);
+  const [existingSponsors, setExistingSponsors] = useState<Sponsor[]>([]);
+
+  // fetch all sponsors on component mount
+  useEffect(() => {
+    const fetchSponsors = async () => {
+      try {
+        const { data, status } = await RequestHelper.get<Sponsor[]>('/api/sponsors', {});
+        if (status >= 200 && status < 300) {
+          setExistingSponsors(data);
+        }
+      } catch (error) {
+        console.error('Error fetching sponsors:', error);
+      }
+    };
+
+    fetchSponsors();
+  }, []);
+
+  const checkDuplicateName = (newName: string): boolean => {
+    // check if the new name already exists, excluding the current sponsor
+    return existingSponsors.some(
+      (s) => s.name.toLowerCase() === newName.toLowerCase() && s.name !== originalName,
+    );
+  };
 
   const submitEditSponsorRequest = async (sponsorData: Sponsor) => {
     try {
+      // check for duplicate name only if the name has changed
+      if (sponsorData.name !== originalName && checkDuplicateName(sponsorData.name)) {
+        setError(
+          `A sponsor with the name "${sponsorData.name}" already exists. Please use a different name.`,
+        );
+        return;
+      }
+
+      setError(null);
       const { data, status } = await RequestHelper.post<any, { msg?: string }>(
         '/api/sponsors',
         {
@@ -32,11 +67,11 @@ export default function EditSponsorPage({ sponsor }: EditSponsorPageProps) {
       );
 
       if (status === 403) {
-        alert('You do not have the permission to perform this functionality');
+        setError('You do not have the permission to perform this functionality');
         return;
       }
       if (status >= 400) {
-        alert(`Unexpected HTTP error: ${status}`);
+        setError(`Unexpected HTTP error: ${status}`);
         return;
       }
 
@@ -44,10 +79,10 @@ export default function EditSponsorPage({ sponsor }: EditSponsorPageProps) {
         alert('Sponsor updated successfully!');
         router.push('/admin/sponsors');
       } else {
-        alert(`There was an error: ${data?.msg}`);
+        setError(`There was an error: ${data?.msg}`);
       }
     } catch (error) {
-      alert('Unexpected error! Please try again');
+      setError('Unexpected error! Please try again');
       console.error(error);
     }
   };
@@ -66,6 +101,7 @@ export default function EditSponsorPage({ sponsor }: EditSponsorPageProps) {
           </div>
         </Link>
       </div>
+      {error && <div className="text-red-500 text-sm mt-1">{error}</div>}
       <div className="mt-4">
         <SponsorForm
           sponsor={sponsor}
