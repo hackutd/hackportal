@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
-import AppHeader2_Core from './core';
+import AppHeaderCore from './AppHeaderCore';
 import { useAuthContext } from '@/lib/user/AuthContext';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -117,7 +117,7 @@ export default function AppHeader2_Wrapper() {
             pointerEvents: 'auto',
           }}
         >
-          <AppHeader2_Core />
+          <AppHeaderCore />
         </div>
       </header>
 
