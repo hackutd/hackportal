@@ -4,13 +4,8 @@ import clsx from 'clsx';
 import 'firebase/compat/storage';
 import Image from 'next/image';
 import { useContext, useState } from 'react';
-
-interface SponsorCardProps {
-  tier: string;
-  link: string;
-  reference: string;
-  alternativeReference?: string;
-}
+import LoadIcon from '../LoadIcon';
+import { Sponsor } from '@/pages/admin/sponsors';
 
 const mountedStyle = { animation: 'inAnimation 250ms ease-in' };
 const unmountedStyle = {

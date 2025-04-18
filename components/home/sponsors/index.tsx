@@ -1,10 +1,14 @@
 import { useState } from 'react';
 
 import LogoContext from '@/lib/context/logo';
-import { SPONSOR_LIST } from '@/lib/sponsors';
-
-import TierTitle from './TierTitle';
+import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import PlaceholderMascot from '../../public/assets/Reveal.gif';
+import styles from './HomeSponsors.module.css';
 import SponsorCard from './SponsorCard';
+import TierTitle from './TierTitle';
+import { Sponsor } from '@/pages/admin/sponsors';
+import { RequestHelper } from '@/lib/request-helper';
 
 export default function HomeSponsors() {
   const [currentHoveredLogo, setCurrentHoveredLogo] = useState<string>('');
