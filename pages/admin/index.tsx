@@ -133,6 +133,7 @@ export default function Admin({ questions }: { questions: QADocument[] }) {
             <EventDetailLink title="View Events" href="/admin/events" />
             <EventDetailLink title="View Challenges" href="/admin/challenges" />
             <EventDetailLink title="View Sponsors" href="/admin/sponsors" />
+            <EventDetailLink title="View Keynote" href="/admin/keynote" />
           </div>
         </div>
       )}
