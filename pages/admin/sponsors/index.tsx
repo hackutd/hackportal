@@ -1,4 +1,4 @@
-import AdminSponsorList from '@/components/adminComponents/sponsorComponents/AdminSponsorList';
+import AdminSponsorList from '@/components/admin/sponsor/AdminSponsorList';
 import { RequestHelper } from '@/lib/request-helper';
 import { useAuthContext } from '@/lib/user/AuthContext';
 import { GetServerSideProps } from 'next';

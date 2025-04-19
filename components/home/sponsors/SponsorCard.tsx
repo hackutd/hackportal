@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import 'firebase/compat/storage';
 import Image from 'next/image';
 import { useContext, useState } from 'react';
-import LoadIcon from '../LoadIcon';
 import { Sponsor } from '@/pages/admin/sponsors';
 
 const mountedStyle = { animation: 'inAnimation 250ms ease-in' };

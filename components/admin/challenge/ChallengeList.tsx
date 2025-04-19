@@ -19,9 +19,15 @@ import {
 interface Props {
   challenges: SortableObject<Challenge>[];
   onUpdateOrder: (oldIndex: number, newIndex: number) => void;
+  onChallengeDeleteClick: (index: number) => void;
+  onChallengeEditClick: (index: number) => void;
 }
-
-export default function ChallengeList({ challenges, onUpdateOrder }: Props) {
+export default function ChallengeList({
+  challenges,
+  onUpdateOrder,
+  onChallengeDeleteClick,
+  onChallengeEditClick,
+}: Props) {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {

@@ -4,7 +4,7 @@ import { RequestHelper } from '@/lib/request-helper';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import SponsorForm from '@/components/adminComponents/sponsorComponents/AdminSponsorForm';
+import SponsorForm from '@/components/admin/sponsor/AdminSponsorForm';
 
 function isAuthorized(user: any): boolean {
   if (!user || !user.permissions) return false;

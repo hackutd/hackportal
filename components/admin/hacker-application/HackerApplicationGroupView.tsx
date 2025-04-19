@@ -1,30 +1,37 @@
 import { useEffect, useRef, useState } from 'react';
 import Pagination from './HackerApplicationPagination';
 import { useAuthContext } from '../../../lib/user/AuthContext';
-import { ChevronLeftIcon, ChevronRightIcon, XIcon } from '@heroicons/react/solid';
-
-import { ApplicationViewState } from '@/lib/util';
-import { ApplicationEntry } from '@/lib/admin/group';
-
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  LockClosedIcon,
+  LockOpenIcon,
+  XIcon,
+} from '@heroicons/react/solid';
 import { getGroupId } from './utils';
-import HackerApplicationGroupCarousel from './HackerApplicaationGroupCarousel';
-import HackerApplicationPagination from './HackerApplicationPagination';
+import UserAdminGroupCarousel from './HackerApplicationGroupCarousel';
+import { ApplicationViewState } from '@/lib/util';
+import { ApplicationEntry, useUserGroup } from '@/lib/admin/group';
 
-interface Props {
+interface UserAdminGroupViewProps {
   userGroups: ApplicationEntry[];
   currentUserGroupId: string;
   goBack: () => void;
+  // updateCurrentUser: (value: Omit<UserIdentifier, 'scans'>) => void;
   onUserGroupClick: (id: string) => void;
+  // onAcceptReject: (status: string, notes: string) => void;
+  // onUpdateRole: (newRole: UserPermission) => void;
   appViewState: ApplicationViewState;
 }
 
-export default function HackerApplicationGroupView({
+export default function UserAdminGroupView({
   userGroups,
   currentUserGroupId,
   goBack,
   onUserGroupClick,
   appViewState,
-}: Props) {
+}: UserAdminGroupViewProps) {
+  const { user } = useAuthContext();
   const [currentUserGroupIndex, setCurrentUserGroupIndex] = useState(0);
 
   useEffect(() => {
@@ -38,11 +45,20 @@ export default function HackerApplicationGroupView({
     setCurrentUserGroupIndex(tempCurrentUserGroupIndex);
   }, [userGroups, currentUserGroupId]);
 
+  const stringifyScore = (appScore: { acceptCount: number; rejectCount: number }) => {
+    if (appScore.acceptCount >= 1000000000) return 'Auto-Accepted by HackPortal';
+    return `${appScore.acceptCount - appScore.rejectCount} (${appScore.acceptCount} accepted, ${
+      appScore.rejectCount
+    } rejected)`;
+  };
+
   // Pagination
   const ref = useRef(null);
+
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [height, setHeight] = useState(60);
   const [currentPage, setCurrentPage] = useState(1);
+  const [errors, setErrors] = useState<string[]>([]);
 
   // Contains info of the user who is viewing the data
   const { user: organizer } = useAuthContext();
@@ -93,6 +109,15 @@ export default function HackerApplicationGroupView({
                 onUserGroupClick(getGroupId(group.application));
               }}
             >
+              {/* <div
+                className={`
+                  text-[rgba(19,19,19,1)] font-bold
+                  whitespace-nowrap overflow-hidden text-ellipsis max-w-[50%]
+                `}
+              >
+                {user.user.firstName}
+              </div> */}
+
               <div
                 className={`
                   py-1 px-6 text-sm font-bold rounded-full
@@ -137,7 +162,7 @@ export default function HackerApplicationGroupView({
         </div>
 
         {/* Pagination */}
-        <HackerApplicationPagination
+        <Pagination
           currentPage={currentPage}
           totalCount={userGroups.length}
           pageSize={pageSize}
@@ -177,7 +202,7 @@ export default function HackerApplicationGroupView({
         </div>
 
         {/* Application */}
-        <HackerApplicationGroupCarousel
+        <UserAdminGroupCarousel
           group={userGroups[currentUserGroupIndex].application}
           appViewState={appViewState}
         />

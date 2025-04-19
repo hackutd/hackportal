@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import SponsorForm from '@/components/adminComponents/sponsorComponents/AdminSponsorForm';
+import SponsorForm from '@/components/admin/sponsor/AdminSponsorForm';
 import { RequestHelper } from '@/lib/request-helper';
 import { useAuthContext } from '@/lib/user/AuthContext';
 import { Sponsor } from '../index';

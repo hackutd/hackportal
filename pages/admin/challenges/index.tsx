@@ -141,6 +141,13 @@ export default function ChallengePage(props: Props) {
             onUpdateOrder={(oldIndex, newIndex) => {
               setChallenges((prev) => arrayMove(prev, oldIndex, newIndex));
             }}
+            onChallengeDeleteClick={(index) => {
+              setModalOpen(true);
+              setCurrentChallengeDeleteIndex(index);
+            }}
+            onChallengeEditClick={(index) => {
+              setCurrentChallengeEditIndex(index);
+            }}
           />
           <div className="p-3 flex gap-x-4">
             <Link href={`/admin/challenges/add?id=${nextChallengeIndex}`} legacyBehavior>

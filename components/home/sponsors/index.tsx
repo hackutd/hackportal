@@ -1,8 +1,6 @@
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import LogoContext from '@/lib/context/logo';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
 import PlaceholderMascot from '../../public/assets/Reveal.gif';
 import styles from './HomeSponsors.module.css';
 import SponsorCard from './SponsorCard';
