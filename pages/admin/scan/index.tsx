@@ -1,7 +1,5 @@
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { Dialog } from '@headlessui/react';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { TextField } from '@mui/material';
 
@@ -10,38 +8,14 @@ import { checkUserPermission } from '@/lib/util';
 import { useAuthContext } from '@/lib/user/AuthContext';
 import { RequestHelper } from '@/lib/request-helper';
 import ScanType from '@/components/ScanType';
-import QRCodeReader from '@/components/dashboard/QRCodeReader';
 import Loading from '@/components/icon/Loading';
 
-const allowedRoles = ['super_admin', 'admin', 'organizer'];
-
-// TODO: refactor this page
-const successStrings = {
-  claimed: 'Scan claimed...',
-  invalidUser: 'Invalid user...',
-  alreadyClaimed: 'User has already claimed...',
-  unexpectedError: 'Unexpected error...',
-  notCheckedIn: "User hasn't checked in!",
-  invalidFormat: 'Invalid hacker tag format...',
-  lateCheckinIneligible: 'User is not eligible for late check-in...',
-};
-
-interface UserProfile extends Omit<Registration, 'user'> {
-  user: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    permissions: string[];
-    preferredEmail: string;
-  };
-}
-
-function getSuccessColor(success: string) {
-  if (success === successStrings.claimed) {
-    return '#5fde05';
-  }
-  return '#ff0000';
-}
+import { allowedRoles, successStrings } from './constants';
+import { UserProfile, ScanType as ScanTypeInterface, NewScanForm } from './types';
+import ScanDialog from './ScanDialog';
+import ScanForm from './ScanForm';
+import ScanResult from './ScanResult';
+import ScanControls from './ScanControls';
 
 /**
  * The admin scanning page.
@@ -52,37 +26,30 @@ export default function Admin() {
   const { user, isSignedIn } = useAuthContext();
 
   // List of scan types fetched from backend
-  const [scanTypes, setScanTypes] = useState([]);
+  const [scanTypes, setScanTypes] = useState<ScanTypeInterface[]>([]);
 
   // Flag whether scan-fetching process is completed
   const [scansFetched, setScansFetched] = useState(false);
 
   // Current scan
-  const [currentScan, setCurrentScan] = useState(undefined);
+  const [currentScan, setCurrentScan] = useState<ScanTypeInterface | undefined>(undefined);
   const [currentScanIdx, setCurrentScanIdx] = useState(-1);
 
   // Process data from QR code
-  const [scanData, setScanData] = useState(undefined);
-  const [success, setSuccess] = useState(undefined);
+  const [scanData, setScanData] = useState<string | undefined>(undefined);
+  const [success, setSuccess] = useState<string | undefined>(undefined);
 
   // CRUD scantypes and use scan
   const [showNewScanForm, setShowNewScanForm] = useState(false);
-  const [newScanForm, setNewScanForm] = useState({
-    name: '',
-    isCheckIn: false,
-    isPermanentScan: false,
-    startTime: new Date(),
-    endTime: new Date(),
-  });
   const [startScan, setStartScan] = useState(false);
 
   const [editScan, setEditScan] = useState(false);
-  const [currentEditScan, setCurrentEditScan] = useState(undefined);
+  const [currentEditScan, setCurrentEditScan] = useState<ScanTypeInterface | undefined>(undefined);
 
   const [showDeleteScanDialog, setShowDeleteScanDialog] = useState(false);
-  const [scannedUserInfo, setScannedUserInfo] = useState(undefined);
+  const [scannedUserInfo, setScannedUserInfo] = useState<UserProfile | undefined>(undefined);
 
-  const handleScanClick = (data, idx) => {
+  const handleScanClick = (data: ScanTypeInterface, idx: number) => {
     setCurrentScan(data);
     setCurrentScanIdx(idx);
   };
@@ -173,21 +140,18 @@ export default function Admin() {
     }
   };
 
-  const createNewScan = async () => {
+  const createNewScan = async (newScan: NewScanForm) => {
     if (!user.permissions.includes('super_admin')) {
       alert('You do not have the required permission to use this functionality');
       return;
     }
-    if (
-      !newScanForm.isPermanentScan &&
-      newScanForm.startTime.getTime() > newScanForm.endTime.getTime()
-    ) {
+    if (!newScan.isPermanentScan && newScan.startTime.getTime() > newScan.endTime.getTime()) {
       alert('Invalid date range');
       return;
     }
     try {
-      const newScan = {
-        ...newScanForm,
+      const newScanData = {
+        ...newScan,
         precedence: scanTypes.length,
       };
       const { status, data } = await RequestHelper.post<any, any>(
@@ -198,7 +162,7 @@ export default function Admin() {
           },
         },
         {
-          ...newScanForm,
+          ...newScan,
           precedence: scanTypes.length,
         },
       );
@@ -206,7 +170,7 @@ export default function Admin() {
         alert(data.msg);
       } else {
         alert('Scan added');
-        setScanTypes((prev) => [...prev, newScan]);
+        setScanTypes((prev) => [...prev, newScanData]);
       }
     } catch (error) {
       console.log(error);
@@ -285,140 +249,15 @@ export default function Admin() {
         <AppHeaderCoreMobile />
       </div>
       {currentScan && (
-        <Dialog
-          open={showDeleteScanDialog}
-          onClose={() => setShowDeleteScanDialog(false)}
-          className="fixed z-10 inset-0 overflow-y-auto"
-        >
-          <div className="flex items-center justify-center min-h-screen">
-            <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-
-            <div className="rounded-2xl relative bg-white flex flex-col justify-between p-4 max-w-sm mx-auto">
-              <Dialog.Title>
-                Delete <span className="font-bold">{currentScan.name}</span>
-              </Dialog.Title>
-
-              <div className="my-7 flex flex-col gap-y-4">
-                <Dialog.Description>
-                  This is permanently delete <span className="font-bold">{currentScan.name}</span>
-                </Dialog.Description>
-                <p>Are you sure you want to delete this scan? This action cannot be undone.</p>
-              </div>
-
-              <div className="flex flex-row justify-end gap-x-2">
-                <button
-                  className="rounded-lg p-3 text-red-800 bg-red-100 hover:bg-red-200 border border-red-400"
-                  onClick={async () => {
-                    await deleteScan();
-                  }}
-                >
-                  Delete
-                </button>
-                <button
-                  className="rounded-lg p-3 bg-gray-200 hover:bg-gray-300 border border-gray-500"
-                  onClick={() => setShowDeleteScanDialog(false)}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        </Dialog>
+        <ScanDialog
+          currentScan={currentScan}
+          showDeleteScanDialog={showDeleteScanDialog}
+          setShowDeleteScanDialog={setShowDeleteScanDialog}
+          deleteScan={deleteScan}
+        />
       )}
       {showNewScanForm ? (
-        <div className="px-6 py-4">
-          <button
-            className="text-primaryDark font-bold md:text-lg text-base flex items-center"
-            onClick={() => {
-              setShowNewScanForm(false);
-            }}
-          >
-            <ChevronLeftIcon />
-            Return to scanner
-          </button>
-          <div className="text-2xl font-black text-center">Add New Scan</div>
-          <div className="w-3/5 my-5 mx-auto">
-            <input
-              className="p-3 rounded-lg w-full border-[1px] focus:border-primaryDark"
-              type="text"
-              name="name"
-              value={newScanForm.name}
-              onChange={(e) => {
-                setNewScanForm((prev) => ({
-                  ...prev,
-                  name: e.target.value,
-                }));
-              }}
-              placeholder="Enter name of scantype"
-            />
-            {!newScanForm.isPermanentScan && (
-              <div className="flex flex-row gap-x-2 items-center my-4">
-                <DateTimePicker
-                  label="Enter start date"
-                  value={newScanForm.startTime}
-                  onChange={(newValue) =>
-                    setNewScanForm((prev) => ({
-                      ...prev,
-                      startTime: newValue,
-                    }))
-                  }
-                  renderInput={(params) => <TextField {...params} />}
-                />
-                <DateTimePicker
-                  label="Enter end date"
-                  value={newScanForm.endTime}
-                  onChange={(newValue) =>
-                    setNewScanForm((prev) => ({
-                      ...prev,
-                      endTime: newValue,
-                    }))
-                  }
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </div>
-            )}
-            <div className="flex flex-row gap-x-2 items-center my-4">
-              <input
-                type="checkbox"
-                id="isCheckin"
-                name="isCheckin"
-                checked={newScanForm.isCheckIn}
-                onChange={(e) => {
-                  setNewScanForm((prev) => ({
-                    ...prev,
-                    isCheckIn: e.target.checked,
-                  }));
-                }}
-              />
-              <h1>Is this for check-in event?</h1>
-            </div>
-            <div className="flex flex-row gap-x-2 items-center my-4">
-              <input
-                type="checkbox"
-                id="isPermanent"
-                name="isPermanent"
-                checked={newScanForm.isPermanentScan}
-                onChange={(e) => {
-                  setNewScanForm((prev) => ({
-                    ...prev,
-                    isPermanentScan: e.target.checked,
-                  }));
-                }}
-              />
-              <h1>Will this scan be available throughout the event?</h1>
-            </div>
-          </div>
-          <div className="flex justify-around">
-            <button
-              className="mx-auto p-3 rounded-lg font-bold bg-green-200 hover:bg-green-300 border border-green-800 text-green-900"
-              onClick={async () => {
-                await createNewScan();
-              }}
-            >
-              Add Scan
-            </button>
-          </div>
-        </div>
+        <ScanForm setShowNewScanForm={setShowNewScanForm} createNewScan={createNewScan} />
       ) : (
         <>
           <div className="flex flex-col justify-center">
@@ -446,57 +285,16 @@ export default function Admin() {
                     {currentScan ? currentScan.name : ''}
                   </div>
                   {startScan ? (
-                    <>
-                      {currentScan && !scanData ? (
-                        <QRCodeReader width={200} height={200} callback={handleScan} />
-                      ) : (
-                        <div />
-                      )}
-
-                      {scanData ? (
-                        <div
-                          className="text-center text-3xl font-black"
-                          style={{ color: getSuccessColor(success) }}
-                        >
-                          <p>{success ?? 'Unexpected error!'}</p>
-                          {scannedUserInfo && (
-                            <>
-                              <p>
-                                Name: {scannedUserInfo.user.firstName}{' '}
-                                {scannedUserInfo.user.lastName}
-                              </p>
-                            </>
-                          )}
-                        </div>
-                      ) : (
-                        <div />
-                      )}
-
-                      {scanData ? (
-                        <div className="flex m-auto items-center justify-center">
-                          <div
-                            className="w-min-5 m-3 rounded-lg text-center text-lg font-black p-3 cursor-pointer hover:bg-green-300 border border-green-800 text-green-900"
-                            onClick={() => {
-                              setScanData(undefined);
-                            }}
-                          >
-                            Next Scan
-                          </div>
-                          <div
-                            className="w-min-5 m-3 rounded-lg text-center text-lg font-black p-3 cursor-pointer hover:bg-green-300 border border-green-800 text-green-900"
-                            onClick={() => {
-                              setScanData(undefined);
-                              setCurrentScan(undefined);
-                              setStartScan(false);
-                            }}
-                          >
-                            Done
-                          </div>
-                        </div>
-                      ) : (
-                        <div />
-                      )}
-                    </>
+                    <ScanResult
+                      scanData={scanData}
+                      success={success}
+                      scannedUserInfo={scannedUserInfo}
+                      setScanData={setScanData}
+                      setCurrentScan={setCurrentScan}
+                      setStartScan={setStartScan}
+                      currentScan={currentScan}
+                      handleScan={handleScan}
+                    />
                   ) : editScan ? (
                     <>
                       <div className="px-6 py-4">
@@ -594,62 +392,16 @@ export default function Admin() {
                       </div>
                     </>
                   ) : (
-                    <div className="mx-auto flex flex-row gap-x-4">
-                      <button
-                        className="font-bold bg-green-200 hover:bg-green-300 border border-green-800 text-green-700 rounded-lg md:p-3 p-1 px-2"
-                        onClick={() => {
-                          setStartScan(true);
-                        }}
-                      >
-                        Start Scan
-                      </button>
-                      {user.permissions.includes('super_admin') && (
-                        <>
-                          <button
-                            className="font-bold bg-gray-200 hover:bg-gray-300 border border-gray-500 rounded-lg md:p-3 p-1 px-2"
-                            onClick={() => {
-                              if (!user.permissions.includes('super_admin')) {
-                                alert(
-                                  'You do not have the required permission to use this functionality',
-                                );
-                                return;
-                              }
-                              setCurrentEditScan(currentScan);
-                              setEditScan(true);
-                            }}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="font-bold text-red-700 bg-red-100 hover:bg-red-200 border border-red-400 rounded-lg md:p-3 p-1 px-2"
-                            onClick={() => {
-                              if (!user.permissions.includes('super_admin')) {
-                                alert(
-                                  'You do not have the required permission to use this functionality',
-                                );
-                                return;
-                              }
-                              if (currentScan.isCheckIn) {
-                                alert('Check-in scan cannot be deleted');
-                                return;
-                              }
-                              setShowDeleteScanDialog(true);
-                            }}
-                          >
-                            Delete
-                          </button>
-                        </>
-                      )}
-                      <button
-                        className="font-bold text-red-800 bg-red-100 hover:bg-red-200 border border-red-400 rounded-lg md:p-3 p-1 px-2"
-                        onClick={() => {
-                          setCurrentScan(undefined);
-                          setCurrentScanIdx(-1);
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    </div>
+                    <ScanControls
+                      currentScan={currentScan}
+                      user={user}
+                      setStartScan={setStartScan}
+                      setEditScan={setEditScan}
+                      setCurrentEditScan={setCurrentEditScan}
+                      setShowDeleteScanDialog={setShowDeleteScanDialog}
+                      setCurrentScan={setCurrentScan}
+                      setCurrentScanIdx={setCurrentScanIdx}
+                    />
                   )}
                 </div>
               </div>
