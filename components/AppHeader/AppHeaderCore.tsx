@@ -28,7 +28,6 @@ type Scan = {
 
 export default function AppHeaderCore(props: Props) {
   const { user, hasProfile, signOut } = useAuthContext();
-  const { faqRef, scheduleRef } = useContext(SectionReferenceContext);
   const { callbackRegistry } = useContext(NavbarCallbackRegistryContext);
 
   const router = useRouter();
@@ -97,9 +96,7 @@ export default function AppHeaderCore(props: Props) {
         text: 'Schedule',
         onClick: () => {
           if (router.pathname === '/') {
-            scheduleRef.current?.scrollIntoView({
-              behavior: 'smooth',
-            });
+            document.getElementById('schedule-section')?.scrollIntoView({ behavior: 'smooth' });
           } else {
             router.push('/#schedule-section');
           }
@@ -109,9 +106,7 @@ export default function AppHeaderCore(props: Props) {
         text: 'FAQ',
         onClick: () => {
           if (router.pathname === '/') {
-            faqRef.current?.scrollIntoView({
-              behavior: 'smooth',
-            });
+            document.getElementById('faq-section')?.scrollIntoView({ behavior: 'smooth' });
           } else {
             router.push('/#faq-section');
           }
