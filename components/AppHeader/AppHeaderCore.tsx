@@ -62,34 +62,41 @@ export default function AppHeaderCore(props: Props) {
     const navItems = [
       {
         text: 'Home',
-        onClick: async () => {
-          if (Object.hasOwn(callbackRegistry, router.pathname)) {
-            await callbackRegistry[router.pathname]();
-          }
-          if (router.pathname === '/')
-            window.scroll({
+        onClick: () => {
+          if (router.pathname === '/') {
+            window.scrollTo({
               top: 0,
               behavior: 'smooth',
             });
-          else router.push('/');
+          } else {
+            window.location.href = '/';
+          }
         },
       },
       {
         text: 'Livestream',
-        onClick: async () => {
-          if (Object.hasOwn(callbackRegistry, router.pathname)) {
-            await callbackRegistry[router.pathname]();
+        onClick: () => {
+          if (router.pathname === '/live') {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth',
+            });
+          } else {
+            window.location.href = '/live';
           }
-          router.push('/live');
         },
       },
       {
         text: 'Hackerpacks',
-        onClick: async () => {
-          if (Object.hasOwn(callbackRegistry, router.pathname)) {
-            await callbackRegistry[router.pathname]();
+        onClick: () => {
+          if (router.pathname === '/hackerpacks') {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth',
+            });
+          } else {
+            window.location.href = '/hackerpacks';
           }
-          router.push('/hackerpacks');
         },
       },
       {
