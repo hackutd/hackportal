@@ -68,11 +68,17 @@ export default function HomeSchedule(props: { scheduleCard: ScheduleEvent[]; dat
   /* Event Component */
   const Event = ({ data, index, arrayLength }) => {
     const startDate = new Date(data.startDate);
-    const formattedTime = startDate
-      .toLocaleString([], { hour: 'numeric', minute: 'numeric' })
-      .replace(' ', '')
-      .replace('AM', 'am')
-      .replace('PM', 'pm');
+    const formattedTime =
+      startDate
+        .toLocaleString('en-US', {
+          hour: 'numeric',
+          minute: 'numeric',
+          timeZone: 'America/Chicago',
+          hour12: true,
+        })
+        .replace(' ', '')
+        .replace('AM', 'am')
+        .replace('PM', 'pm') + ' CST';
 
     const showEvent = filter === 'All' || filter === data.type;
     const showFilteredEvents = filter !== 'All';
