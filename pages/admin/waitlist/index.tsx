@@ -1,11 +1,14 @@
 import Head from 'next/head';
-import AdminHeader from '../../../components/adminComponents/AdminHeader';
 import { useState } from 'react';
-import QRCodeReader from '../../../components/dashboardComponents/QRCodeReader';
-import { RequestHelper } from '../../../lib/request-helper';
-import { useAuthContext } from '../../../lib/user/AuthContext';
-import { isAuthorized } from '..';
-import WaitlistCheckInNotificationDialog from '@/components/adminComponents/WaitlistCheckInNotificationDialog';
+
+import { checkUserPermission } from '@/lib/util';
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { RequestHelper } from '@/lib/request-helper';
+
+import WaitlistCheckInNotificationDialog from '@/components/admin/WaitlistCheckInNotificationDialog';
+import QRCodeReader from '@/components/dashboard/QRCodeReader';
+
+const allowedRoles = ['admin', 'organizer', 'super_admin'];
 
 const SCAN_STATUS = {
   successful: 'Check-in successful...',
@@ -102,7 +105,7 @@ export default function WaitlistCheckinPage() {
     }
   };
 
-  if (!isSignedIn || !isAuthorized(user))
+  if (!isSignedIn || !checkUserPermission(user, allowedRoles))
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
 
   return (

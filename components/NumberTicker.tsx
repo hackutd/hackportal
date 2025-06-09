@@ -1,12 +1,12 @@
 import { useInView, useMotionValue, useSpring } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 
-interface NumberTickerProps {
+interface Props {
   value: number;
   delay?: number;
 }
 
-export default function NumberTicker({ value, delay = 0 }: NumberTickerProps) {
+export default function NumberTicker({ value, delay = 0 }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, {

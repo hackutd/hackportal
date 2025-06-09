@@ -1,23 +1,21 @@
-import { useAuthContext } from '../../lib/user/AuthContext';
 import Head from 'next/head';
-import AdminHeader from '../../components/adminComponents/AdminHeader';
-import AdminStatsCard from '../../components/adminComponents/AdminStatsCard';
-import { RequestHelper } from '../../lib/request-helper';
 import { useEffect, useState } from 'react';
-import LoadIcon from '../../components/LoadIcon';
-
 import CheckIcon from '@mui/icons-material/Check';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import EngineeringIcon from '@mui/icons-material/Engineering';
-import { fieldToName } from '../../lib/stats/field';
-import NivoBarChart from '../../components/adminComponents/NivoBarChart';
-import NivoPieChart from '../../components/adminComponents/NivoPieChart';
 
-function isAuthorized(user): boolean {
-  if (!user || !user.permissions) return false;
-  return (user.permissions as string[]).includes('super_admin');
-}
+import { checkUserPermission } from '@/lib/util';
+import { RequestHelper } from '@/lib/request-helper';
+import { fieldToName } from '@/lib/stats/field';
+import { useAuthContext } from '@/lib/user/AuthContext';
+
+import AdminStatsCard from '@/components/admin/AdminStatsCard';
+import NivoPieChart from '@/components/admin/NivoPieChart';
+import NivoBarChart from '@/components/admin/NivoBarChart';
+import Loading from '@/components/icon/Loading';
+
+const allowedRoles = ['super_admin'];
 
 export default function AdminStatsPage() {
   const [loading, setLoading] = useState(true);
@@ -37,12 +35,12 @@ export default function AdminStatsPage() {
     getData();
   }, []);
 
-  if (!isSignedIn || !isAuthorized(user)) {
+  if (!isSignedIn || !checkUserPermission(user, allowedRoles)) {
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
   }
 
   if (loading) {
-    return <LoadIcon width={200} height={200} />;
+    return <Loading width={200} height={200} />;
   }
 
   return (

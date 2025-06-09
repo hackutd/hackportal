@@ -1,29 +1,29 @@
 import { Transition, Dialog } from '@headlessui/react';
 import { GetServerSideProps } from 'next';
 import React, { Fragment } from 'react';
-import EventForm from '../../../components/adminComponents/eventComponents/EventForm';
-import EventList from '../../../components/adminComponents/eventComponents/EventList';
-import { RequestHelper } from '../../../lib/request-helper';
-import { useAuthContext } from '../../../lib/user/AuthContext';
 import Link from 'next/link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-interface EventPageProps {
-  events_: ScheduleEvent[];
+import { checkUserPermission } from '@/lib/util';
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { RequestHelper } from '@/lib/request-helper';
+
+import EventForm from '@/components/admin/event/EventForm';
+import EventList from '@/components/admin/event/EventList';
+
+interface Props {
+  events: ScheduleEvent[];
 }
 
-function isAuthorized(user): boolean {
-  if (!user || !user.permissions) return false;
-  return (user.permissions as string[]).includes('super_admin');
-}
+const allowedRoles = ['super_admin'];
 
-export default function EventPage({ events_ }: EventPageProps) {
+export default function EventPage(props: Props) {
   const { user, isSignedIn } = useAuthContext();
-  const [events, setEvents] = React.useState<ScheduleEvent[]>(events_);
+  const [events, setEvents] = React.useState<ScheduleEvent[]>(props.events);
   const [currentEventEditIndex, setCurrentEventEditIndex] = React.useState<number>(-1);
   const [currentEventDeleteIndex, setCurrentEventDeleteIndex] = React.useState<number>(-1);
   const [modalOpen, setModalOpen] = React.useState(false);
-  const nextEventIndex = events_.reduce((acc, curr) => Math.max(acc, curr.Event), 0) + 1;
+  const nextEventIndex = props.events.reduce((acc, curr) => Math.max(acc, curr.Event), 0) + 1;
 
   const submitEditEventRequest = async (eventData: ScheduleEvent) => {
     if (eventData.startDate > eventData.endDate) {
@@ -85,7 +85,7 @@ export default function EventPage({ events_ }: EventPageProps) {
       console.error(error);
     }
   };
-  if (!isSignedIn || !isAuthorized(user))
+  if (!isSignedIn || !checkUserPermission(user, allowedRoles))
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
 
   return (
@@ -208,7 +208,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
   return {
     props: {
-      events_: data,
+      events: data,
     },
   };
 };

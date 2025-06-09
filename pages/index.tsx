@@ -1,31 +1,34 @@
 import { GetServerSideProps } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import HackCountdown from '../components/homeComponents/HackCountdown';
-import HomeAboutPhotos from '../components/homeComponents/HomeAboutPhotos';
-import HomeAboutText from '../components/homeComponents/HomeAboutText';
-import HomeFaq from '../components/homeComponents/HomeFaq';
-import HomeFooter from '../components/homeComponents/HomeFooter';
-import HomeHero2 from '../components/homeComponents/HomeHero2';
-import HomeSchedule from '../components/homeComponents/HomeSchedule';
-import HomeSponsors from '../components/homeComponents/HomeSponsors';
-import HomeVideoStats from '../components/homeComponents/HomeVideoStats';
-import Wave from '../components/homeComponents/Wave';
-import { RequestHelper } from '../lib/request-helper';
-import cloud from '../public/assets/cloud.png';
-import countdownClouds from '../public/assets/countdown_clouds.png';
-import hackutdBg from '../public/assets/hackutd-bg.png';
-import topBg from '../public/assets/topBg.png';
-import HomeChallengesComponent from '@/components/homeComponents/HomeChallenges';
-import HomeSpeakers2 from '@/components/homeComponents/HomeSpeakers2';
-export default function Home(props: {
+import Head from 'next/head';
+
+import HomeChallengesComponent from '@/components/home/challenge';
+import HomeHero from '@/components/home/HomeHero';
+import HackUTDCountdown from '@/components/home/countdown';
+import HomeAboutText from '@/components/home/about/HomeAboutText';
+import HomeAboutPhotos from '@/components/home/about/HomeAboutPhotos';
+import HomeSchedule from '@/components/home/HomeSchedule';
+import HomeFaq from '@/components/home/faq';
+import HomeSponsors from '@/components/home/sponsors';
+import HomeFooter from '@/components/home/HomeFooter';
+
+import { RequestHelper } from '@/lib/request-helper';
+
+interface Props {
   answeredQuestion: AnsweredQuestion[];
   sponsorCard: Sponsor[];
   scheduleCard: ScheduleEvent[];
   dateCard: Dates;
   challenges: Challenge[];
-}) {
+}
+
+export default function Home({
+  answeredQuestion,
+  challenges,
+  dateCard,
+  scheduleCard,
+  sponsorCard,
+}: Props) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(false);
@@ -47,20 +50,13 @@ export default function Home(props: {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="overflow-x-hidden w-full">
-        {/* <HomeNotif /> */}
-        <HomeHero2 />
-        <HackCountdown />
+        <HomeHero />
+        <HackUTDCountdown />
         <HomeAboutText />
         <HomeAboutPhotos />
-        <HomeSchedule scheduleCard={props.scheduleCard} dateCard={props.dateCard} />
-        <HomeChallengesComponent challenges={props.challenges} />
-        {/* include HomePrizes in HomeChallenges */}
-        {/* <HomePrizes prizes={props.prizeData} /> */}
-        {/*<HomeVideoStats />*/}
-
-        <HomeFaq answeredQuestion={props.answeredQuestion} />
-
-        <HomeSpeakers2 />
+        <HomeSchedule scheduleCard={scheduleCard} dateCard={dateCard} />
+        <HomeChallengesComponent challenges={challenges} />
+        <HomeFaq answeredQuestions={answeredQuestion} />
         <HomeSponsors />
         <HomeFooter />
       </div>

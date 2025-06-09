@@ -1,25 +1,24 @@
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import DashboardHeader from '../../components/dashboardComponents/DashboardHeader';
-import { useUser } from '../../lib/profile/user-data';
-import { useAuthContext } from '../../lib/user/AuthContext';
-import AnnouncementCard from '../../components/dashboardComponents/AnnouncementCards';
-import Sidebar from '../../components/dashboardComponents/Sidebar';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/messaging';
 import 'firebase/compat/firestore';
 import { GetServerSideProps } from 'next';
-import { RequestHelper } from '../../lib/request-helper';
-import { useFCMContext } from '../../lib/service-worker/FCMContext';
-import SpotlightCard from '../../components/dashboardComponents/SpotlightCard';
-import ChallengeCard from '../../components/dashboardComponents/ChallengeCard';
-
 import { Navigation, Pagination, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { useUser } from '@/lib/profile/user-data';
+import { RequestHelper } from '@/lib/request-helper';
+
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import SpotlightCard from '@/components/dashboard/SpotlightCard';
+import ChallengeCard from '@/components/dashboard/ChallengeCard';
+import AnnouncementCard from '@/components/dashboard/AnnouncementCard';
 
 /**
  * The dashboard / hack center.
@@ -122,9 +121,9 @@ export default function Dashboard(props: {
                             <SpotlightCard
                               title={title}
                               speakers={speakers}
-                              startDate={startTimestamp}
+                              startDateTS={startTimestamp}
+                              endDateTS={endTimestamp}
                               location={location}
-                              endDate={endTimestamp}
                               page={page}
                             />
                           </div>
