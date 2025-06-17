@@ -1,4 +1,4 @@
-import { getGroupId } from '@/components/adminComponents/userApplicationAdmin/helpers';
+import { getGroupId } from '@/components/admin/hacker-application/utils';
 import { create } from 'zustand';
 
 export type ApplicationEntry = {

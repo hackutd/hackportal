@@ -6,14 +6,14 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Head from 'next/head';
 import { Fragment, useEffect, useMemo, useState } from 'react';
-import { isAuthorized } from '.';
-import AllUsersAdminView from '../../components/adminComponents/userApplicationAdmin/AllUsersAdminView';
-import UserAdminGroupView from '../../components/adminComponents/userApplicationAdmin/UserAdminGroupView';
+import isAuthorized from '.';
+import AllUsersAdminView from '../../components/admin/hacker-application';
+import UserAdminGroupView from '../../components/admin/hacker-application/HackerApplicationGroupView';
 import { RequestHelper } from '../../lib/request-helper';
 import { useAuthContext } from '../../lib/user/AuthContext';
 import { ApplicationViewState, RegistrationState } from '../../lib/util';
 import { ApplicationEntry, useUserGroup } from '@/lib/admin/group';
-import AdminStatsCard from '@/components/adminComponents/AdminStatsCard';
+import AdminStatsCard from '@/components/admin/AdminStatsCard';
 import { CheckIcon, XCircleIcon } from '@heroicons/react/solid';
 import { SelectChangeEvent } from '@mui/material';
 
@@ -324,7 +324,7 @@ export default function UserPage() {
     [numAppsReviewed, numAppsAccepted],
   );
 
-  if (!user || !isAuthorized(user))
+  if (!user || !isAuthorized({ ...user, questions: [] }))
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
 
   if (loading) {

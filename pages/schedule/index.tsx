@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { SectionReferenceContext } from '@/lib/context/section';
 
 /* Calendar */
 export default function Calendar() {

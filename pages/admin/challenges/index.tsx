@@ -1,32 +1,35 @@
 import { Transition, Dialog } from '@headlessui/react';
 import { GetServerSideProps } from 'next';
 import React, { Fragment } from 'react';
-import ChallengeForm from '../../../components/adminComponents/challengeComponents/ChallengeForm';
-import { RequestHelper } from '../../../lib/request-helper';
-import { useAuthContext } from '../../../lib/user/AuthContext';
 import Link from 'next/link';
-import ChallengeList from '../../../components/adminComponents/challengeComponents/ChallengeList';
 import { arrayMove } from '@dnd-kit/sortable';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-interface ChallengePageProps {
-  challenges_: Challenge[];
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { RequestHelper } from '@/lib/request-helper';
+
+import ChallengeForm from '@/components/admin/challenge/ChallengeForm';
+import ChallengeList from '@/components/admin/challenge/ChallengeList';
+import { checkUserPermission } from '@/lib/util';
+
+interface Props {
+  challenges: Challenge[];
 }
 
-function isAuthorized(user): boolean {
-  if (!user || !user.permissions) return false;
-  return (user.permissions as string[]).includes('super_admin');
-}
+const allowedRoles = ['super_admin'];
 
-export default function ChallengePage({ challenges_ }: ChallengePageProps) {
+export default function ChallengePage(props: Props) {
   const { user, isSignedIn } = useAuthContext();
   const [challenges, setChallenges] = React.useState<SortableObject<Challenge>[]>(
-    challenges_.sort((a, b) => a.rank - b.rank).map((obj, i) => ({ ...obj, id: i.toString() })),
+    props.challenges
+      .sort((a, b) => a.rank - b.rank)
+      .map((obj, i) => ({ ...obj, id: i.toString() })),
   );
   const [currentChallengeEditIndex, setCurrentChallengeEditIndex] = React.useState<number>(-1);
   const [currentChallengeDeleteIndex, setCurrentChallengeDeleteIndex] = React.useState<number>(-1);
   const [modalOpen, setModalOpen] = React.useState(false);
-  const nextChallengeIndex = challenges_.reduce((acc, curr) => Math.max(acc, curr.rank), 0) + 1;
+  const nextChallengeIndex =
+    props.challenges.reduce((acc, curr) => Math.max(acc, curr.rank), 0) + 1;
 
   const submitEditChallengeRequest = async (challengeDataWrapper: SortableObject<Challenge>) => {
     const { id, ...challengeData } = challengeDataWrapper;
@@ -97,7 +100,7 @@ export default function ChallengePage({ challenges_ }: ChallengePageProps) {
       console.error(error);
     }
   };
-  if (!isSignedIn || !isAuthorized(user))
+  if (!isSignedIn || !checkUserPermission(user, allowedRoles))
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
 
   const orderChanged = challenges.filter((obj, idx) => obj.rank !== idx).length !== 0;
@@ -134,16 +137,16 @@ export default function ChallengePage({ challenges_ }: ChallengePageProps) {
             </Link>
           </div>
           <ChallengeList
-            onChallengeEditClick={(challengeIndex) => {
-              setCurrentChallengeEditIndex(challengeIndex);
-            }}
-            onChallengeDeleteClick={(challengeIndex) => {
-              setCurrentChallengeDeleteIndex(challengeIndex);
-              setModalOpen(true);
-            }}
             challenges={challenges}
             onUpdateOrder={(oldIndex, newIndex) => {
               setChallenges((prev) => arrayMove(prev, oldIndex, newIndex));
+            }}
+            onChallengeDeleteClick={(index) => {
+              setModalOpen(true);
+              setCurrentChallengeDeleteIndex(index);
+            }}
+            onChallengeEditClick={(index) => {
+              setCurrentChallengeEditIndex(index);
             }}
           />
           <div className="p-3 flex gap-x-4">
@@ -238,7 +241,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
   return {
     props: {
-      challenges_: data,
+      challenges: data,
     },
   };
 };

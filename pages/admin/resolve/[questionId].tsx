@@ -2,13 +2,13 @@ import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { isAuthorized } from '..';
-import ErrorList from '../../../components/ErrorList';
-import PendingQuestion from '../../../components/dashboardComponents/PendingQuestion';
+import PendingQuestion from '../../../components/dashboard/PendingQuestion';
 import { RequestHelper } from '../../../lib/request-helper';
 import { useAuthContext } from '../../../lib/user/AuthContext';
 import { QADocument } from '../../api/questions';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ErrorList from '@/components/error/ErrorList';
+import { checkUserPermission } from '@/lib/util';
 
 /**
  * Resolve question page.
@@ -17,13 +17,14 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
  *
  * Route: /admin/resolve/[questionId]
  */
-export default function ResolveQuestionPage({
-  question,
-  questionId,
-}: {
+const allowedRoles = ['admin', 'organizer', 'super_admin'];
+
+interface Props {
   question: QADocument;
   questionId: string;
-}) {
+}
+
+export default function ResolveQuestionPage({ question, questionId }: Props) {
   const router = useRouter();
   const [answer, setAnswer] = useState('');
   const [errors, setErrors] = useState<string[]>([]);
@@ -55,7 +56,7 @@ export default function ResolveQuestionPage({
     }
   };
 
-  if (!user || !isAuthorized(user))
+  if (!user || !checkUserPermission(user, allowedRoles))
     return <div className="text-2xl font-black text-center">Unauthorized</div>;
 
   return (

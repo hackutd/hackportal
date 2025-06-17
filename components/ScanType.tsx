@@ -1,4 +1,4 @@
-export interface ScanTypeProps {
+export interface Props {
   /**
    * Raw JSON of the scan.
    */
@@ -12,7 +12,7 @@ export interface ScanTypeProps {
    */
   onClick: () => void;
 }
-export default function ScanType({ name, onClick }: ScanTypeProps) {
+export default function ScanType({ name, onClick }: Props) {
   return (
     <div
       className="hidden md:block md:p-4 p-2 cursor-pointer m-3 bg-[#40B7BA] rounded-lg text-white hover:bg-white hover:text-[#40B7BA] transition duration-300 ease-in-out h-min"

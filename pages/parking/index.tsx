@@ -1,8 +1,10 @@
 import { useMediaQuery } from '@mui/material';
 import Image from 'next/image';
-import heroDesktop from '../../public/assets/hero-desktop.png';
-import heroXl from '../../public/assets/hero-xl.png';
-import hero from '../../public/assets/hero.png';
+
+import heroDesktop from '@/public/assets/hero-desktop.png';
+import heroXl from '@/public/assets/hero-xl.png';
+import hero from '@/public/assets/hero.png';
+
 import styles from './index.module.css';
 
 export default function ParkingPage() {

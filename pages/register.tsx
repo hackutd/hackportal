@@ -1,21 +1,24 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import LoadIcon from '../components/LoadIcon';
-import { RequestHelper } from '../lib/request-helper';
-import { useAuthContext } from '../lib/user/AuthContext';
 import { Formik, Form, useFormikContext } from 'formik';
-import { hackPortalConfig, generateInitialValues } from '../hackportal.config';
-import DisplayQuestion from '../components/registerComponents/DisplayQuestion';
-import { getFileExtension } from '../lib/util';
 import Link from 'next/link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { GetServerSideProps } from 'next';
 import { Snackbar } from '@mui/material';
-import { NavbarCallbackRegistryContext } from '@/lib/context/navbar';
 
-interface RegisterPageProps {
+import { NavbarCallbackRegistryContext } from '@/lib/context/navbar';
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { getFileExtension } from '@/lib/util';
+import { RequestHelper } from '@/lib/request-helper';
+import { generateInitialValues, hackPortalConfig } from '@/hackportal.config';
+
+import Loading from '@/components/icon/Loading';
+import DisplayRegistrationQuestion from '@/components/register/DisplayRegistrationQuestion';
+// TODO: refactor this page
+
+interface Props {
   allowedRegistrations: boolean;
 }
 
@@ -85,7 +88,7 @@ function ApplicationAutosaveHandler({
  * Registration: /
  */
 
-export default function Register({ allowedRegistrations }: RegisterPageProps) {
+export default function Register({ allowedRegistrations }: Props) {
   const router = useRouter();
 
   const {
@@ -321,7 +324,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
   }
 
   if (loading) {
-    return <LoadIcon width={200} height={200} />;
+    return <Loading width={200} height={200} />;
   }
 
   //disables submitting form on enter key press
@@ -509,7 +512,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                     <div className="md:px-10">
                       <div className="flex flex-col">
                         {generalQuestions.map((obj, idx) => (
-                          <DisplayQuestion key={idx} obj={obj} />
+                          <DisplayRegistrationQuestion key={idx} obj={obj} />
                         ))}
                       </div>
                     </div>
@@ -536,10 +539,10 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                     </h2>
                     <div className="flex flex-col md:px-4 poppins-regular ">
                       {schoolQuestions.map((obj, idx) => (
-                        <DisplayQuestion key={idx} obj={obj} />
+                        <DisplayRegistrationQuestion key={idx} obj={obj} />
                       ))}
                       {values['major'] === 'Other' && (
-                        <DisplayQuestion
+                        <DisplayRegistrationQuestion
                           key={1000}
                           obj={{
                             textInputQuestions: [
@@ -555,7 +558,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                         />
                       )}
                       {values['university'] === 'Other' && (
-                        <DisplayQuestion
+                        <DisplayRegistrationQuestion
                           key={1001}
                           obj={{
                             textInputQuestions: [
@@ -594,10 +597,10 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                     </h2>
                     <div className="flex flex-col poppins-regular md:px-4">
                       {hackathonExperienceQuestions.map((obj, idx) => (
-                        <DisplayQuestion key={idx} obj={obj} />
+                        <DisplayRegistrationQuestion key={idx} obj={obj} />
                       ))}
                       {values['heardFrom'] === 'Other' && (
-                        <DisplayQuestion
+                        <DisplayRegistrationQuestion
                           key={1000}
                           obj={{
                             textInputQuestions: [
@@ -636,7 +639,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                     </h2>
                     <div className="flex flex-col poppins-regular md:px-4">
                       {shortAnswerQuestions.map((obj, idx) => (
-                        <DisplayQuestion key={idx} obj={obj} />
+                        <DisplayRegistrationQuestion key={idx} obj={obj} />
                       ))}
                     </div>
                     <div className="flex justify-end my-4">
@@ -665,7 +668,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                       {eventInfoQuestions.map((obj, idx) => {
                         // if (idx !== 0) return <DisplayQuestion key={idx} obj={obj} />;
 
-                        return <DisplayQuestion key={idx} obj={obj} />;
+                        return <DisplayRegistrationQuestion key={idx} obj={obj} />;
                       })}
                     </div>
                     <div className="flex justify-end my-4">
@@ -691,7 +694,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                     </h2>
                     <div className="flex flex-col poppins-regular md:px-4">
                       {sponsorInfoQuestions.map((obj, idx) => (
-                        <DisplayQuestion key={idx} obj={obj} />
+                        <DisplayRegistrationQuestion key={idx} obj={obj} />
                       ))}
                     </div>
                     {/* Resume Upload */}
@@ -764,7 +767,7 @@ export default function Register({ allowedRegistrations }: RegisterPageProps) {
                     </p>
                     <div className="flex flex-col">
                       {teammateQuestions.map((obj, idx) => (
-                        <DisplayQuestion key={idx} obj={obj} />
+                        <DisplayRegistrationQuestion key={idx} obj={obj} />
                       ))}
                     </div>
 

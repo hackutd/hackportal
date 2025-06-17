@@ -8,7 +8,7 @@ import { useAuthContext } from '../lib/user/AuthContext';
 /**
  * Component properties for a ProfileDialog.
  */
-interface ProfileDialogProps {
+interface Props {
   /**
    * A callback triggered when the dialog should be dismissed.
    */
@@ -31,7 +31,7 @@ const ROLE_MAPPINGS: Record<UserPermission, string> = {
  * - Link to profile
  * - Sign in/Sign out
  */
-export default function ProfileDialog({ onDismiss }: ProfileDialogProps) {
+export default function ProfileDialog({ onDismiss }: Props) {
   const { user, isSignedIn, hasProfile } = useAuthContext();
   let name: string;
   let role: string;

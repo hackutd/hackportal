@@ -2,23 +2,18 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import AdminHeader from '../../components/adminComponents/AdminHeader';
-import ErrorList from '../../components/ErrorList';
-import EventDetailLink from '../../components/adminComponents/eventComponents/EventDetailLink';
-import PendingQuestion from '../../components/dashboardComponents/PendingQuestion';
-import SuccessCard from '../../components/adminComponents/SuccessCard';
-import { RequestHelper } from '../../lib/request-helper';
-import { useAuthContext } from '../../lib/user/AuthContext';
 import { QADocument } from '../api/questions';
 
-export function isAuthorized(user): boolean {
-  if (!user || !user.permissions) return false;
-  return (
-    (user.permissions as string[]).includes('admin') ||
-    (user.permissions as string[]).includes('organizer') ||
-    (user.permissions as string[]).includes('super_admin')
-  );
-}
+import { useAuthContext } from '@/lib/user/AuthContext';
+import { RequestHelper } from '@/lib/request-helper';
+import { checkUserPermission } from '@/lib/util';
+
+import ErrorList from '@/components/error/ErrorList';
+import SuccessCard from '@/components/admin/SuccessCard';
+import PendingQuestion from '@/components/dashboard/PendingQuestion';
+import EventLink from '@/components/admin/event/EventLink';
+
+const allowedRoles = ['admin', 'organizer', 'super_admin'];
 
 /**
  * The main page of Admin Console.
@@ -65,7 +60,7 @@ export default function Admin({ questions }: { questions: QADocument[] }) {
     }
   };
 
-  if (!isSignedIn || !isAuthorized(user))
+  if (!isSignedIn || !checkUserPermission(user, allowedRoles))
     return <div className="text-2xl font-black text-center bg-blue-200">Unauthorized</div>;
 
   return (
@@ -74,11 +69,6 @@ export default function Admin({ questions }: { questions: QADocument[] }) {
         <title>HackUTD 2024 - Admin</title>
         <meta name="description" content="HackPortal's Admin Page" />
       </Head>
-
-      <section className="p-4">
-        <AdminHeader />
-      </section>
-
       {user.permissions.includes('super_admin') && (
         <div className="2xl:px-32 md:px-16 px-6">
           <ErrorList
@@ -130,8 +120,10 @@ export default function Admin({ questions }: { questions: QADocument[] }) {
         <div className="2xl:px-32 md:px-16 px-6 mt-8">
           <h1 className="font-bold text-xl text-complementary">Event Details: </h1>
           <div className="py-2">
-            <EventDetailLink title="View Events" href="/admin/events" />
-            <EventDetailLink title="View Challenges" href="/admin/challenges" />
+            <EventLink title="View Events" href="/admin/events" />
+            <EventLink title="View Challenges" href="/admin/challenges" />
+            <EventLink title="View Sponsors" href="/admin/sponsors" />
+            <EventLink title="View Keynote" href="/admin/keynote" />
           </div>
         </div>
       )}
