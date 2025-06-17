@@ -30,7 +30,9 @@ function initializeFirebase() {
       credential: admin.credential.cert({
         projectId: process.env.SERVICE_ACCOUNT_PROJECT_ID,
         clientEmail: process.env.SERVICE_ACCOUNT_CLIENT_EMAIL,
-        privateKey: process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        privateKey: Buffer.from(process.env.SERVICE_ACCOUNT_PRIVATE_KEY, 'base64').toString(
+          'utf-8',
+        ),
       }),
     });
   }
