@@ -19,7 +19,6 @@ const SPEAKER = 'keySpeaker';
  *
  */
 async function getKeynoteSpeakers(req: NextApiRequest, res: NextApiResponse) {
-
   const snapshot = await db.collection(KEYNOTE_SPEAKERS).limit(1).get();
   if (snapshot.empty) {
     // Define default data
